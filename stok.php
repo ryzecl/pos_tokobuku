@@ -2,23 +2,23 @@
 require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
-require_once 'models/Roti.php';
+require_once 'models/buku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$roti = new Roti($db);
+$buku = new buku($db);
 
 $message = '';
 $message_type = '';
 
 // Handle stock adjustment
 if ($_POST && isset($_POST['action']) && $_POST['action'] === 'adjust_stock') {
-    $roti_id = sanitizeInput($_POST['roti_id']);
+    $buku_id = sanitizeInput($_POST['buku_id']);
     $adjustment = sanitizeInput($_POST['adjustment']);
     $reason = sanitizeInput($_POST['reason']);
 
-    if ($roti->updateStok($roti_id, $adjustment)) {
+    if ($buku->updateStok($buku_id, $adjustment)) {
         // Log stock adjustment (optional)
         $message = 'Stok berhasil disesuaikan!';
         $message_type = 'success';
@@ -32,35 +32,35 @@ if ($_POST && isset($_POST['action']) && $_POST['action'] === 'adjust_stock') {
 $filter = $_GET['filter'] ?? 'all';
 $search = $_GET['search'] ?? '';
 
-// Get roti data based on filter
+// Get buku data based on filter
 switch ($filter) {
     case 'low_stock':
         $query = "SELECT o.*, k.nama_kategori 
-                  FROM roti o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
+                  FROM buku o
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
                   WHERE o.stok <= o.stok_minimum
-                  ORDER BY o.nama_roti";
+                  ORDER BY o.nama_buku";
         break;
     case 'expired':
         $query = "SELECT o.*, k.nama_kategori 
-                  FROM roti o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
+                  FROM buku o
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
                   WHERE o.tanggal_expired <= CURDATE()
-                  ORDER BY o.nama_roti";
+                  ORDER BY o.nama_buku";
         break;
     case 'expiring_soon':
         $query = "SELECT o.*, k.nama_kategori 
-                  FROM roti o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
+                  FROM buku o
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
                   WHERE o.tanggal_expired <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)
                   AND o.tanggal_expired > CURDATE()
                   ORDER BY o.tanggal_expired";
         break;
     default:
         if (!empty($search)) {
-            $stmt = $roti->search($search);
+            $stmt = $buku->search($search);
         } else {
-            $stmt = $roti->readAll();
+            $stmt = $buku->readAll();
         }
         break;
 }
@@ -119,7 +119,7 @@ if (isset($query)) {
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="filter">Filter:</label>
                             <select id="filter" name="filter" onchange="this.form.submit()">
-                                <option value="all" <?php echo $filter === 'all' ? 'selected' : ''; ?>>Semua roti</option>
+                                <option value="all" <?php echo $filter === 'all' ? 'selected' : ''; ?>>Semua buku</option>
                                 <option value="low_stock" <?php echo $filter === 'low_stock' ? 'selected' : ''; ?>>Stok Minimum</option>
                                 <option value="expired" <?php echo $filter === 'expired' ? 'selected' : ''; ?>>Sudah Expired</option>
                                 <option value="expiring_soon" <?php echo $filter === 'expiring_soon' ? 'selected' : ''; ?>>Akan Expired (30 hari)</option>
@@ -128,7 +128,7 @@ if (isset($query)) {
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="search">Cari:</label>
                             <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>"
-                                placeholder="Nama atau kode roti">
+                                placeholder="Nama atau kode buku">
                         </div>
                         <button type="submit" class="btn btn-primary">Filter</button>
                         <a href="stok.php" class="btn btn-secondary">Reset</a>
@@ -143,15 +143,15 @@ if (isset($query)) {
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="roti_id">Pilih roti</label>
-                                <select id="roti_id" name="roti_id" required>
-                                    <option value="">Pilih roti</option>
+                                <label for="buku_id">Pilih buku</label>
+                                <select id="buku_id" name="buku_id" required>
+                                    <option value="">Pilih buku</option>
                                     <?php
-                                    $roti_stmt = $roti->readAll();
-                                    while ($row = $roti_stmt->fetch(PDO::FETCH_ASSOC)):
+                                    $buku_stmt = $buku->readAll();
+                                    while ($row = $buku_stmt->fetch(PDO::FETCH_ASSOC)):
                                     ?>
                                         <option value="<?php echo $row['id']; ?>">
-                                            <?php echo $row['nama_roti'] . ' (Stok: ' . $row['stok'] . ')'; ?>
+                                            <?php echo $row['nama_buku'] . ' (Stok: ' . $row['stok'] . ')'; ?>
                                         </option>
                                     <?php endwhile; ?>
                                 </select>
@@ -167,7 +167,7 @@ if (isset($query)) {
                         <div class="form-group">
                             <label for="reason">Alasan Penyesuaian</label>
                             <textarea id="reason" name="reason" rows="2" required
-                                placeholder="Contoh: Koreksi stok, kerusakan roti, dll"></textarea>
+                                placeholder="Contoh: Koreksi stok, kerusakan buku, dll"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Sesuaikan Stok</button>
@@ -177,13 +177,13 @@ if (isset($query)) {
                 <!-- Stock Table -->
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Daftar Stok roti</h3>
+                        <h3 class="table-title">Daftar Stok buku</h3>
                     </div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Kode</th>
-                                <th>Nama roti</th>
+                                <th>Nama buku</th>
                                 <th>Kategori</th>
                                 <th>Stok</th>
                                 <th>Stok Min</th>
@@ -196,8 +196,8 @@ if (isset($query)) {
                         <tbody>
                             <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                 <tr>
-                                    <td><?php echo $row['kode_roti']; ?></td>
-                                    <td><?php echo $row['nama_roti']; ?></td>
+                                    <td><?php echo $row['kode_buku']; ?></td>
+                                    <td><?php echo $row['nama_buku']; ?></td>
                                     <td><?php echo $row['nama_kategori']; ?></td>
                                     <td>
                                         <span class="badge <?php echo $row['stok'] <= $row['stok_minimum'] ? 'badge-danger' : 'badge-success'; ?>">

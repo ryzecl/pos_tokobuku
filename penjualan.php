@@ -5,7 +5,7 @@
 require_once 'config/config.php';
 requireRole(['admin', 'kasir']);
 
-require_once 'models/Roti.php';
+require_once 'models/Buku.php';
 require_once 'models/Penjualan.php';
 require_once 'models/Customer.php';
 require_once 'models/Pengaturan.php';
@@ -13,7 +13,7 @@ require_once 'models/Pengaturan.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$roti = new Roti($db);
+$buku = new buku($db);
 $penjualan = new Penjualan($db);
 $customer = new Customer($db);
 $pengaturan = new Pengaturan($db);
@@ -30,16 +30,16 @@ $role = $_SESSION['user_role'] ?? 'kasir';
 if (isset($_GET['action'])) {
     header('Content-Type: application/json');
     switch ($_GET['action']) {
-        case 'search_roti':
+        case 'search_buku':
             $keyword = sanitizeInput($_GET['keyword'] ?? '');
-            $stmt = $roti->search($keyword);
+            $stmt = $buku->search($keyword);
             $results = [];
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // Pastikan struktur yang frontend butuhkan
                 $results[] = [
                     'id' => isset($row['id']) ? (int)$row['id'] : 0,
-                    'kode_roti' => $row['kode_roti'] ?? '',
-                    'nama_roti' => $row['nama_roti'] ?? '',
+                    'kode_buku' => $row['kode_buku'] ?? '',
+                    'nama_buku' => $row['nama_buku'] ?? '',
                     'harga_jual' => isset($row['harga_jual']) ? (float)$row['harga_jual'] : 0,
                     'diskon' => isset($row['diskon']) ? (float)$row['diskon'] : 0,
                     'stok' => isset($row['stok']) ? (int)$row['stok'] : 0,
@@ -49,21 +49,21 @@ if (isset($_GET['action'])) {
             echo json_encode($results);
             exit;
 
-        case 'get_roti':
-            $roti_id = sanitizeInput($_GET['roti_id']);
-            $roti->id = $roti_id;
-            if ($roti->readOne()) {
+        case 'get_buku':
+            $buku_id = sanitizeInput($_GET['buku_id']);
+            $buku->id = $buku_id;
+            if ($buku->readOne()) {
                 echo json_encode([
-                    'id' => (int)$roti->id,
-                    'kode_roti' => $roti->kode_roti,
-                    'nama_roti' => $roti->nama_roti,
-                    'harga_jual' => (float)$roti->harga_jual,
-                    'diskon' => (float)($roti->diskon ?? 0),
-                    'stok' => (int)$roti->stok,
-                    'satuan' => $roti->satuan
+                    'id' => (int)$buku->id,
+                    'kode_buku' => $buku->kode_buku,
+                    'nama_buku' => $buku->nama_buku,
+                    'harga_jual' => (float)$buku->harga_jual,
+                    'diskon' => (float)($buku->diskon ?? 0),
+                    'stok' => (int)$buku->stok,
+                    'satuan' => $buku->satuan
                 ]);
             } else {
-                echo json_encode(['error' => 'roti tidak ditemukan']);
+                echo json_encode(['error' => 'buku tidak ditemukan']);
             }
             exit;
     }
@@ -101,26 +101,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         // Validasi item dan persiapkan detail array
         $details = [];
         foreach ($items as $idx => $it) {
-            $roti_id = isset($it['id']) ? intval($it['id']) : (isset($it['roti_id']) ? intval($it['roti_id']) : 0);
+            $buku_id = isset($it['id']) ? intval($it['id']) : (isset($it['buku_id']) ? intval($it['buku_id']) : 0);
             $quantity = isset($it['quantity']) ? intval($it['quantity']) : (isset($it['qty']) ? intval($it['qty']) : 0);
             $price = isset($it['price']) ? floatval($it['price']) : (isset($it['harga']) ? floatval($it['harga']) : 0);
             $subtotal = isset($it['subtotal']) ? floatval($it['subtotal']) : max(0, $price * $quantity);
 
-            if ($roti_id <= 0 || $quantity <= 0) {
+            if ($buku_id <= 0 || $quantity <= 0) {
                 throw new Exception("Item ke-" . ($idx + 1) . " tidak valid (id atau quantity).");
             }
 
-            // Cek stok saat ini via model Roti
-            $roti->id = $roti_id;
-            if (!$roti->readOne()) {
-                throw new Exception("Roti dengan ID {$roti_id} tidak ditemukan.");
+            // Cek stok saat ini via model buku
+            $buku->id = $buku_id;
+            if (!$buku->readOne()) {
+                throw new Exception("buku dengan ID {$buku_id} tidak ditemukan.");
             }
-            if ($roti->stok < $quantity) {
-                throw new Exception("Stok untuk '{$roti->nama_roti}' tidak cukup. (tersisa: {$roti->stok})");
+            if ($buku->stok < $quantity) {
+                throw new Exception("Stok untuk '{$buku->nama_buku}' tidak cukup. (tersisa: {$buku->stok})");
             }
 
             $details[] = [
-                'roti_id' => $roti_id,
+                'buku_id' => $buku_id,
                 'jumlah' => $quantity,
                 'harga_satuan' => $price,
                 'subtotal' => $subtotal
@@ -138,14 +138,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             throw new Exception('Tidak mendapatkan ID penjualan.');
         }
 
-        // Insert detail_penjualan (kolom: penjualan_id, roti_id, jumlah, harga_satuan, subtotal)
-        $detail_query = "INSERT INTO detail_penjualan (penjualan_id, roti_id, jumlah, harga_satuan, subtotal) 
-                         VALUES (:penjualan_id, :roti_id, :jumlah, :harga_satuan, :subtotal)";
+        // Insert detail_penjualan (kolom: penjualan_id, buku_id, jumlah, harga_satuan, subtotal)
+        $detail_query = "INSERT INTO detail_penjualan (penjualan_id, buku_id, jumlah, harga_satuan, subtotal) 
+                         VALUES (:penjualan_id, :buku_id, :jumlah, :harga_satuan, :subtotal)";
         $detail_stmt = $db->prepare($detail_query);
 
         foreach ($details as $d) {
             $detail_stmt->bindValue(':penjualan_id', $penjualan_id, PDO::PARAM_INT);
-            $detail_stmt->bindValue(':roti_id', $d['roti_id'], PDO::PARAM_INT);
+            $detail_stmt->bindValue(':buku_id', $d['buku_id'], PDO::PARAM_INT);
             $detail_stmt->bindValue(':jumlah', $d['jumlah'], PDO::PARAM_INT);
             $detail_stmt->bindValue(':harga_satuan', $d['harga_satuan']);
             $detail_stmt->bindValue(':subtotal', $d['subtotal']);
@@ -154,8 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
 
             // update stok (kurangi)
-            if (!$roti->updateStok($d['roti_id'], -$d['jumlah'])) {
-                throw new Exception('Gagal memperbarui stok untuk roti ID ' . $d['roti_id']);
+            if (!$buku->updateStok($d['buku_id'], -$d['jumlah'])) {
+                throw new Exception('Gagal memperbarui stok untuk buku ID ' . $d['buku_id']);
             }
         }
 
@@ -353,7 +353,7 @@ $customer_stmt = $customer->readAll();
                 <div class="pos-container">
                     <div class="product-section">
                         <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Cari roti..." onkeyup="searchProducts()">
+                            <input type="text" id="searchInput" placeholder="Cari buku..." onkeyup="searchProducts()">
                         </div>
                         <div id="productGrid" class="product-grid"></div>
                     </div>
@@ -365,7 +365,7 @@ $customer_stmt = $customer->readAll();
                             <div style="text-align:center;padding:60px 20px;color:#A0522D;">
                                 <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Basket</div>
                                 <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
-                                <small>Pilih roti untuk memulai transaksi</small>
+                                <small>Pilih buku untuk memulai transaksi</small>
                             </div>
                         </div>
 
@@ -416,7 +416,7 @@ $customer_stmt = $customer->readAll();
 
         function searchProducts() {
             const keyword = document.getElementById('searchInput').value;
-            fetch(`penjualan.php?action=search_roti&keyword=${encodeURIComponent(keyword)}`)
+            fetch(`penjualan.php?action=search_buku&keyword=${encodeURIComponent(keyword)}`)
                 .then(r => r.json())
                 .then(data => {
                     products = data;
@@ -434,11 +434,11 @@ $customer_stmt = $customer->readAll();
 
                 card.innerHTML = `
             <div style="display:flex; align-items:center; gap:10px; padding:1px;">
-                <img src="assets/produk/${p.kode_roti}.jpg" 
+                <img src="assets/produk/${p.kode_buku}.jpg" 
                      onerror="this.src='assets/produk/default.jpg'" 
                      style="width:50px; height:50px; border-radius:12px; object-fit:cover; box-shadow:0 4px 10px rgba(139,69,19,0.2);">
                 <div style="flex:1;">
-                    <div style="font-weight:700; color:#2c1b18;">${p.nama_roti}</div>
+                    <div style="font-weight:700; color:#2c1b18;">${p.nama_buku}</div>
                     <div style="color:#8B4513; font-weight:bold; font-size:16px;">${formatCurrency(p.harga_jual)}</div>
                     <div style="font-size:12px; color:#A0522D;">Stok: ${p.stok} ${p.satuan || 'pcs'}</div>
                 </div>
@@ -457,8 +457,8 @@ $customer_stmt = $customer->readAll();
             } else {
                 cart.push({
                     id: product.id,
-                    kode_roti: product.kode_roti,
-                    nama_roti: product.nama_roti,
+                    kode_buku: product.kode_buku,
+                    nama_buku: product.nama_buku,
                     price: parseFloat(product.harga_jual),
                     diskon: parseFloat(product.diskon || 0),
                     quantity: 1,
@@ -474,7 +474,7 @@ $customer_stmt = $customer->readAll();
                 el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#A0522D;">
                     <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Basket</div>
                     <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
-                    <small>Pilih roti untuk memulai transaksi</small>
+                    <small>Pilih buku untuk memulai transaksi</small>
                 </div>`;
                 updateSummary();
                 return;
@@ -490,7 +490,7 @@ $customer_stmt = $customer->readAll();
                 div.innerHTML = `
                     <div style="display:flex;gap:14px;align-items:start;">
                         <div style="flex:1;">
-                            <div style="font-weight:700;font-size:15px;color:#2c1b18;margin-bottom:4px;">${item.nama_roti}</div>
+                            <div style="font-weight:700;font-size:15px;color:#2c1b18;margin-bottom:4px;">${item.nama_buku}</div>
                             <div style="font-size:13px;color:#A0522D;margin-bottom:8px;">
                                 ${formatCurrency(item.price)} × ${item.quantity}<br>
                                 ${item.diskon > 0 ? '<span style="background:#ffe6e6;color:#c0392b;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:6px;">−'+formatCurrency(item.diskon)+'</span>' : ''}

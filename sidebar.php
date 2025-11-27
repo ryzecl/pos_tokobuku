@@ -29,8 +29,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <?php if ($role === 'admin' || $role === 'gudang'): ?>
             <li class="nav-item">
-                <a href="roti.php" class="nav-link <?php echo ($current_page === 'roti.php') ? 'active' : ''; ?>">
-                    <i>🍞</i> Data roti
+                <a href="buku.php" class="nav-link <?php echo ($current_page === 'buku.php') ? 'active' : ''; ?>">
+                    <i>🍞</i> Data buku
                 </a>
             </li>
             <li class="nav-item">
@@ -53,12 +53,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <?php if ($role === 'admin'): ?>
             <li class="nav-item">
                 <a href="kategori.php" class="nav-link <?php echo ($current_page === 'kategori.php') ? 'active' : ''; ?>">
-                    <i>🏷️</i> Kategori roti
+                    <i>🏷️</i> Kategori buku
                 </a>
             </li>
             <li class="nav-item">
-                <a href="vendor.php" class="nav-link <?php echo ($current_page === 'vendor.php') ? 'active' : ''; ?>">
-                    <i>🏢</i> Vendor
+                <a href="penerbit.php" class="nav-link <?php echo ($current_page === 'penerbit.php') ? 'active' : ''; ?>">
+                    <i>🏢</i> penerbit
                 </a>
             </li>
             <li class="nav-item">

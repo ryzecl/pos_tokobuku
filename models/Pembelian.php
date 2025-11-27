@@ -6,7 +6,7 @@ class Pembelian
 
     public $id;
     public $no_faktur;
-    public $vendor_id;
+    public $penerbit_id;
     public $user_id;
     public $total_harga;
     public $tanggal_pembelian;
@@ -20,20 +20,20 @@ class Pembelian
     public function create()
     {
         $query = "INSERT INTO " . $this->table_name . "
-                  SET no_faktur=:no_faktur, vendor_id=:vendor_id, user_id=:user_id, 
+                  SET no_faktur=:no_faktur, penerbit_id=:penerbit_id, user_id=:user_id, 
                       total_harga=:total_harga, tanggal_pembelian=:tanggal_pembelian, status=:status";
 
         $stmt = $this->conn->prepare($query);
 
         $this->no_faktur = htmlspecialchars(strip_tags($this->no_faktur));
-        $this->vendor_id = htmlspecialchars(strip_tags($this->vendor_id));
+        $this->penerbit_id = htmlspecialchars(strip_tags($this->penerbit_id));
         $this->user_id = htmlspecialchars(strip_tags($this->user_id));
         $this->total_harga = htmlspecialchars(strip_tags($this->total_harga));
         $this->tanggal_pembelian = htmlspecialchars(strip_tags($this->tanggal_pembelian));
         $this->status = htmlspecialchars(strip_tags($this->status));
 
         $stmt->bindParam(':no_faktur', $this->no_faktur);
-        $stmt->bindParam(':vendor_id', $this->vendor_id);
+        $stmt->bindParam(':penerbit_id', $this->penerbit_id);
         $stmt->bindParam(':user_id', $this->user_id);
         $stmt->bindParam(':total_harga', $this->total_harga);
         $stmt->bindParam(':tanggal_pembelian', $this->tanggal_pembelian);
@@ -47,9 +47,9 @@ class Pembelian
 
     public function readAll()
     {
-        $query = "SELECT p.*, s.nama_vendor, u.nama_lengkap as user_name
+        $query = "SELECT p.*, s.nama_penerbit, u.nama_lengkap as user_name
                   FROM " . $this->table_name . " p
-                  LEFT JOIN vendor s ON p.vendor_id = s.id
+                  LEFT JOIN penerbit s ON p.penerbit_id = s.id
                   LEFT JOIN users u ON p.user_id = u.id
                   ORDER BY p.tanggal_pembelian DESC";
 
@@ -61,9 +61,9 @@ class Pembelian
 
     public function readOne()
     {
-        $query = "SELECT p.*, s.nama_vendor, u.nama_lengkap as user_name
+        $query = "SELECT p.*, s.nama_penerbit, u.nama_lengkap as user_name
                   FROM " . $this->table_name . " p
-                  LEFT JOIN vendor s ON p.vendor_id = s.id
+                  LEFT JOIN penerbit s ON p.penerbit_id = s.id
                   LEFT JOIN users u ON p.user_id = u.id
                   WHERE p.id = :id";
 
@@ -74,7 +74,7 @@ class Pembelian
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->no_faktur = $row['no_faktur'];
-            $this->vendor_id = $row['vendor_id'];
+            $this->penerbit_id = $row['penerbit_id'];
             $this->user_id = $row['user_id'];
             $this->total_harga = $row['total_harga'];
             $this->tanggal_pembelian = $row['tanggal_pembelian'];
@@ -86,9 +86,9 @@ class Pembelian
 
     public function readRecent($limit = 10)
     {
-        $query = "SELECT p.*, s.nama_vendor, u.nama_lengkap as user_name
+        $query = "SELECT p.*, s.nama_penerbit, u.nama_lengkap as user_name
                   FROM " . $this->table_name . " p
-                  LEFT JOIN vendor s ON p.vendor_id = s.id
+                  LEFT JOIN penerbit s ON p.penerbit_id = s.id
                   LEFT JOIN users u ON p.user_id = u.id
                   ORDER BY p.tanggal_pembelian DESC
                   LIMIT :limit";
@@ -102,9 +102,9 @@ class Pembelian
 
     public function getDetailPembelian($pembelian_id)
     {
-        $query = "SELECT dp.*, o.nama_roti, o.kode_roti
+        $query = "SELECT dp.*, o.nama_buku, o.kode_buku
                   FROM detail_pembelian dp
-                  LEFT JOIN roti o ON dp.roti_id = o.id
+                  LEFT JOIN buku o ON dp.buku_id = o.id
                   WHERE dp.pembelian_id = :pembelian_id";
 
         $stmt = $this->conn->prepare($query);
@@ -129,9 +129,9 @@ class Pembelian
 
     public function getLaporanPembelian($start_date, $end_date)
     {
-        $query = "SELECT p.*, s.nama_vendor, u.nama_lengkap as user_name
+        $query = "SELECT p.*, s.nama_penerbit, u.nama_lengkap as user_name
                   FROM " . $this->table_name . " p
-                  LEFT JOIN vendor s ON p.vendor_id = s.id
+                  LEFT JOIN penerbit s ON p.penerbit_id = s.id
                   LEFT JOIN users u ON p.user_id = u.id
                   WHERE DATE(p.tanggal_pembelian) BETWEEN :start_date AND :end_date
                   ORDER BY p.tanggal_pembelian DESC";

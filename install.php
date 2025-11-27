@@ -3,11 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "<h1>Instalasi Database - Sistem POS Minimart</h1>";
+echo "<h1>Instalasi Database - Sistem POS Daebook</h1>";
 
 // Konfigurasi database
 $host = 'localhost';
-$db_name = 'pos_rooty';
+$db_name = 'pos_daebook';
 $username = 'root';
 $password = '';
 

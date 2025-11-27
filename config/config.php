@@ -1,7 +1,7 @@
 <?php
 // Konfigurasi umum aplikasi
-define('BASE_URL', 'http://localhost/pos_minimart/');
-define('APP_NAME', 'RootyMart');
+define('BASE_URL', 'http://localhost/pos_daebook/');
+define('APP_NAME', 'Daebook');
 
 // Konfigurasi session
 session_start();

@@ -1,13 +1,13 @@
 <?php
-class Roti
+class Buku
 {
     private $conn;
-    private $table_name = "roti";
+    private $table_name = "buku";
     private $has_diskon = false; // ditambahkan
 
     public $id;
-    public $kode_roti;
-    public $nama_roti;
+    public $kode_buku;
+    public $nama_buku;
     public $kategori_id;
     public $satuan;
     public $harga_beli;
@@ -35,7 +35,7 @@ class Roti
     public function create()
     {
         $query = "INSERT INTO " . $this->table_name . "
-                  SET kode_roti=:kode_roti, nama_roti=:nama_roti, kategori_id=:kategori_id, 
+                  SET kode_buku=:kode_buku, nama_buku=:nama_buku, kategori_id=:kategori_id, 
                       satuan=:satuan, harga_beli=:harga_beli, harga_jual=:harga_jual";
 
         if ($this->has_diskon) {
@@ -47,8 +47,8 @@ class Roti
 
         $stmt = $this->conn->prepare($query);
 
-        $this->kode_roti = htmlspecialchars(strip_tags($this->kode_roti));
-        $this->nama_roti = htmlspecialchars(strip_tags($this->nama_roti));
+        $this->kode_buku = htmlspecialchars(strip_tags($this->kode_buku));
+        $this->nama_buku = htmlspecialchars(strip_tags($this->nama_buku));
         $this->kategori_id = htmlspecialchars(strip_tags($this->kategori_id));
         $this->satuan = htmlspecialchars(strip_tags($this->satuan));
         $this->harga_beli = htmlspecialchars(strip_tags($this->harga_beli));
@@ -59,8 +59,8 @@ class Roti
         $this->tanggal_expired = htmlspecialchars(strip_tags($this->tanggal_expired));
         $this->deskripsi = htmlspecialchars(strip_tags($this->deskripsi));
 
-        $stmt->bindParam(':kode_roti', $this->kode_roti);
-        $stmt->bindParam(':nama_roti', $this->nama_roti);
+        $stmt->bindParam(':kode_buku', $this->kode_buku);
+        $stmt->bindParam(':nama_buku', $this->nama_buku);
         $stmt->bindParam(':kategori_id', $this->kategori_id);
         $stmt->bindParam(':satuan', $this->satuan);
         $stmt->bindParam(':harga_beli', $this->harga_beli);
@@ -83,8 +83,8 @@ class Roti
     {
         $query = "SELECT o.*, k.nama_kategori 
                   FROM " . $this->table_name . " o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
-                  ORDER BY o.nama_roti";
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
+                  ORDER BY o.nama_buku";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -96,7 +96,7 @@ class Roti
     {
         $query = "SELECT o.*, k.nama_kategori 
                   FROM " . $this->table_name . " o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
                   WHERE o.id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -105,8 +105,8 @@ class Roti
 
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->kode_roti = $row['kode_roti'];
-            $this->nama_roti = $row['nama_roti'];
+            $this->kode_buku = $row['kode_buku'];
+            $this->nama_buku = $row['nama_buku'];
             $this->kategori_id = $row['kategori_id'];
             $this->satuan = $row['satuan'];
             $this->harga_beli = $row['harga_beli'];
@@ -125,7 +125,7 @@ class Roti
     public function update()
     {
         $query = "UPDATE " . $this->table_name . "
-                  SET kode_roti=:kode_roti, nama_roti=:nama_roti, kategori_id=:kategori_id, 
+                  SET kode_buku=:kode_buku, nama_buku=:nama_buku, kategori_id=:kategori_id, 
                       satuan=:satuan, harga_beli=:harga_beli, harga_jual=:harga_jual";
 
         if ($this->has_diskon) {
@@ -138,8 +138,8 @@ class Roti
 
         $stmt = $this->conn->prepare($query);
 
-        $this->kode_roti = htmlspecialchars(strip_tags($this->kode_roti));
-        $this->nama_roti = htmlspecialchars(strip_tags($this->nama_roti));
+        $this->kode_buku = htmlspecialchars(strip_tags($this->kode_buku));
+        $this->nama_buku = htmlspecialchars(strip_tags($this->nama_buku));
         $this->kategori_id = htmlspecialchars(strip_tags($this->kategori_id));
         $this->satuan = htmlspecialchars(strip_tags($this->satuan));
         $this->harga_beli = htmlspecialchars(strip_tags($this->harga_beli));
@@ -151,8 +151,8 @@ class Roti
         $this->deskripsi = htmlspecialchars(strip_tags($this->deskripsi));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt->bindParam(':kode_roti', $this->kode_roti);
-        $stmt->bindParam(':nama_roti', $this->nama_roti);
+        $stmt->bindParam(':kode_buku', $this->kode_buku);
+        $stmt->bindParam(':nama_buku', $this->nama_buku);
         $stmt->bindParam(':kategori_id', $this->kategori_id);
         $stmt->bindParam(':satuan', $this->satuan);
         $stmt->bindParam(':harga_beli', $this->harga_beli);
@@ -186,13 +186,13 @@ class Roti
         return false;
     }
 
-    public function updateStok($roti_id, $jumlah)
+    public function updateStok($buku_id, $jumlah)
     {
         $query = "UPDATE " . $this->table_name . " SET stok = stok + :jumlah WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':jumlah', $jumlah);
-        $stmt->bindParam(':id', $roti_id);
+        $stmt->bindParam(':id', $buku_id);
 
         if ($stmt->execute()) {
             return true;
@@ -200,7 +200,7 @@ class Roti
         return false;
     }
 
-    public function getTotalroti()
+    public function getTotalbuku()
     {
         $query = "SELECT COUNT(*) as total FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -209,7 +209,7 @@ class Roti
         return $row['total'];
     }
 
-    public function getrotiExpired()
+    public function getbukuExpired()
     {
         $query = "SELECT COUNT(*) as total FROM " . $this->table_name . " 
                   WHERE tanggal_expired <= CURDATE()";
@@ -233,9 +233,9 @@ class Roti
     {
         $query = "SELECT o.*, k.nama_kategori 
                   FROM " . $this->table_name . " o
-                  LEFT JOIN kategori_roti k ON o.kategori_id = k.id
-                  WHERE o.nama_roti LIKE :keyword OR o.kode_roti LIKE :keyword
-                  ORDER BY o.nama_roti";
+                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
+                  WHERE o.nama_buku LIKE :keyword OR o.kode_buku LIKE :keyword
+                  ORDER BY o.nama_buku";
 
         $stmt = $this->conn->prepare($query);
         $keyword = "%{$keyword}%";

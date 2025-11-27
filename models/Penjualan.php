@@ -127,9 +127,9 @@ class Penjualan
 
     public function getDetailPenjualan($penjualan_id)
     {
-        $query = "SELECT dp.*, o.nama_roti, o.kode_roti
+        $query = "SELECT dp.*, o.nama_buku, o.kode_buku
                   FROM detail_penjualan dp
-                  LEFT JOIN roti o ON dp.roti_id = o.id
+                  LEFT JOIN buku o ON dp.buku_id = o.id
                   WHERE dp.penjualan_id = :penjualan_id";
 
         $stmt = $this->conn->prepare($query);

@@ -37,6 +37,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,10 +45,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dynamic.php">
 </head>
+
 <body>
     <div class="main-container">
         <!-- Sidebar -->
-        <?php 
+        <?php
         $role = $_SESSION['user_role'];
         require_once 'sidebar.php'; ?>
 
@@ -142,7 +144,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         <thead>
                             <tr>
                                 <th>No. Faktur</th>
-                                <th>Vendor</th>
+                                <th>penerbit</th>
                                 <th>User</th>
                                 <th>Total Harga</th>
                                 <th>Status</th>
@@ -159,22 +161,22 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($laporan_data as $row): ?>
-                                <tr>
-                                    <td><?php echo $row['no_faktur']; ?></td>
-                                    <td><?php echo $row['nama_vendor'] ?? '-'; ?></td>
-                                    <td><?php echo $row['user_name'] ?? '-'; ?></td>
-                                    <td><?php echo formatCurrency($row['total_harga']); ?></td>
-                                    <td>
-                                        <span class="badge <?php echo $row['status'] === 'completed' ? 'badge-success' : 'badge-warning'; ?>">
-                                            <?php echo ucfirst($row['status']); ?>
-                                        </span>
-                                    </td>
-                                    <td><?php echo date('d/m/Y', strtotime($row['tanggal_pembelian'])); ?></td>
-                                    <td>
-                                        <a href="pembelian.php?id=<?php echo $row['id']; ?>" 
-                                           class="btn btn-info btn-sm" target="_blank">Detail</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><?php echo $row['no_faktur']; ?></td>
+                                        <td><?php echo $row['nama_penerbit'] ?? '-'; ?></td>
+                                        <td><?php echo $row['user_name'] ?? '-'; ?></td>
+                                        <td><?php echo formatCurrency($row['total_harga']); ?></td>
+                                        <td>
+                                            <span class="badge <?php echo $row['status'] === 'completed' ? 'badge-success' : 'badge-warning'; ?>">
+                                                <?php echo ucfirst($row['status']); ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo date('d/m/Y', strtotime($row['tanggal_pembelian'])); ?></td>
+                                        <td>
+                                            <a href="pembelian.php?id=<?php echo $row['id']; ?>"
+                                                class="btn btn-info btn-sm" target="_blank">Detail</a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -186,28 +188,32 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     <style>
         @media print {
-            .sidebar, .top-nav, .form-container, .btn {
+
+            .sidebar,
+            .top-nav,
+            .form-container,
+            .btn {
                 display: none !important;
             }
-            
+
             .main-content {
                 margin-left: 0 !important;
             }
-            
+
             .content {
                 padding: 0 !important;
             }
-            
+
             .table-container {
                 box-shadow: none !important;
                 border: 1px solid #000 !important;
             }
-            
+
             .dashboard-grid {
                 display: none !important;
             }
         }
     </style>
 </body>
-</html>
 
+</html>

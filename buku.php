@@ -2,14 +2,14 @@
 require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
-require_once 'models/Roti.php';
-require_once 'models/KategoriRoti.php';
+require_once 'models/buku.php';
+require_once 'models/Kategoribuku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$roti = new Roti($db);
-$kategori = new KategoriRoti($db);
+$buku = new buku($db);
+$kategori = new Kategoribuku($db);
 
 $message = '';
 $message_type = '';
@@ -19,57 +19,57 @@ if ($_POST) {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'create':
-                $roti->kode_roti = sanitizeInput($_POST['kode_roti']);
-                $roti->nama_roti = sanitizeInput($_POST['nama_roti']);
-                $roti->kategori_id = sanitizeInput($_POST['kategori_id']);
-                $roti->satuan = sanitizeInput($_POST['satuan']);
-                $roti->harga_beli = sanitizeInput($_POST['harga_beli']);
-                $roti->harga_jual = sanitizeInput($_POST['harga_jual']);
-                $roti->diskon = sanitizeInput($_POST['diskon'] ?? 0);
-                $roti->stok = sanitizeInput($_POST['stok']);
-                $roti->stok_minimum = sanitizeInput($_POST['stok_minimum']);
-                $roti->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
-                $roti->deskripsi = sanitizeInput($_POST['deskripsi']);
+                $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
+                $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
+                $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
+                $buku->satuan = sanitizeInput($_POST['satuan']);
+                $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
+                $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
+                $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
+                $buku->stok = sanitizeInput($_POST['stok']);
+                $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
+                $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
+                $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
 
-                if ($roti->create()) {
-                    $message = 'Data roti berhasil ditambahkan!';
+                if ($buku->create()) {
+                    $message = 'Data buku berhasil ditambahkan!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal menambahkan data roti!';
+                    $message = 'Gagal menambahkan data buku!';
                     $message_type = 'error';
                 }
                 break;
 
             case 'update':
-                $roti->id = sanitizeInput($_POST['id']);
-                $roti->kode_roti = sanitizeInput($_POST['kode_roti']);
-                $roti->nama_roti = sanitizeInput($_POST['nama_roti']);
-                $roti->kategori_id = sanitizeInput($_POST['kategori_id']);
-                $roti->satuan = sanitizeInput($_POST['satuan']);
-                $roti->harga_beli = sanitizeInput($_POST['harga_beli']);
-                $roti->harga_jual = sanitizeInput($_POST['harga_jual']);
-                $roti->diskon = sanitizeInput($_POST['diskon'] ?? 0);
-                $roti->stok = sanitizeInput($_POST['stok']);
-                $roti->stok_minimum = sanitizeInput($_POST['stok_minimum']);
-                $roti->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
-                $roti->deskripsi = sanitizeInput($_POST['deskripsi']);
+                $buku->id = sanitizeInput($_POST['id']);
+                $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
+                $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
+                $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
+                $buku->satuan = sanitizeInput($_POST['satuan']);
+                $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
+                $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
+                $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
+                $buku->stok = sanitizeInput($_POST['stok']);
+                $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
+                $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
+                $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
 
-                if ($roti->update()) {
-                    $message = 'Data roti berhasil diperbarui!';
+                if ($buku->update()) {
+                    $message = 'Data buku berhasil diperbarui!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal memperbarui data roti!';
+                    $message = 'Gagal memperbarui data buku!';
                     $message_type = 'error';
                 }
                 break;
 
             case 'delete':
-                $roti->id = sanitizeInput($_POST['id']);
-                if ($roti->delete()) {
-                    $message = 'Data roti berhasil dihapus!';
+                $buku->id = sanitizeInput($_POST['id']);
+                if ($buku->delete()) {
+                    $message = 'Data buku berhasil dihapus!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal menghapus data roti!';
+                    $message = 'Gagal menghapus data buku!';
                     $message_type = 'error';
                 }
                 break;
@@ -77,8 +77,8 @@ if ($_POST) {
     }
 }
 
-// Get all roti
-$stmt = $roti->readAll();
+// Get all buku
+$stmt = $buku->readAll();
 
 // Get all kategori for dropdown
 $kategori_stmt = $kategori->readAll();
@@ -90,7 +90,7 @@ $kategori_stmt = $kategori->readAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data roti - <?php echo APP_NAME; ?></title>
+    <title>Data buku - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dynamic.php">
 </head>
@@ -106,7 +106,7 @@ $kategori_stmt = $kategori->readAll();
         <main class="main-content">
             <!-- Top Navigation -->
             <header class="top-nav">
-                <h1>Data roti</h1>
+                <h1>Data buku</h1>
                 <div class="user-info">
                     <div class="user-avatar">
                         <?php echo strtoupper(substr($_SESSION['nama_lengkap'], 0, 1)); ?>
@@ -126,20 +126,20 @@ $kategori_stmt = $kategori->readAll();
                     </div>
                 <?php endif; ?>
 
-                <!-- Add roti Form -->
+                <!-- Add buku Form -->
                 <div class="form-container">
-                    <h2>Tambah roti Baru</h2>
+                    <h2>Tambah buku Baru</h2>
                     <form method="POST">
                         <input type="hidden" name="action" value="create">
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kode_roti">Kode roti</label>
-                                <input type="text" id="kode_roti" name="kode_roti" required>
+                                <label for="kode_buku">Kode buku</label>
+                                <input type="text" id="kode_buku" name="kode_buku" required>
                             </div>
                             <div class="form-group">
-                                <label for="nama_roti">Nama roti</label>
-                                <input type="text" id="nama_roti" name="nama_roti" required>
+                                <label for="nama_buku">Nama buku</label>
+                                <input type="text" id="nama_buku" name="nama_buku" required>
                             </div>
                         </div>
 
@@ -200,20 +200,20 @@ $kategori_stmt = $kategori->readAll();
                             <textarea id="deskripsi" name="deskripsi" rows="3"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Tambah roti</button>
+                        <button type="submit" class="btn btn-primary">Tambah buku</button>
                     </form>
                 </div>
 
-                <!-- Data roti Table -->
+                <!-- Data buku Table -->
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Daftar roti</h3>
+                        <h3 class="table-title">Daftar buku</h3>
                     </div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Kode</th>
-                                <th>Nama roti</th>
+                                <th>Nama buku</th>
                                 <th>Kategori</th>
                                 <th>Satuan</th>
                                 <th>Harga Beli</th>
@@ -228,8 +228,8 @@ $kategori_stmt = $kategori->readAll();
                         <tbody>
                             <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                 <tr>
-                                    <td><?php echo $row['kode_roti']; ?></td>
-                                    <td><?php echo $row['nama_roti']; ?></td>
+                                    <td><?php echo $row['kode_buku']; ?></td>
+                                    <td><?php echo $row['nama_buku']; ?></td>
                                     <td><?php echo $row['nama_kategori']; ?></td>
                                     <td><?php echo $row['satuan']; ?></td>
                                     <td><?php echo formatCurrency($row['harga_beli']); ?></td>
@@ -261,9 +261,9 @@ $kategori_stmt = $kategori->readAll();
                                         ?>
                                     </td>
                                     <td>
-                                        <button onclick="editroti(<?php echo htmlspecialchars(json_encode($row)); ?>)"
+                                        <button onclick="editbuku(<?php echo htmlspecialchars(json_encode($row)); ?>)"
                                             class="btn btn-warning btn-sm">Edit</button>
-                                        <button onclick="deleteroti(<?php echo $row['id']; ?>)"
+                                        <button onclick="deletebuku(<?php echo $row['id']; ?>)"
                                             class="btn btn-danger btn-sm">Hapus</button>
                                     </td>
                                 </tr>
@@ -278,19 +278,19 @@ $kategori_stmt = $kategori->readAll();
     <!-- Edit Modal -->
     <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto;">
-            <h2>Edit roti</h2>
+            <h2>Edit buku</h2>
             <form method="POST" id="editForm">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="edit_kode_roti">Kode roti</label>
-                        <input type="text" id="edit_kode_roti" name="kode_roti" required>
+                        <label for="edit_kode_buku">Kode buku</label>
+                        <input type="text" id="edit_kode_buku" name="kode_buku" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit_nama_roti">Nama roti</label>
-                        <input type="text" id="edit_nama_roti" name="nama_roti" required>
+                        <label for="edit_nama_buku">Nama buku</label>
+                        <input type="text" id="edit_nama_buku" name="nama_buku" required>
                     </div>
                 </div>
 
@@ -362,10 +362,10 @@ $kategori_stmt = $kategori->readAll();
     </div>
 
     <script>
-        function editroti(data) {
+        function editbuku(data) {
             document.getElementById('edit_id').value = data.id;
-            document.getElementById('edit_kode_roti').value = data.kode_roti;
-            document.getElementById('edit_nama_roti').value = data.nama_roti;
+            document.getElementById('edit_kode_buku').value = data.kode_buku;
+            document.getElementById('edit_nama_buku').value = data.nama_buku;
             document.getElementById('edit_kategori_id').value = data.kategori_id;
             document.getElementById('edit_satuan').value = data.satuan;
             document.getElementById('edit_harga_beli').value = data.harga_beli;
@@ -382,8 +382,8 @@ $kategori_stmt = $kategori->readAll();
             document.getElementById('editModal').style.display = 'none';
         }
 
-        function deleteroti(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data roti ini?')) {
+        function deletebuku(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data buku ini?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.innerHTML = `

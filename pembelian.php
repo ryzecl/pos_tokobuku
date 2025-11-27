@@ -3,15 +3,15 @@ require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
 require_once 'models/Pembelian.php';
-require_once 'models/Vendor.php';
-require_once 'models/Roti.php';
+require_once 'models/penerbit.php';
+require_once 'models/buku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $pembelian = new Pembelian($db);
-$vendor = new Vendor($db);
-$roti = new Roti($db);
+$penerbit = new penerbit($db);
+$buku = new buku($db);
 
 $message = '';
 $message_type = '';
@@ -26,7 +26,7 @@ if ($_POST) {
 
                     // Create pembelian record
                     $pembelian->no_faktur = $pembelian->generateNoFaktur();
-                    $pembelian->vendor_id = sanitizeInput($_POST['vendor_id']);
+                    $pembelian->penerbit_id = sanitizeInput($_POST['penerbit_id']);
                     $pembelian->user_id = $_SESSION['user_id'];
                     $pembelian->total_harga = sanitizeInput($_POST['total_harga']);
                     $pembelian->tanggal_pembelian = sanitizeInput($_POST['tanggal_pembelian']);
@@ -42,11 +42,11 @@ if ($_POST) {
                     $items = json_decode($_POST['items'], true);
                     foreach ($items as $item) {
                         // Insert detail pembelian
-                        $detail_query = "INSERT INTO detail_pembelian (pembelian_id, roti_id, jumlah, harga_satuan, subtotal) 
-                                         VALUES (:pembelian_id, :roti_id, :jumlah, :harga_satuan, :subtotal)";
+                        $detail_query = "INSERT INTO detail_pembelian (pembelian_id, buku_id, jumlah, harga_satuan, subtotal) 
+                                         VALUES (:pembelian_id, :buku_id, :jumlah, :harga_satuan, :subtotal)";
                         $detail_stmt = $db->prepare($detail_query);
                         $detail_stmt->bindParam(':pembelian_id', $pembelian_id);
-                        $detail_stmt->bindParam(':roti_id', $item['id']);
+                        $detail_stmt->bindParam(':buku_id', $item['id']);
                         $detail_stmt->bindParam(':jumlah', $item['quantity']);
                         $detail_stmt->bindParam(':harga_satuan', $item['price']);
                         $detail_stmt->bindParam(':subtotal', $item['subtotal']);
@@ -78,7 +78,7 @@ if ($_POST) {
                     // Update stock
                     $detail_stmt = $pembelian->getDetailPembelian($pembelian_id);
                     while ($row = $detail_stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $roti->updateStok($row['roti_id'], $row['jumlah']);
+                        $buku->updateStok($row['buku_id'], $row['jumlah']);
                     }
 
                     $db->commit();
@@ -97,8 +97,8 @@ if ($_POST) {
 // Get all pembelian
 $stmt = $pembelian->readAll();
 
-// Get all vendor for dropdown
-$vendor_stmt = $vendor->readAll();
+// Get all penerbit for dropdown
+$penerbit_stmt = $penerbit->readAll();
 ?>
 
 <!DOCTYPE html>
@@ -123,7 +123,7 @@ $vendor_stmt = $vendor->readAll();
         <main class="main-content">
             <!-- Top Navigation -->
             <header class="top-nav">
-                <h1>Pembelian roti</h1>
+                <h1>Pembelian buku</h1>
                 <div class="user-info">
                     <div class="user-avatar">
                         <?php echo strtoupper(substr($_SESSION['nama_lengkap'], 0, 1)); ?>
@@ -153,11 +153,11 @@ $vendor_stmt = $vendor->readAll();
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="vendor_id">vendor</label>
-                                <select id="vendor_id" name="vendor_id" required>
-                                    <option value="">Pilih vendor</option>
-                                    <?php while ($row = $vendor_stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                                        <option value="<?php echo $row['id']; ?>"><?php echo $row['nama_vendor']; ?></option>
+                                <label for="penerbit_id">penerbit</label>
+                                <select id="penerbit_id" name="penerbit_id" required>
+                                    <option value="">Pilih penerbit</option>
+                                    <?php while ($row = $penerbit_stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                                        <option value="<?php echo $row['id']; ?>"><?php echo $row['nama_penerbit']; ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -173,16 +173,16 @@ $vendor_stmt = $vendor->readAll();
                             <label>Items Pembelian</label>
                             <div id="itemsContainer">
                                 <div class="item-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                                    <select class="roti-select" onchange="loadrotiInfo(this)">
-                                        <option value="">Pilih roti</option>
+                                    <select class="buku-select" onchange="loadbukuInfo(this)">
+                                        <option value="">Pilih buku</option>
                                         <?php
-                                        $roti_stmt = $roti->readAll();
-                                        while ($row = $roti_stmt->fetch(PDO::FETCH_ASSOC)):
+                                        $buku_stmt = $buku->readAll();
+                                        while ($row = $buku_stmt->fetch(PDO::FETCH_ASSOC)):
                                         ?>
                                             <option value="<?php echo $row['id']; ?>"
                                                 data-harga="<?php echo $row['harga_beli']; ?>"
-                                                data-nama="<?php echo $row['nama_roti']; ?>">
-                                                <?php echo $row['nama_roti']; ?>
+                                                data-nama="<?php echo $row['nama_buku']; ?>">
+                                                <?php echo $row['nama_buku']; ?>
                                             </option>
                                         <?php endwhile; ?>
                                     </select>
@@ -215,7 +215,7 @@ $vendor_stmt = $vendor->readAll();
                         <thead>
                             <tr>
                                 <th>No. Faktur</th>
-                                <th>vendor</th>
+                                <th>penerbit</th>
                                 <th>Total Harga</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
@@ -226,7 +226,7 @@ $vendor_stmt = $vendor->readAll();
                             <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                 <tr>
                                     <td><?php echo $row['no_faktur']; ?></td>
-                                    <td><?php echo $row['nama_vendor']; ?></td>
+                                    <td><?php echo $row['nama_penerbit']; ?></td>
                                     <td><?php echo formatCurrency($row['total_harga']); ?></td>
                                     <td><?php echo date('d/m/Y', strtotime($row['tanggal_pembelian'])); ?></td>
                                     <td>
@@ -240,7 +240,7 @@ $vendor_stmt = $vendor->readAll();
                                                 <input type="hidden" name="action" value="complete">
                                                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                                                 <button type="submit" class="btn btn-success btn-sm"
-                                                    onclick="return confirm('Konfirmasi penerimaan roti?')">
+                                                    onclick="return confirm('Konfirmasi penerimaan buku?')">
                                                     Terima
                                                 </button>
                                             </form>
@@ -267,9 +267,9 @@ $vendor_stmt = $vendor->readAll();
             newItem.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;';
 
             newItem.innerHTML = `
-                <select class="roti-select" onchange="loadrotiInfo(this)">
-                    <option value="">Pilih roti</option>
-                    ${document.querySelector('.roti-select').innerHTML}
+                <select class="buku-select" onchange="loadbukuInfo(this)">
+                    <option value="">Pilih buku</option>
+                    ${document.querySelector('.buku-select').innerHTML}
                 </select>
                 <input type="number" class="quantity-input" placeholder="Jumlah" min="1" onchange="calculateSubtotal(this)">
                 <input type="number" class="price-input" placeholder="Harga" min="0" step="100" onchange="calculateSubtotal(this)">
@@ -290,7 +290,7 @@ $vendor_stmt = $vendor->readAll();
             }
         }
 
-        function loadrotiInfo(select) {
+        function loadbukuInfo(select) {
             const option = select.options[select.selectedIndex];
             if (option.value) {
                 const priceInput = select.parentElement.querySelector('.price-input');
@@ -314,7 +314,7 @@ $vendor_stmt = $vendor->readAll();
             const items = [];
 
             document.querySelectorAll('.item-row').forEach(row => {
-                const select = row.querySelector('.roti-select');
+                const select = row.querySelector('.buku-select');
                 const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
                 const price = parseFloat(row.querySelector('.price-input').value) || 0;
                 const subtotal = quantity * price;

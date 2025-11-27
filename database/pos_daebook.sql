@@ -40,8 +40,8 @@ CREATE TABLE `customer` (
 -- Dumping data untuk tabel `customer`
 --
 
-INSERT INTO `customer` (`id`, `nama_customer`, `alamat`, `telepon`, `email`, `created_at`) VALUES
-(1, 'Hildan', 'Jl.Sukses', '081234567890', 'test1@gmail.com', '2025-11-18 14:05:02');
+-- INSERT INTO `customer` (`id`, `nama_customer`, `alamat`, `telepon`, `email`) VALUES
+-- (1, 'Hildan', 'Karawang', '081234567890', 'hildan@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,7 @@ INSERT INTO `customer` (`id`, `nama_customer`, `alamat`, `telepon`, `email`, `cr
 CREATE TABLE `detail_pembelian` (
   `id` int NOT NULL,
   `pembelian_id` int DEFAULT NULL,
-  `roti_id` int DEFAULT NULL,
+  `buku_id` int DEFAULT NULL,
   `jumlah` int NOT NULL,
   `harga_satuan` decimal(10,2) NOT NULL,
   `subtotal` decimal(12,2) NOT NULL
@@ -67,7 +67,7 @@ CREATE TABLE `detail_pembelian` (
 CREATE TABLE `detail_penjualan` (
   `id` int NOT NULL,
   `penjualan_id` int DEFAULT NULL,
-  `roti_id` int DEFAULT NULL,
+  `buku_id` int DEFAULT NULL,
   `jumlah` int NOT NULL,
   `harga_satuan` decimal(10,2) NOT NULL,
   `subtotal` decimal(12,2) NOT NULL
@@ -77,34 +77,34 @@ CREATE TABLE `detail_penjualan` (
 -- Dumping data untuk tabel `detail_penjualan`
 --
 
-INSERT INTO `detail_penjualan` (`id`, `penjualan_id`, `roti_id`, `jumlah`, `harga_satuan`, `subtotal`) VALUES
-(1, 1, 6, 1, 60000.00, 58500.00),
-(2, 1, 5, 1, 10000.00, 9500.00),
-(3, 2, 2, 1, 18000.00, 16000.00);
+-- INSERT INTO `detail_penjualan` (`id`, `penjualan_id`, `buku_id`, `jumlah`, `harga_satuan`, `subtotal`) VALUES
+-- (1, 1, 6, 1, 60000.00, 58500.00),
+-- (2, 1, 5, 1, 10000.00, 9500.00),
+-- (3, 2, 2, 1, 18000.00, 16000.00);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori_roti`
+-- Struktur dari tabel `kategori_buku`
 --
 
-CREATE TABLE `kategori_roti` (
-  `id` int NOT NULL,
+CREATE TABLE `kategori_buku` (
+  `id` int PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `nama_kategori` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `deskripsi` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `kategori_roti`
+-- Dumping data untuk tabel `kategori_buku`
 --
 
-INSERT INTO `kategori_roti` (`id`, `nama_kategori`, `deskripsi`, `created_at`) VALUES
-(1, 'Roti Manis', 'Roti yang bercita rasa manis', '2025-11-18 14:08:48'),
-(2, 'Roti Tawar', 'Roty yang tidak memiliki rasa', '2025-11-18 14:09:37'),
-(3, 'Pastry', 'Rapuh, mentega, berlapis, wangi, memuaskan', '2025-11-18 14:11:34'),
-(4, 'Cake', 'Bolu lemebut', '2025-11-18 14:12:26');
-
+-- INSERT INTO kategori_buku (nama_kategori, deskripsi) VALUES
+-- ('Romance', 'Novel bertema cinta dan hubungan emosional'),
+-- ('Fantasy', 'Cerita imajinatif dengan dunia magis atau makhluk supernatural'),
+-- ('Mistery', 'Kisah penuh teka-teki, investigasi, dan rahasia yang harus diungkap'),
+-- ('Thriller', 'Cerita menegangkan dengan konflik intens dan penuh kejutan'),
+-- ('Biography', 'Kisah nyata perjalanan hidup seseorang, ditulis secara detail');
 -- --------------------------------------------------------
 
 --
@@ -114,7 +114,7 @@ INSERT INTO `kategori_roti` (`id`, `nama_kategori`, `deskripsi`, `created_at`) V
 CREATE TABLE `pembelian` (
   `id` int NOT NULL,
   `no_faktur` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `vendor_id` int DEFAULT NULL,
+  `penerbit_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `total_harga` decimal(12,2) NOT NULL,
   `tanggal_pembelian` date NOT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `pengaturan` (
 --
 
 INSERT INTO `pengaturan` (`id`, `nama`, `nilai`) VALUES
-(1, 'ppn_persen', '10');
+(1, 'ppn_persen', '12');
 
 -- --------------------------------------------------------
 
@@ -166,20 +166,20 @@ CREATE TABLE `penjualan` (
 -- Dumping data untuk tabel `penjualan`
 --
 
-INSERT INTO `penjualan` (`id`, `no_transaksi`, `user_id`, `customer_id`, `diskon`, `ppn`, `total_harga`, `total_bayar`, `kembalian`, `note`, `tanggal_penjualan`, `metode_pembayaran`) VALUES
-(1, 'TRX202511180001', 1, 1, 1000.00, 6700.00, 73700.00, 100000.00, 26300.00, 'terimaksaih', '2025-11-18 16:12:12', 'CASH'),
-(2, 'TRX202511180002', 1, 1, 0.00, 1600.00, 17600.00, 20000.00, 2400.00, 'terimakasih', '2025-11-18 16:23:33', 'CASH');
+-- INSERT INTO `penjualan` (`id`, `no_transaksi`, `user_id`, `customer_id`, `diskon`, `ppn`, `total_harga`, `total_bayar`, `kembalian`, `note`, `tanggal_penjualan`, `metode_pembayaran`) VALUES
+-- (1, 'TRX202511180001', 1, 1, 1000.00, 6700.00, 73700.00, 100000.00, 26300.00, 'terimaksaih', '2025-11-18 16:12:12', 'CASH'),
+-- (2, 'TRX202511180002', 1, 1, 0.00, 1600.00, 17600.00, 20000.00, 2400.00, 'terimakasih', '2025-11-18 16:23:33', 'CASH');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `roti`
+-- Struktur dari tabel `buku`
 --
 
-CREATE TABLE `roti` (
+CREATE TABLE `buku` (
   `id` int NOT NULL,
-  `kode_roti` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `nama_roti` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `kode_buku` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_buku` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
   `kategori_id` int DEFAULT NULL,
   `satuan` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `harga_beli` decimal(10,2) NOT NULL,
@@ -194,14 +194,14 @@ CREATE TABLE `roti` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `roti`
+-- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `roti` (`id`, `kode_roti`, `nama_roti`, `kategori_id`, `satuan`, `harga_beli`, `harga_jual`, `diskon`, `stok`, `stok_minimum`, `tanggal_expired`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(2, 'RT01', 'Manis Lumer Coklat', 1, 'pcs', 12000.00, 18000.00, 2000.00, 998, 1, '2026-01-18', 'Roti yang manis', '2025-11-18 14:20:23', '2025-11-18 16:23:33'),
-(4, 'RT02', 'Roti tawar Bulat', 2, 'pcs', 14000.00, 20000.00, 1000.00, 999, 1, '2026-01-18', 'Roti yang tidak memiliki rasa', '2025-11-18 14:21:36', '2025-11-18 14:21:36'),
-(5, 'RT03', 'kwasong', 3, 'pcs', 8000.00, 10000.00, 500.00, 998, 1, '2026-02-18', 'roti khas prancis', '2025-11-18 14:24:17', '2025-11-18 16:12:12'),
-(6, 'RT04', 'Cake Hallowen', 4, 'pcs', 50000.00, 60000.00, 1500.00, 998, 1, '2025-12-18', 'untuk hallowen', '2025-11-18 14:25:50', '2025-11-18 16:12:12');
+-- INSERT INTO `buku` (`id`, `kode_buku`, `nama_buku`, `kategori_id`, `satuan`, `harga_beli`, `harga_jual`, `diskon`, `stok`, `stok_minimum`, `tanggal_expired`, `deskripsi`, `created_at`, `updated_at`) VALUES
+-- (2, 'RT01', 'Manis Lumer Coklat', 1, 'pcs', 12000.00, 18000.00, 2000.00, 998, 1, '2026-01-18', 'buku yang manis', '2025-11-18 14:20:23', '2025-11-18 16:23:33'),
+-- (4, 'RT02', 'buku tawar Bulat', 2, 'pcs', 14000.00, 20000.00, 1000.00, 999, 1, '2026-01-18', 'buku yang tidak memiliki rasa', '2025-11-18 14:21:36', '2025-11-18 14:21:36'),
+-- (5, 'RT03', 'kwasong', 3, 'pcs', 8000.00, 10000.00, 500.00, 998, 1, '2026-02-18', 'buku khas prancis', '2025-11-18 14:24:17', '2025-11-18 16:12:12'),
+-- (6, 'RT04', 'Cake Hallowen', 4, 'pcs', 50000.00, 60000.00, 1500.00, 998, 1, '2025-12-18', 'untuk hallowen', '2025-11-18 14:25:50', '2025-11-18 16:12:12');
 
 -- --------------------------------------------------------
 
@@ -232,12 +232,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `email`, `rol
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `vendor`
+-- Struktur dari tabel `penerbit`
 --
 
-CREATE TABLE `vendor` (
+CREATE TABLE `penerbit` (
   `id` int NOT NULL,
-  `nama_vendor` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_penerbit` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
   `alamat` text COLLATE utf8mb4_general_ci,
   `telepon` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -245,11 +245,11 @@ CREATE TABLE `vendor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `vendor`
+-- Dumping data untuk tabel `penerbit`
 --
 
-INSERT INTO `vendor` (`id`, `nama_vendor`, `alamat`, `telepon`, `email`, `created_at`) VALUES
-(5, 'H.AdulMalik', 'Jl.Amanah', '081234567890', 'test2@gmail.com', '2025-11-18 14:06:51');
+-- INSERT INTO `penerbit` (`id`, `nama_penerbit`, `alamat`, `telepon`, `email`, `created_at`) VALUES
+-- (5, 'H.AdulMalik', 'Jl.Amanah', '081234567890', 'test2@gmail.com', '2025-11-18 14:06:51');
 
 --
 -- Indeks untuk tabel yang dibuang
@@ -267,7 +267,7 @@ ALTER TABLE `customer`
 ALTER TABLE `detail_pembelian`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pembelian_id` (`pembelian_id`),
-  ADD KEY `roti_id` (`roti_id`);
+  ADD KEY `buku_id` (`buku_id`);
 
 --
 -- Indeks untuk tabel `detail_penjualan`
@@ -275,12 +275,12 @@ ALTER TABLE `detail_pembelian`
 ALTER TABLE `detail_penjualan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `penjualan_id` (`penjualan_id`),
-  ADD KEY `roti_id` (`roti_id`);
+  ADD KEY `buku_id` (`buku_id`);
 
 --
--- Indeks untuk tabel `kategori_roti`
+-- Indeks untuk tabel `kategori_buku`
 --
-ALTER TABLE `kategori_roti`
+ALTER TABLE `kategori_buku`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -289,7 +289,7 @@ ALTER TABLE `kategori_roti`
 ALTER TABLE `pembelian`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `no_faktur` (`no_faktur`),
-  ADD KEY `vendor_id` (`vendor_id`),
+  ADD KEY `penerbit_id` (`penerbit_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -308,11 +308,11 @@ ALTER TABLE `penjualan`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `roti`
+-- Indeks untuk tabel `buku`
 --
-ALTER TABLE `roti`
+ALTER TABLE `buku`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `kode_roti` (`kode_roti`),
+  ADD UNIQUE KEY `kode_buku` (`kode_buku`),
   ADD KEY `kategori_id` (`kategori_id`);
 
 --
@@ -323,9 +323,9 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indeks untuk tabel `vendor`
+-- Indeks untuk tabel `penerbit`
 --
-ALTER TABLE `vendor`
+ALTER TABLE `penerbit`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -351,9 +351,9 @@ ALTER TABLE `detail_penjualan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `kategori_roti`
+-- AUTO_INCREMENT untuk tabel `kategori_buku`
 --
-ALTER TABLE `kategori_roti`
+ALTER TABLE `kategori_buku`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
@@ -375,9 +375,9 @@ ALTER TABLE `penjualan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `roti`
+-- AUTO_INCREMENT untuk tabel `buku`
 --
-ALTER TABLE `roti`
+ALTER TABLE `buku`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -387,9 +387,9 @@ ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `vendor`
+-- AUTO_INCREMENT untuk tabel `penerbit`
 --
-ALTER TABLE `vendor`
+ALTER TABLE `penerbit`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
@@ -401,20 +401,20 @@ ALTER TABLE `vendor`
 --
 ALTER TABLE `detail_pembelian`
   ADD CONSTRAINT `detail_pembelian_ibfk_1` FOREIGN KEY (`pembelian_id`) REFERENCES `pembelian` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`roti_id`) REFERENCES `roti` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
   ADD CONSTRAINT `detail_penjualan_ibfk_1` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`roti_id`) REFERENCES `roti` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pembelian`
 --
 ALTER TABLE `pembelian`
-  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`penerbit_id`) REFERENCES `penerbit` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
@@ -424,10 +424,10 @@ ALTER TABLE `penjualan`
   ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `roti`
+-- Ketidakleluasaan untuk tabel `buku`
 --
-ALTER TABLE `roti`
-  ADD CONSTRAINT `roti_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori_roti` (`id`) ON DELETE SET NULL;
+ALTER TABLE `buku`
+  ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori_buku` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

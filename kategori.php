@@ -2,12 +2,12 @@
 require_once 'config/config.php';
 requireRole(['admin']);
 
-require_once 'models/KategoriRoti.php';
+require_once 'models/Kategoribuku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$kategori = new KategoriRoti($db);
+$kategori = new Kategoribuku($db);
 
 $message = '';
 $message_type = '';
@@ -21,10 +21,10 @@ if ($_POST) {
                 $kategori->deskripsi = sanitizeInput($_POST['deskripsi']);
 
                 if ($kategori->create()) {
-                    $message = 'Kategori roti berhasil ditambahkan!';
+                    $message = 'Kategori buku berhasil ditambahkan!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal menambahkan kategori roti!';
+                    $message = 'Gagal menambahkan kategori buku!';
                     $message_type = 'error';
                 }
                 break;
@@ -35,10 +35,10 @@ if ($_POST) {
                 $kategori->deskripsi = sanitizeInput($_POST['deskripsi']);
 
                 if ($kategori->update()) {
-                    $message = 'Kategori roti berhasil diperbarui!';
+                    $message = 'Kategori buku berhasil diperbarui!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal memperbarui kategori roti!';
+                    $message = 'Gagal memperbarui kategori buku!';
                     $message_type = 'error';
                 }
                 break;
@@ -46,10 +46,10 @@ if ($_POST) {
             case 'delete':
                 $kategori->id = sanitizeInput($_POST['id']);
                 if ($kategori->delete()) {
-                    $message = 'Kategori roti berhasil dihapus!';
+                    $message = 'Kategori buku berhasil dihapus!';
                     $message_type = 'success';
                 } else {
-                    $message = 'Gagal menghapus kategori roti!';
+                    $message = 'Gagal menghapus kategori buku!';
                     $message_type = 'error';
                 }
                 break;
@@ -67,7 +67,7 @@ $stmt = $kategori->readAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kategori roti - <?php echo APP_NAME; ?></title>
+    <title>Kategori buku - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -82,7 +82,7 @@ $stmt = $kategori->readAll();
         <main class="main-content">
             <!-- Top Navigation -->
             <header class="top-nav">
-                <h1>Kategori roti</h1>
+                <h1>Kategori buku</h1>
                 <div class="user-info">
                     <div class="user-avatar">
                         <?php echo strtoupper(substr($_SESSION['nama_lengkap'], 0, 1)); ?>
@@ -127,7 +127,7 @@ $stmt = $kategori->readAll();
                 <!-- Data Kategori Table -->
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Daftar Kategori roti</h3>
+                        <h3 class="table-title">Daftar Kategori buku</h3>
                     </div>
                     <table class="table">
                         <thead>

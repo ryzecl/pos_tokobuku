@@ -241,7 +241,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
         ?>
 
             <div class="item-row">
-                <span><?php echo htmlspecialchars($row['nama_roti']); ?></span>
+                <span><?php echo htmlspecialchars($row['nama_buku']); ?></span>
                 <span><?php echo $row['jumlah']; ?></span>
                 <span><?php echo number_format($row['harga_satuan'], 0, ',', '.'); ?></span>
                 <span><?php echo number_format($aft, 0, ',', '.'); ?></span>
@@ -300,7 +300,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
 
         <div class="footer">
             <p><?php echo htmlspecialchars($footer_struk); ?></p>
-            <p>Roti yang sudah dibeli tidak dapat dikembalikan</p>
+            <p>buku yang sudah dibeli tidak dapat dikembalikan</p>
         </div>
     </div>
 

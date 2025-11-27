@@ -1,8 +1,8 @@
 <?php
-class KategoriRoti
+class Kategoribuku
 {
     private $conn;
-    private $table_name = "kategori_roti";
+    private $table_name = "kategori_buku";
 
     public $id;
     public $nama_kategori;

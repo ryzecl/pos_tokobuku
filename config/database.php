@@ -2,7 +2,7 @@
 class Database
 {
     private $host = 'localhost';
-    private $db_name = 'pos_rooty';
+    private $db_name = 'pos_daebook';
     private $username = 'root';
     private $password = '';
     private $conn;

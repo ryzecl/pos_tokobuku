@@ -4,7 +4,7 @@ requireLogin();
 
 // Include models
 require_once 'models/User.php';
-require_once 'models/Roti.php';
+require_once 'models/buku.php';
 require_once 'models/Penjualan.php';
 require_once 'models/Pembelian.php';
 
@@ -24,11 +24,11 @@ if ($role === 'admin' || $role === 'kasir') {
 }
 
 if ($role === 'admin' || $role === 'gudang') {
-    // Get roti stats
-    $roti = new Roti($db);
-    $total_roti = $roti->getTotalroti();
-    $roti_expired = $roti->getrotiExpired();
-    $stok_minimum = $roti->getStokMinimum();
+    // Get buku stats
+    $buku = new buku($db);
+    $total_buku = $buku->getTotalbuku();
+    $buku_expired = $buku->getbukuExpired();
+    $stok_minimum = $buku->getStokMinimum();
 
     // Get pembelian stats
     $pembelian = new Pembelian($db);
@@ -127,10 +127,10 @@ if ($role === 'admin' || $role === 'gudang') {
                                 <div class="card-icon warning">
                                     <i>💊</i>
                                 </div>
-                                <div class="card-title">Total roti</div>
+                                <div class="card-title">Total buku</div>
                             </div>
-                            <div class="card-value"><?php echo $total_roti ?? 0; ?></div>
-                            <div class="card-subtitle">Jumlah jenis roti</div>
+                            <div class="card-value"><?php echo $total_buku ?? 0; ?></div>
+                            <div class="card-subtitle">Jumlah jenis buku</div>
                         </div>
 
                         <div class="dashboard-card">
@@ -141,7 +141,7 @@ if ($role === 'admin' || $role === 'gudang') {
                                 <div class="card-title">Stok Minimum</div>
                             </div>
                             <div class="card-value"><?php echo $stok_minimum ?? 0; ?></div>
-                            <div class="card-subtitle">roti dengan stok minimum</div>
+                            <div class="card-subtitle">buku dengan stok minimum</div>
                         </div>
                     <?php endif; ?>
 
