@@ -26,7 +26,7 @@ try {
     $pdo->exec("USE `$db_name`");
 
     // Baca dan eksekusi schema SQL
-    $schema = file_get_contents('database/pos_rooty.sql');
+    $schema = file_get_contents('database/pos_daebook.sql');
 
     // Split per statement
     $statements = explode(';', $schema);
