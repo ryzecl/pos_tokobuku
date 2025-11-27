@@ -363,7 +363,7 @@ $customer_stmt = $customer->readAll();
 
                         <div class="cart-items" id="cartItems">
                             <div style="text-align:center;padding:60px 20px;color:#A0522D;">
-                                <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Basket</div>
+                                <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Keranjang</div>
                                 <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
                                 <small>Pilih buku untuk memulai transaksi</small>
                             </div>
@@ -472,7 +472,7 @@ $customer_stmt = $customer->readAll();
             const el = document.getElementById('cartItems');
             if (cart.length === 0) {
                 el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#A0522D;">
-                    <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Basket</div>
+                    <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Keranjang</div>
                     <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
                     <small>Pilih buku untuk memulai transaksi</small>
                 </div>`;
