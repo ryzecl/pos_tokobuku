@@ -14,6 +14,34 @@ $kategori = new KategoriBuku($db);
 $message = '';
 $message_type = '';
 
+$uploadFolder = __DIR__ . "/assets/produk/";
+if (!is_dir($uploadFolder)) {
+    mkdir($uploadFolder, 0775, true);
+}
+
+function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
+{
+    if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
+        return false;
+    }
+
+    $nama = preg_replace('/[^A-Za-z0-9_\-]/', '_', $kodeBuku);
+    $targetFile = $uploadFolder . $nama . ".jpg";
+
+    $source = $_FILES[$fieldName]['tmp_name'];
+    $image = imagecreatefromstring(file_get_contents($source));
+
+    if ($image === false) {
+        return false;
+    }
+
+    imagejpeg($image, $targetFile, 90);
+    imagedestroy($image);
+
+    return $nama . ".jpg";
+}
+
+
 // Handle form submission
 if ($_POST) {
     if (isset($_POST['action'])) {
@@ -30,6 +58,8 @@ if ($_POST) {
                 $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
                 $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
                 $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
+
+                $fileCover = uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
 
                 if ($buku->create()) {
                     $message = 'Data buku berhasil ditambahkan!';
@@ -54,6 +84,10 @@ if ($_POST) {
                 $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
                 $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
 
+                if (!empty($_FILES['foto_cover']['name'])) {
+                    uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
+                }
+
                 if ($buku->update()) {
                     $message = 'Data buku berhasil diperbarui!';
                     $message_type = 'success';
@@ -65,8 +99,19 @@ if ($_POST) {
 
             case 'delete':
                 $buku->id = sanitizeInput($_POST['id']);
+
+                // FIX: readOne() gak return array, tapi isi property object
+                if ($buku->readOne()) {
+
+                    $filePath = $uploadFolder . $buku->kode_buku . ".jpg";
+
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+                }
+
                 if ($buku->delete()) {
-                    $message = 'Data buku berhasil dihapus!';
+                    $message = 'Data buku & foto cover berhasil dihapus!';
                     $message_type = 'success';
                 } else {
                     $message = 'Gagal menghapus data buku!';
@@ -77,10 +122,8 @@ if ($_POST) {
     }
 }
 
-// Get all buku
 $stmt = $buku->readAll();
 
-// Get all kategori for dropdown
 $kategori_stmt = $kategori->readAll();
 ?>
 
@@ -90,23 +133,20 @@ $kategori_stmt = $kategori->readAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data buku - <?php echo APP_NAME; ?></title>
+    <title>Data Buku - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dynamic.php">
 </head>
 
 <body>
     <div class="main-container">
-        <!-- Sidebar -->
         <?php
         $role = $_SESSION['user_role'];
         require_once 'sidebar.php'; ?>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Top Navigation -->
             <header class="top-nav">
-                <h1>Data buku</h1>
+                <h1>Data Buku</h1>
                 <div class="user-info">
                     <div class="user-avatar">
                         <?php echo strtoupper(substr($_SESSION['nama_lengkap'], 0, 1)); ?>
@@ -118,7 +158,6 @@ $kategori_stmt = $kategori->readAll();
                 </div>
             </header>
 
-            <!-- Content -->
             <div class="content">
                 <?php if ($message): ?>
                     <div class="alert alert-<?php echo $message_type; ?>">
@@ -126,15 +165,14 @@ $kategori_stmt = $kategori->readAll();
                     </div>
                 <?php endif; ?>
 
-                <!-- Add buku Form -->
                 <div class="form-container">
-                    <h2>Tambah buku Baru</h2>
-                    <form method="POST">
+                    <h2>Tambah Buku Baru</h2>
+                    <form method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="create">
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kode_buku">Kode buku</label>
+                                <label for="kode_buku">Kode Buku</label>
                                 <input type="text" id="kode_buku" name="kode_buku" required>
                             </div>
                             <div class="form-group">
@@ -149,7 +187,9 @@ $kategori_stmt = $kategori->readAll();
                                 <select id="kategori_id" name="kategori_id" required>
                                     <option value="">Pilih Kategori</option>
                                     <?php while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                                        <option value="<?php echo $row['id']; ?>"><?php echo $row['nama_kategori']; ?></option>
+                                        <option value="<?php echo $row['id']; ?>">
+                                            <?php echo $row['nama_kategori']; ?>
+                                        </option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -190,6 +230,10 @@ $kategori_stmt = $kategori->readAll();
 
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="foto_cover">Foto Cover Buku</label>
+                                <input type="file" id="foto_cover" name="foto_cover" accept="image/*" capture="environment" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="tanggal_expired">Tanggal Expired</label>
                                 <input type="date" id="tanggal_expired" name="tanggal_expired">
                             </div>
@@ -200,11 +244,10 @@ $kategori_stmt = $kategori->readAll();
                             <textarea id="deskripsi" name="deskripsi" rows="3"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Tambah buku</button>
+                        <button type="submit" class="btn btn-primary">Tambah Buku</button>
                     </form>
                 </div>
 
-                <!-- Data buku Table -->
                 <div class="table-container">
                     <div class="table-header">
                         <h3 class="table-title">Daftar buku</h3>
@@ -213,7 +256,7 @@ $kategori_stmt = $kategori->readAll();
                         <thead>
                             <tr>
                                 <th>Kode</th>
-                                <th>Nama buku</th>
+                                <th>Nama Buku</th>
                                 <th>Kategori</th>
                                 <th>Satuan</th>
                                 <th>Harga Beli</th>
