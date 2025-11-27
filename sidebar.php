@@ -58,7 +58,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
             <li class="nav-item">
                 <a href="penerbit.php" class="nav-link <?php echo ($current_page === 'penerbit.php') ? 'active' : ''; ?>">
-                    <i>🏢</i> penerbit
+                    <i>🏢</i> Penerbit
                 </a>
             </li>
             <li class="nav-item">

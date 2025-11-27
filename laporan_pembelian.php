@@ -144,7 +144,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         <thead>
                             <tr>
                                 <th>No. Faktur</th>
-                                <th>penerbit</th>
+                                <th>Penerbit</th>
                                 <th>User</th>
                                 <th>Total Harga</th>
                                 <th>Status</th>

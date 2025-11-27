@@ -13,7 +13,7 @@ require_once 'models/Pengaturan.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$buku = new buku($db);
+$buku = new Buku($db);
 $penjualan = new Penjualan($db);
 $customer = new Customer($db);
 $pengaturan = new Pengaturan($db);
@@ -110,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 throw new Exception("Item ke-" . ($idx + 1) . " tidak valid (id atau quantity).");
             }
 
-            // Cek stok saat ini via model buku
+            // Cek stok saat ini via model Buku
             $buku->id = $buku_id;
             if (!$buku->readOne()) {
-                throw new Exception("buku dengan ID {$buku_id} tidak ditemukan.");
+                throw new Exception("Buku dengan ID {$buku_id} tidak ditemukan.");
             }
             if ($buku->stok < $quantity) {
                 throw new Exception("Stok untuk '{$buku->nama_buku}' tidak cukup. (tersisa: {$buku->stok})");

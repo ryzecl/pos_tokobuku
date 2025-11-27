@@ -2,12 +2,12 @@
 require_once 'config/config.php';
 requireRole(['admin']);
 
-require_once 'models/penerbit.php';
+require_once 'models/Penerbit.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$penerbit = new penerbit($db);
+$penerbit = new Penerbit($db);
 
 $message = '';
 $message_type = '';
@@ -67,16 +67,18 @@ $stmt = $penerbit->readAll();
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>penerbit - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <div class="main-container">
         <!-- Sidebar -->
-        <?php 
+        <?php
         $role = $_SESSION['user_role'];
         require_once 'sidebar.php'; ?>
 
@@ -109,7 +111,7 @@ $stmt = $penerbit->readAll();
                     <h2>Tambah penerbit Baru</h2>
                     <form method="POST">
                         <input type="hidden" name="action" value="create">
-                        
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="nama_penerbit">Nama penerbit</label>
@@ -156,20 +158,20 @@ $stmt = $penerbit->readAll();
                         </thead>
                         <tbody>
                             <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['nama_penerbit']; ?></td>
-                                <td><?php echo $row['alamat'] ?: '-'; ?></td>
-                                <td><?php echo $row['telepon'] ?: '-'; ?></td>
-                                <td><?php echo $row['email'] ?: '-'; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($row['created_at'])); ?></td>
-                                <td>
-                                    <button onclick="editpenerbit(<?php echo htmlspecialchars(json_encode($row)); ?>)" 
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['nama_penerbit']; ?></td>
+                                    <td><?php echo $row['alamat'] ?: '-'; ?></td>
+                                    <td><?php echo $row['telepon'] ?: '-'; ?></td>
+                                    <td><?php echo $row['email'] ?: '-'; ?></td>
+                                    <td><?php echo date('d/m/Y', strtotime($row['created_at'])); ?></td>
+                                    <td>
+                                        <button onclick="editpenerbit(<?php echo htmlspecialchars(json_encode($row)); ?>)"
                                             class="btn btn-warning btn-sm">Edit</button>
-                                    <button onclick="deletepenerbit(<?php echo $row['id']; ?>)" 
+                                        <button onclick="deletepenerbit(<?php echo $row['id']; ?>)"
                                             class="btn btn-danger btn-sm">Hapus</button>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             <?php endwhile; ?>
                         </tbody>
                     </table>
@@ -185,7 +187,7 @@ $stmt = $penerbit->readAll();
             <form method="POST" id="editForm">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
-                
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="edit_nama_penerbit">Nama penerbit</label>
@@ -252,4 +254,5 @@ $stmt = $penerbit->readAll();
         }
     </script>
 </body>
+
 </html>

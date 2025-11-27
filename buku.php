@@ -2,7 +2,7 @@
 require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
-require_once 'models/buku.php';
+require_once 'models/Buku.php';
 require_once 'models/KategoriBuku.php';
 
 $database = new Database();

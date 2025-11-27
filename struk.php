@@ -300,7 +300,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
 
         <div class="footer">
             <p><?php echo htmlspecialchars($footer_struk); ?></p>
-            <p>buku yang sudah dibeli tidak dapat dikembalikan</p>
+            <p>Buku yang sudah dibeli tidak dapat dikembalikan</p>
         </div>
     </div>
 

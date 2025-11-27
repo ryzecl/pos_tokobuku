@@ -2,12 +2,12 @@
 require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
-require_once 'models/buku.php';
+require_once 'models/Buku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$buku = new buku($db);
+$buku = new Buku($db);
 
 $message = '';
 $message_type = '';

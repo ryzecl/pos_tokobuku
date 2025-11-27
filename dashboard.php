@@ -4,7 +4,7 @@ requireLogin();
 
 // Include models
 require_once 'models/User.php';
-require_once 'models/buku.php';
+require_once 'models/Buku.php';
 require_once 'models/Penjualan.php';
 require_once 'models/Pembelian.php';
 
@@ -25,7 +25,7 @@ if ($role === 'admin' || $role === 'kasir') {
 
 if ($role === 'admin' || $role === 'gudang') {
     // Get buku stats
-    $buku = new buku($db);
+    $buku = new Buku($db);
     $total_buku = $buku->getTotalbuku();
     $buku_expired = $buku->getbukuExpired();
     $stok_minimum = $buku->getStokMinimum();

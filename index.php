@@ -348,16 +348,16 @@ if (isLoggedIn()) {
                     <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
                         <img src="assets/buku-manis.jpg" alt="POS" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
                     </div>
-                    <h3>buku manis</h3>
-                    <p>buku dengan kandungan gula dan lemak yang lebih tinggi, seringkali diberi isian (seperti cokelat, keju, selai) atau topping. Teksturnya lembut, empuk, dan rasanya dominan manis</p>
+                    <h3>Buku manis</h3>
+                    <p>Buku dengan kandungan gula dan lemak yang lebih tinggi, seringkali diberi isian (seperti cokelat, keju, selai) atau topping. Teksturnya lembut, empuk, dan rasanya dominan manis</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
                         <img src="assets/buku-tawar.jpg" alt="Laporan" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
                     </div>
-                    <h3>buku Tawar</h3>
-                    <p>buku dasar yang dibuat dari adonan sederhana (tepung, air, ragi, sedikit garam/gula). Tidak memiliki isian/rasa yang kuat dan biasanya digunakan sebagai pendamping (misalnya untuk sarapan dengan selai, mentega, atau diolah menjadi sandwich).</p>
+                    <h3>Buku Tawar</h3>
+                    <p>Buku dasar yang dibuat dari adonan sederhana (tepung, air, ragi, sedikit garam/gula). Tidak memiliki isian/rasa yang kuat dan biasanya digunakan sebagai pendamping (misalnya untuk sarapan dengan selai, mentega, atau diolah menjadi sandwich).</p>
                 </div>
 
                 <div class="feature-card">

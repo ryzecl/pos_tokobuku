@@ -3,15 +3,15 @@ require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
 require_once 'models/Pembelian.php';
-require_once 'models/penerbit.php';
-require_once 'models/buku.php';
+require_once 'models/Penerbit.php';
+require_once 'models/Buku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $pembelian = new Pembelian($db);
-$penerbit = new penerbit($db);
-$buku = new buku($db);
+$penerbit = new Penerbit($db);
+$buku = new Buku($db);
 
 $message = '';
 $message_type = '';
