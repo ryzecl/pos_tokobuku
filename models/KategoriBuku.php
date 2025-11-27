@@ -1,5 +1,5 @@
 <?php
-class Kategoribuku
+class KategoriBuku
 {
     private $conn;
     private $table_name = "kategori_buku";

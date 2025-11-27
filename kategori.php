@@ -2,12 +2,12 @@
 require_once 'config/config.php';
 requireRole(['admin']);
 
-require_once 'models/Kategoribuku.php';
+require_once 'models/KategoriBuku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$kategori = new Kategoribuku($db);
+$kategori = new KategoriBuku($db);
 
 $message = '';
 $message_type = '';

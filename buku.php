@@ -3,13 +3,13 @@ require_once 'config/config.php';
 requireRole(['admin', 'gudang']);
 
 require_once 'models/buku.php';
-require_once 'models/Kategoribuku.php';
+require_once 'models/KategoriBuku.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$buku = new buku($db);
-$kategori = new Kategoribuku($db);
+$buku = new Buku($db);
+$kategori = new KategoriBuku($db);
 
 $message = '';
 $message_type = '';
