@@ -8,6 +8,7 @@ session_start();
 
 // Autoload classes
 spl_autoload_register(function ($class_name) {
+    $base_dir = dirname(__DIR__) . '/';
     $directories = [
         'classes/',
         'models/',
@@ -15,7 +16,7 @@ spl_autoload_register(function ($class_name) {
     ];
 
     foreach ($directories as $directory) {
-        $file = $directory . $class_name . '.php';
+        $file = $base_dir . $directory . $class_name . '.php';
         if (file_exists($file)) {
             require_once $file;
             return;
@@ -24,7 +25,8 @@ spl_autoload_register(function ($class_name) {
 });
 
 // Include database connection
-require_once 'config/database.php';
+// Include database connection
+require_once __DIR__ . '/database.php';
 
 // Helper functions
 function isLoggedIn()

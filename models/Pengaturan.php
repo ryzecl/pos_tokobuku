@@ -12,8 +12,8 @@ class Pengaturan
     public function get(string $kunci)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT nilai FROM " . $this->table_name . " WHERE kunci = :kunci LIMIT 1");
-            $stmt->execute([':kunci' => $kunci]);
+            $stmt = $this->conn->prepare("SELECT nilai FROM " . $this->table_name . " WHERE nama = :nama LIMIT 1");
+            $stmt->execute([':nama' => $kunci]);
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row ? $row['nilai'] : null;
         } catch (PDOException $e) {
@@ -24,12 +24,12 @@ class Pengaturan
 
     public function set($key, $value)
     {
-        $query = "INSERT INTO " . $this->table_name . " (kunci, nilai) 
-                  VALUES (:kunci, :nilai)
+        $query = "INSERT INTO " . $this->table_name . " (nama, nilai) 
+                  VALUES (:nama, :nilai)
                   ON DUPLICATE KEY UPDATE nilai = :nilai";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':kunci', $key);
+        $stmt->bindParam(':nama', $key);
         $stmt->bindParam(':nilai', $value);
 
         return $stmt->execute();

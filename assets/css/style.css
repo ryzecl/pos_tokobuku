@@ -1,4 +1,47 @@
 /* Reset dan Base Styles */
+:root {
+  /* =========================================
+     Warna Utama Aplikasi
+     Digunakan untuk tombol utama, link, dan elemen fokus
+     ========================================= */
+  --color-primary: #667eea;
+  --color-primary-dark: #5a6fd1;
+  --color-primary-light: #859aff;
+  --color-secondary: #764ba2;
+
+  /* =========================================
+     Warna Sidebar
+     Digunakan untuk latar belakang sidebar dan header sidebar
+     ========================================= */
+  --color-sidebar: #2c3e50;
+  --color-sidebar-header: #34495e;
+  --color-sidebar-dark: #202d3a;
+
+  /* =========================================
+     Warna Status (Alert & Badge)
+     Digunakan untuk pesan sukses, error, warning, dan info
+     ========================================= */
+  /* Success (Berhasil) */
+  --color-success: #27ae60;
+  --color-success-light: #d4edda;
+  --color-success-dark: #155724;
+
+  /* Danger (Error/Bahaya) */
+  --color-danger: #e74c3c;
+  --color-danger-light: #f8d7da;
+  --color-danger-dark: #721c24;
+
+  /* Warning (Peringatan) */
+  --color-warning: #f39c12;
+  --color-warning-light: #fff3cd;
+  --color-warning-dark: #856404;
+
+  /* Info (Informasi) */
+  --color-info: #3498db;
+  --color-info-light: #d1ecf1;
+  --color-info-dark: #0c5460;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,8 +57,7 @@ body {
 
 /* Login Page Styles */
 .login-page {
-  background: linear-gradient(rgba(139, 69, 19, 0.7), rgba(160, 82, 45, 0.8)),
-    url("../roty-bg.jpg") center/cover no-repeat;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -74,7 +116,7 @@ body {
 
 .login-form input:focus {
   outline: none;
-  border-color: #d2691e; /* cokelat susu */
+  border-color: var(--color-primary);
 }
 
 .login-footer {
@@ -102,13 +144,13 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #8b4513 0%, #a0522d 50%, #d2691e 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+  box-shadow: 0 5px 15px var(--color-primary);
 }
 
 .btn-secondary {
@@ -122,32 +164,35 @@ body {
 }
 
 .btn-success {
-  background: #28a745;
+  background: var(--color-success);
   color: white;
 }
 
 .btn-success:hover {
-  background: #218838;
+  background: var(--color-success);
+  filter: brightness(90%);
   transform: translateY(-2px);
 }
 
 .btn-danger {
-  background: #dc3545;
+  background: var(--color-danger);
   color: white;
 }
 
 .btn-danger:hover {
-  background: #c82333;
+  background: var(--color-danger);
+  filter: brightness(90%);
   transform: translateY(-2px);
 }
 
 .btn-warning {
-  background: #ffc107;
+  background: var(--color-warning);
   color: #212529;
 }
 
 .btn-warning:hover {
-  background: #e0a800;
+  background: var(--color-warning);
+  filter: brightness(90%);
   transform: translateY(-2px);
 }
 
@@ -169,27 +214,27 @@ body {
 }
 
 .alert-success {
-  background: #d4edda;
-  border-color: #28a745;
-  color: #155724;
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success-dark);
 }
 
 .alert-error {
-  background: #f8d7da;
-  border-color: #dc3545;
-  color: #721c24;
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger-dark);
 }
 
 .alert-warning {
-  background: #fff3cd;
-  border-color: #ffc107;
-  color: #856404;
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
 }
 
 .alert-info {
-  background: #d1ecf1;
-  border-color: #17a2b8;
-  color: #0c5460;
+  background: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
 }
 
 /* Main Layout */
@@ -201,7 +246,7 @@ body {
 /* Sidebar */
 .sidebar {
   width: 250px;
-  background: #2c1b18; /* cokelat pekat */
+  background: var(--color-sidebar);
   color: white;
   padding: 0;
   position: fixed;
@@ -213,8 +258,8 @@ body {
 
 .sidebar-header {
   padding: 20px;
-  background: #3d2a24;
-  border-bottom: 1px solid #4a352f;
+  background: var(--color-sidebar-header);
+  border-bottom: 1px solid var(--color-sidebar-dark);
 }
 
 .sidebar-header h2 {
@@ -240,14 +285,14 @@ body {
 }
 
 .nav-link:hover {
-  background: #3d2a24;
-  border-left-color: #d2691e;
+  background: var(--color-sidebar-dark);
+  border-left-color: var(--color-primary);
   color: white;
 }
 
 .nav-link.active {
-  background: #d2691e;
-  border-left-color: #a0522d;
+  background: var(--color-primary);
+  border-left-color: var(--color-secondary);
   color: white;
 }
 
@@ -292,7 +337,7 @@ body {
 .user-avatar {
   width: 40px;
   height: 40px;
-  background: #d2691e; /* cokelat susu */
+  background: var(--color-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -364,16 +409,16 @@ body {
 }
 
 .card-icon.primary {
-  background: #d2691e;
+  background: var(--color-primary);
 }
 .card-icon.success {
-  background: #27ae60;
+  background: var(--color-success);
 }
 .card-icon.warning {
-  background: #d4a574;
-} /* caramel */
+  background: var(--color-warning);
+}
 .card-icon.danger {
-  background: #e74c3c;
+  background: var(--color-danger);
 }
 
 .card-title {
@@ -486,7 +531,7 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #d2691e;
+  border-color: var(--color-primary);
 }
 
 .form-group textarea {
@@ -505,23 +550,23 @@ body {
 }
 
 .badge-success {
-  background: #d4edda;
-  color: #155724;
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
 }
 
 .badge-warning {
-  background: #fff3cd;
-  color: #856404;
+  background: var(--color-warning-light);
+  color: var(--color-warning-dark);
 }
 
 .badge-danger {
-  background: #f8d7da;
-  color: #721c24;
+  background: var(--color-danger-light);
+  color: var(--color-danger-dark);
 }
 
 .badge-info {
-  background: #d1ecf1;
-  color: #0c5460;
+  background: var(--color-info-light);
+  color: var(--color-info-dark);
 }
 
 /* Pagination */
@@ -536,7 +581,7 @@ body {
   padding: 8px 12px;
   margin: 0 2px;
   border: 1px solid #dee2e6;
-  color: #a0522d;
+  color: var(--color-primary);
   text-decoration: none;
   border-radius: 4px;
 }
@@ -546,9 +591,9 @@ body {
 }
 
 .pagination .current {
-  background: #a0522d;
+  background: var(--color-primary);
   color: white;
-  border-color: #a0522d;
+  border-color: var(--color-primary);
 }
 
 /* Responsive */
@@ -588,7 +633,7 @@ body {
   width: 20px;
   height: 20px;
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #d2691e;
+  border-top: 3px solid var(--color-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
