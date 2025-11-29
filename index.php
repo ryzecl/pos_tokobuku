@@ -1,21 +1,24 @@
-<?php
-require_once 'config/config.php';
-
-// Redirect to dashboard if already logged in
-if (isLoggedIn()) {
-    header('Location: dashboard.php');
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo APP_NAME; ?> - Sistem Point of Sale Modern</title>
+    <title>Daebook - Discover Books Worth Your Time</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #A259FF;
+            /* Warna ungu utama */
+            --light-primary: #bb86fc;
+            /* Gradasi lebih terang */
+            --dark: #121212;
+            --card-bg: rgba(162, 89, 255, 0.27);
+            /* Latar belakang kartu */
+            --stat-bg: rgba(162, 89, 255, 0.15);
+            /* Latar belakang statistik */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,434 +26,629 @@ if (isLoggedIn()) {
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+            /* Menggunakan Inter sebagai font utama */
+            background: #0a0a0a;
+            color: #fff;
             line-height: 1.6;
-            color: #333;
             overflow-x: hidden;
-            background: #fdf4e3;
-            /* krem gading lembut (ganti putih polos) */
         }
 
-        /* Navigation – tetap pakai gradient cokelat yang kamu pilih */
-        .navbar {
-            background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #D2691E 100%);
-            padding: 1rem 0;
+        /* Header */
+        header {
             position: fixed;
-            width: 100%;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            left: 0;
+            right: 0;
+            padding: 25px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.15);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        .nav-links {
             display: flex;
-            gap: 2rem;
             align-items: center;
+            gap: 10px;
         }
 
-        .nav-links a {
-            color: white;
+        .logo img {
+            width: 150px;
+            height: 32px;
+        }
+
+        nav a {
+            color: #ddd;
+            margin: 0 15px;
             text-decoration: none;
-            transition: opacity 0.3s;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            opacity: 0.8;
+        nav a:hover {
+            color: var(--light-primary);
+            border-bottom: 2px solid var(--light-primary);
         }
 
-        /* Tombol login – warna ungu diganti cokelat caramel */
-        .btn-login {
-            background: white;
-            color: #A0522D;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
+        .login-btn {
+            background: var(--light-primary);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            transition: background 0.3s;
         }
 
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(160, 82, 45, 0.4);
+        .login-btn:hover {
+            background: #9b59b6;
         }
 
-        /* Hero Section – ganti ungu jadi cokelat sama seperti navbar */
-        .hero {
-            background:
-                linear-gradient(rgba(139, 69, 19, 0.70), rgba(160, 82, 45, 0.80)),
-                url('assets/roty-bg.jpg') center/cover no-repeat;
-
-            color: white;
-            padding: 150px 2rem 100px;
-            text-align: center;
-            margin-top: 60px;
-            background-attachment: fixed;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .hero-buttons {
+        /* home */
+        .home {
+            height: 100vh;
+            background: radial-gradient(circle at 80% 20%, rgba(162, 89, 255, 0.3), transparent 50%),
+                #0a0a0a;
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.4s both;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+        }
+
+        .home-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .home h1 {
+            font-size: 68px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .home h1 span {
+            color: var(--light-primary);
+        }
+
+        .home p {
+            font-size: 19px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .btns a {
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 15px;
+            display: inline-block;
+            transition: all 0.3s;
         }
 
         .btn-primary {
-            background: white;
-            color: #A0522D;
-            /* ganti #667eea */
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: inline-block;
+            background: var(--light-primary);
+            color: #000;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: #9b59b6;
+            transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2.5rem;
-            border: 2px solid white;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            display: inline-block;
+        .btn-outline {
+            border: 2px solid var(--light-primary);
+            color: var(--light-primary);
         }
 
-        .btn-secondary:hover {
-            background: white;
-            color: #A0522D;
-            /* ganti #667eea */
-            transform: translateY(-3px);
+        .btn-outline:hover {
+            background: rgba(162, 89, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        /* Features Section – background hitam pekat diganti cokelat tua */
-        .features {
-            padding: 80px 2rem;
-            background: #2c1b18;
-            /* cokelat sangat gelap (lebih hangat dari hitam) */
+        .home-book {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 700px;
+            animation: float 7s ease-in-out infinite;
         }
 
-        .container {
-            max-width: 1200px;
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateY(-50%) translateY(-30px);
+            }
+        }
+
+        /* Publishers */
+        .publishers {
+            padding: 100px 60px;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .publishers p {
+            color: #bbb;
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        .pub-logos {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+            background: #121212;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        .pub-logos img {
+            height: 55px;
+            opacity: 0.5;
+            transition: 0.4s;
+        }
+
+        .pub-logos img:hover {
+            opacity: 1;
+        }
+
+        /* About Us */
+        .about-us {
+            padding: 120px 60px;
+            background: #0f0f0f;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #D2691E;
-            /* aksen cokelat susu */
+        .about-img {
+            flex: 1;
+            position: relative;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .about-img img {
+            width: 100%;
+            border-radius: 24px;
+            object-fit: cover;
         }
 
-        .feature-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
+        .about-img::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
+            border: 4px solid var(--light-primary);
+            border-radius: 24px;
+            z-index: -1;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        .about-text {
+            flex: 1;
+            text-align: left;
         }
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #D2691E;
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
         }
 
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        /* Stats Section – gradient ungu diganti cokelat */
-        .stats {
-            background: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #D2691E 100%);
-            color: white;
-            padding: 60px 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            font-size: 1.1rem;
+        .about-text p {
+            font-size: 16px;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
 
-        /* CTA Section */
-        .cta {
-            padding: 80px 2rem;
-            background: #fdf4e3;
+        .about-signature {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .about-signature p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .about-signature img {
+            width: 150px;
+            height: 32px;
+        }
+
+        /* Genres */
+        .genres {
+            padding: 120px 60px;
             text-align: center;
         }
 
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #2c1b18;
+        .genres h2 {
+            font-size: 42px;
+            margin-bottom: 70px;
         }
 
-        .cta p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 2rem;
+        .genre-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
-        /* Footer */
-        .footer {
-            background: #2c1b18;
-            /* cokelat pekat */
-            color: white;
-            padding: 40px 2rem;
+        .genre-card {
+            background: var(--primary);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            color: #000;
+            transition: transform 0.3s;
+        }
+
+        .genre-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .genre-card img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 25px;
+        }
+
+        .genre-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .big-card {
+            background: var(--primary);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 56px;
+            font-weight: 800;
+            color: #000;
+            transition: transform 0.3s;
+        }
+
+        .big-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .big-card small {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: 500;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            padding: 140px 60px;
+            text-align: center;
+            background: #0f0f0f;
+        }
+
+        .testimonial h2 {
+            font-size: 44px;
+            margin-bottom: 100px;
+        }
+
+        .testi-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testi-photos {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            background: url('https://via.placeholder.com/150x150?text=Background') no-repeat center center;
+            background-size: cover;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .testi-photos img {
+            width: 110px;
+            height: 110px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid var(--light-primary);
+        }
+
+        .testi-text {
+            max-width: 520px;
+            text-align: left;
+        }
+
+        .testi-text h3 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .testi-text p {
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .author {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .stats {
             text-align: center;
         }
 
-        .footer p {
+        .stats>div {
+            background: var(--stat-bg);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .stats small {
+            display: block;
+            font-size: 16px;
+            margin-top: 8px;
             opacity: 0.8;
         }
 
-        /* Animations – tetap persis */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, var(--primary), var(--primary));
+            padding: 90px 60px 50px;
+            color: #000;
         }
 
-        /* Responsive – tetap persis */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-            .hero p {
-                font-size: 1.1rem;
-            }
+        .footer-col h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
 
-            .nav-links {
-                gap: 1rem;
-            }
+        .footer-col a,
+        .footer-col p {
+            opacity: 0.9;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
 
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+        .newsletter input {
+            padding: 13px 10px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            width: 70%;
+            font-size: 16px;
+        }
+
+        .newsletter button {
+            padding: 16px 20px;
+            border: none;
+            background: #000;
+            color: #fff;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 70px;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #000;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #000;
+            color: #fff;
         }
     </style>
+    <!-- Menambahkan font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tetap menyertakan Poppins untuk fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo"><?php echo APP_NAME; ?></a>
-            <div class="nav-links">
-                <a href="#features">Farian</a>
-                <a href="#about">Tentang</a>
-                <a href="login.php" class="btn-login" style="background: white !important; color: #000 !important;">Masuk</a>
+    <header>
+        <div class="logo">
+            <img src="assets/img/logo.png" alt="Daebook Logo">
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#categories">Categories</a>
+            <a href="#reviews">Reviews</a>
+        </nav>
+        <a href="login.php" class="login-btn">Log In</a>
+    </header>
+    <section class="home" id="home">
+        <div class="home-content">
+            <h1>Discover Books<br><span>Worth</span> Your <span>Time</span><br>Today.</h1>
+            <p>Curated books to sharpen thinking, spark curiosity, and inspire meaningful personal growth.</p>
+            <div class="btns">
+                <a href="#about" class="btn-primary">Explore More Now!</a>
+                <a href="#contact" class="btn-outline">Contact Us</a>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Kelola RootyMart Anda dengan Mudah</h1>
-            <p>Sistem Point of Sale modern yang membantu Anda mengelola penjualan, stok, dan laporan dengan efisien</p>
-            <div class="hero-buttons">
-                <a href="login.php" class="btn-primary">Mulai Sekarang</a>
-                <a href="#features" class="btn-secondary">Pelajari Lebih Lanjut</a>
-            </div>
+        <img src="assets/img/table-book.jpg" alt="Magic Book" class="home-book">
+    </section>
+    <section class="publishers">
+        <p>Featured Publishers</p>
+        <div class="pub-logos" id="about">
+            <img src="https://i.ibb.co/5YZnY7h/gramedia.png" alt="Gramedia">
+            <img src="https://i.ibb.co/4p7Y7gK/mizan.png" alt="Mizan">
+            <img src="https://i.ibb.co/6P7Y8kN/bentang.png" alt="Bentang">
+            <img src="https://i.ibb.co.com/0jK7Y8P/deepublish.png" alt="Deepublish">
         </div>
     </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Jenis Jenis Produc</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="assets/buku-manis.jpg" alt="POS" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Buku manis</h3>
-                    <p>Buku dengan kandungan gula dan lemak yang lebih tinggi, seringkali diberi isian (seperti cokelat, keju, selai) atau topping. Teksturnya lembut, empuk, dan rasanya dominan manis</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="assets/buku-tawar.jpg" alt="Laporan" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Buku Tawar</h3>
-                    <p>Buku dasar yang dibuat dari adonan sederhana (tepung, air, ragi, sedikit garam/gula). Tidak memiliki isian/rasa yang kuat dan biasanya digunakan sebagai pendamping (misalnya untuk sarapan dengan selai, mentega, atau diolah menjadi sandwich).</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="assets/pastry.jpg" alt="Stok" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Pastry</h3>
-                    <p>Produk yang dibuat dari adonan berlapis-lapis kaya lemak (seperti mentega atau margarin), yang menghasilkan tekstur renyah, garing, dan ringan (flaky). Contoh umum: croissant, danish, puff pastry, dan pie.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="assets/cake.jpg" alt="Multi User" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Cake</h3>
-                    <p>Produk panggang yang biasanya lebih manis dan kaya lemak/telur, memiliki tekstur yang lembut, halus, dan moist (lembab). Sering dihias dengan icing, frosting, atau dekorasi lain untuk acara khusus.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="images/icons/discount.png" alt="Diskon" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Biscotti</h3>
-                    <p>Biskuit Italia yang dipanggang dua kali (bi-scotti), menjadikannya sangat kering, renyah, dan keras. Sempurna untuk dicelupkan ke dalam kopi, teh, atau minuman lain. Biasanya berbentuk memanjang dan mengandung kacang-kacangan.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon" style="width:100px;height:100px;margin:0 auto 1rem;overflow:hidden;border-radius:18px;background:#fff8f0;padding:8px;box-shadow:0 4px 15px rgba(139,69,19,0.15);">
-                        <img src="images/icons/payment.png" alt="Pembayaran" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/produk/default.jpg'">
-                    </div>
-                    <h3>Muffin</h3>
-                    <p>Kue porsi tunggal (individual) yang dibuat dengan metode cepat. Teksturnya lebih padat, lebih kasar, dan tidak selembut cake. Sering kali diisi dengan buah, cokelat, atau kacang, dan memiliki 'kubah' yang khas di atasnya.</p>
-                </div>
+    <section class="about-us">
+        <div class="about-img">
+            <img src="assets/img/about-us.jpg" alt="About Us Image">
+        </div>
+        <div class="about-text">
+            <h2>About Us</h2>
+            <h3>Daebook A Smarter Way to Discover, Buy, and Experience Books</h3>
+            <p>Daebook exists for readers who seek more than just finishing a book — they read to expand their thinking. We provide a space where quality titles meet curious minds, with a seamless buying experience and intelligent discovery features across genres. Our mission is simple: make knowledge accessible, ideas reachable, and growth a natural part of everyday life.</p>
+            <div class="about-signature">
+                <p>Thank You for Choosing Daebook &lt;3</p>
+                <img src="assets/img/logo.png" alt="Daebook Logo">
             </div>
         </div>
     </section>
+    <section class="genres" id="categories">
+        <p>Book Genres</p>
+        <h2>Explore different book genres<br>and categories.</h2>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>100%</h3>
-                    <p>Akurat</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Tersedia</p>
-                </div>
-                <div class="stat-item">
-                    <h3>3</h3>
-                    <p>Level Akses</p>
-                </div>
-                <div class="stat-item">
-                    <h3>∞</h3>
-                    <p>Transaksi</p>
-                </div>
+        <div class="genre-grid">
+            <div class="genre-card">
+                <img src="https://via.placeholder.com/64?text=Romance" alt="Romance">
+                <h3>Romance</h3>
+                <p>Heartwarming love stories filled with emotions, meaningful moments, and unforgettable journeys of the heart.</p>
+            </div>
+            <div class="genre-card">
+                <img src="https://via.placeholder.com/64?text=Fantasy" alt="Fantasy">
+                <h3>Fantasy</h3>
+                <p>Magical worlds with mythical creatures, epic quests, and adventures beyond imagination and reality.</p>
+            </div>
+            <div class="genre-card">
+                <img src="https://via.placeholder.com/64?text=Mystery" alt="Mystery">
+                <h3>Mystery</h3>
+                <p>Suspenseful stories full of secrets, hidden clues, and unexpected twists at every turn.</p>
+            </div>
+            <div class="genre-card">
+                <img src="https://via.placeholder.com/64?text=Thriller" alt="Thriller">
+                <h3>Thriller</h3>
+                <p>Fast-paced narratives with intense action, dark themes, and adrenaline-filled suspense throughout.</p>
+            </div>
+            <div class="genre-card">
+                <img src="https://via.placeholder.com/64?text=Biography" alt="Biography">
+                <h3>Biography</h3>
+                <p>Inspiring life stories of remarkable people, their struggles, achievements, and unforgettable journeys.</p>
+            </div>
+            <div class="big-card">
+                12+<br>
+                <small>Book Genres to Explore<br>Find Your Next Great Read!</small>
             </div>
         </div>
     </section>
+    <section class="testimonial" id="reviews">
+        <h2>Building Trust Through Real<br>Customer Experiences</h2>
+        <div class="testi-wrapper">
+            <div class="testi-photos">
+                <img src="https://i.ibb.co/4pXv7gK/person1.jpg" alt="">
+                <img src="https://i.ibb.co/5YZnY7h/person2.jpg" alt="">
+                <img src="https://i.ibb.co/6P7Y8kN/person3.jpg" alt="">
+            </div>
 
-    <!-- CTA Section -->
-    <section class="cta" id="about">
-        <div class="container">
-            <h2>Siap Memulai?</h2>
-            <p>Bergabunglah dengan sistem POS modern yang akan membantu bisnis RootyMart Anda berkembang</p>
-            <a href="login.php" class="btn-primary">Login Sekarang</a>
+            <div class="testi-text">
+                <h3>Grateful for the Books That<br>Changed Our Access to Knowledge.</h3>
+                <p>“We’re grateful because your books broaden our knowledge, improve study access, and make learning experiences richer for everyone.”</p>
+                <div class="author">Makayla Barron<br><small>Student at Horizon University Indonesia</small></div>
+                <div style="margin-top:20px; color:#bb86fc;">★★★★★</div>
+            </div>
+
+            <div class="stats">
+                <div>320+<small>People Choose Us</small></div>
+                <div>97%<small>Readers Feel Satisfied</small></div>
+                <div>86%<small>Readers Come Back Again</small></div>
+            </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; <?php echo date('Y'); ?> <?php echo APP_NAME; ?>. All rights reserved.</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">Dibuat dengan ❤️ untuk kemudahan bisnis Anda</p>
+    <footer>
+        <div class="footer-grid" id="contact">
+            <div class="footer-col">
+                <h4>Contact Information</h4>
+                <p>Jl. Pangkal Perjuangan By Pass<br>Tanjungpura, Karawang, Jawa Barat</p>
+                <p>daebook.work@gmail.com</p>
+                <p>+1 (212) 555-0198</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Daebook Pages</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#categories">Categories</a>
+                <a href="#reviews">Reviews</a>
+                <a href="login.php">Log In</a>
+            </div>
+            <div class="footer-col">
+                <h4>Our Team</h4>
+                <p>Fhazar R A - PM</p>
+                <p>Fadel R - QA</p>
+                <p>Hildan A T P - Frontend</p>
+                <p>Ferry N H - Backend</p>
+                <p>Daffa N Z - UI/UX</p>
+            </div>
+            <div class="footer-col">
+                <h4>Get Latest Update</h4>
+                <p>Sign up now to receive fresh updates, product releases, and news you would regret missing later.</p>
+                <div class="newsletter" style="margin-top:25px;">
+                    <input type="email" placeholder="Enter your email">
+                    <button>Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright © Daebook © 2025 All Rights Reserved.
         </div>
     </footer>
-
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
