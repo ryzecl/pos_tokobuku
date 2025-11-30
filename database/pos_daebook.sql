@@ -48,8 +48,6 @@ CREATE TABLE `buku` (
 -- Dumping data untuk tabel `buku`
 --
 
-INSERT INTO `buku` (`id`, `kode_buku`, `nama_buku`, `kategori_id`, `satuan`, `harga_beli`, `harga_jual`, `diskon`, `stok`, `stok_minimum`, `tanggal_expired`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(11, 'B001', 'Algoritma', 19, 'pcs', 1000.00, 2000.00, 0.00, 0, 1, '2025-11-30', '', '2025-11-30 10:00:28', '2025-11-30 13:15:28');
 
 -- --------------------------------------------------------
 
@@ -70,8 +68,6 @@ CREATE TABLE `customer` (
 -- Dumping data untuk tabel `customer`
 --
 
-INSERT INTO `customer` (`id`, `nama_customer`, `alamat`, `telepon`, `email`, `created_at`) VALUES
-(3, 'Hildan', '', '081234567890', 'test1@gmail.com', '2025-11-30 12:32:17');
 
 -- --------------------------------------------------------
 
@@ -107,9 +103,6 @@ CREATE TABLE `detail_penjualan` (
 -- Dumping data untuk tabel `detail_penjualan`
 --
 
-INSERT INTO `detail_penjualan` (`id`, `penjualan_id`, `buku_id`, `jumlah`, `harga_satuan`, `subtotal`) VALUES
-(4, 7, 11, 1, 2000.00, 2000.00),
-(5, 8, 11, 9, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -128,8 +121,6 @@ CREATE TABLE `kategori_buku` (
 -- Dumping data untuk tabel `kategori_buku`
 --
 
-INSERT INTO `kategori_buku` (`id`, `nama_kategori`, `deskripsi`, `created_at`) VALUES
-(19, 'Pendidikan/Akademis', '', '2025-11-27 14:47:26');
 
 -- --------------------------------------------------------
 
@@ -208,9 +199,6 @@ CREATE TABLE `penjualan` (
 -- Dumping data untuk tabel `penjualan`
 --
 
-INSERT INTO `penjualan` (`id`, `no_transaksi`, `user_id`, `customer_id`, `diskon`, `ppn`, `total_harga`, `total_bayar`, `kembalian`, `note`, `tanggal_penjualan`, `metode_pembayaran`, `token_public`) VALUES
-(7, 'TRX202511300001', 1, 3, 1000.00, 120.00, 1120.00, 5000.00, 3880.00, NULL, '2025-11-30 12:59:19', 'CASH', '2f70429348f955baa2dec4554e0c39037ac0a502bdb49aa94601bc316c1a816b'),
-(8, 'TRX202511300002', 1, 3, 0.00, 0.00, 0.00, 1.00, 1.00, NULL, '2025-11-30 13:15:28', 'CASH', 'd582cb26a47d505f2c9f2277818f3c63f52f6774a65fcd1557f82dea11eee64b');
 
 -- --------------------------------------------------------
 
