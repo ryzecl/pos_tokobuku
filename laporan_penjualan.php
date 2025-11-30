@@ -164,7 +164,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     <td><?php echo formatCurrency($row['kembalian']); ?></td>
                                     <td><?php echo date('d/m/Y H:i', strtotime($row['tanggal_penjualan'])); ?></td>
                                     <td>
-                                        <a href="struk.php?id=<?php echo $row['id']; ?>" 
+                                        <a href="struk.php?token=<?php echo urlencode($row['token_public'] ?? ''); ?>" 
                                            class="btn btn-info btn-sm" target="_blank">Struk</a>
                                     </td>
                                 </tr>

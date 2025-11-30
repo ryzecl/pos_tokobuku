@@ -45,11 +45,18 @@ if ($_POST) {
                         $detail_query = "INSERT INTO detail_pembelian (pembelian_id, buku_id, jumlah, harga_satuan, subtotal) 
                                          VALUES (:pembelian_id, :buku_id, :jumlah, :harga_satuan, :subtotal)";
                         $detail_stmt = $db->prepare($detail_query);
-                        $detail_stmt->bindParam(':pembelian_id', $pembelian_id);
-                        $detail_stmt->bindParam(':buku_id', $item['id']);
-                        $detail_stmt->bindParam(':jumlah', $item['quantity']);
-                        $detail_stmt->bindParam(':harga_satuan', $item['price']);
-                        $detail_stmt->bindParam(':subtotal', $item['subtotal']);
+                        // gunakan bindValue dan variabel sementara untuk menghindari
+                        // passing expressions langsung ke bindParam (harus by-reference)
+                        $detail_stmt->bindValue(':pembelian_id', (int)$pembelian_id, PDO::PARAM_INT);
+                        $buku_id = (int)$item['id'];
+                        $jumlah_item = (int)$item['quantity'];
+                        $harga_satuan = (float)$item['price'];
+                        $subtotal_item = (float)$item['subtotal'];
+
+                        $detail_stmt->bindValue(':buku_id', $buku_id, PDO::PARAM_INT);
+                        $detail_stmt->bindValue(':jumlah', $jumlah_item, PDO::PARAM_INT);
+                        $detail_stmt->bindValue(':harga_satuan', $harga_satuan);
+                        $detail_stmt->bindValue(':subtotal', $subtotal_item);
 
                         if (!$detail_stmt->execute()) {
                             throw new Exception('Gagal menyimpan detail pembelian');

@@ -28,7 +28,7 @@
         body {
             font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
             /* Menggunakan Inter sebagai font utama */
-            background: #0a0a0a;
+            background: #0f0f1a;
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -59,6 +59,18 @@
             height: 32px;
         }
 
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            /* jarak nav ke tombol login */
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
         nav a {
             color: #ddd;
             margin: 0 15px;
@@ -68,7 +80,8 @@
             transition: color 0.3s;
         }
 
-        nav a:hover {
+        nav a:hover,
+        .aktip {
             color: var(--light-primary);
             border-bottom: 2px solid var(--light-primary);
         }
@@ -176,7 +189,7 @@
         /* Publishers */
         .publishers {
             padding: 100px 60px;
-            text-align: center;
+            text-align: left;
             background: rgba(10, 10, 10, 0.95);
         }
 
@@ -366,7 +379,6 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
-            background: url('https://via.placeholder.com/150x150?text=Background') no-repeat center center;
             background-size: cover;
             padding: 20px;
             border-radius: 20px;
@@ -380,10 +392,50 @@
             border: 4px solid var(--light-primary);
         }
 
+        /* .testi-text {
+            background: url("assets/img/testi-bg.png") no-repeat center center;
+            background-size: cover;
+            text-align: left;
+            padding: 150px;
+            border-radius: 20px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        } */
+        /* .testi-text {
+            width: 1000px;
+            height: 1000px;
+            background: url("assets/img/testi-bg.png") no-repeat center center;
+            background-size: cover;
+            border-radius: 20px;
+            position: relative;
+            padding: 20px;
+            color: #fff;
+            text-align: left;
+        } */
         .testi-text {
-            max-width: 520px;
+            max-width: 900px;
+            /* width: 100%;
+            height: 30px; */
+            /* bebas lu atur */
+            background: url("assets/img/testi-bg.png") no-repeat center center;
+            background-size: contain;
+            border-radius: 20px;
+            padding: 20px;
             text-align: left;
         }
+
+
+
+        /* .testi-text::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            z-index: -1;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+        } */
 
         .testi-text h3 {
             font-size: 28px;
@@ -478,20 +530,16 @@
         .social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
         }
 
         .social-icons a {
-            color: #000;
-            background: rgba(0, 0, 0, 0.1);
-            padding: 8px;
-            border-radius: 50%;
+            padding: 5px;
             transition: all 0.3s;
         }
 
         .social-icons a:hover {
+            border-radius: 25%;
             background: #000;
-            color: #fff;
         }
     </style>
     <!-- Menambahkan font Inter -->
@@ -503,15 +551,17 @@
 <body>
     <header>
         <div class="logo">
-            <img src="assets/img/logo.png" alt="Daebook Logo">
+            <img src="assets/img/logo/logo.png" alt="Daebook Logo">
         </div>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#categories">Categories</a>
-            <a href="#reviews">Reviews</a>
-        </nav>
-        <a href="login.php" class="login-btn">Log In</a>
+        <div class="menu">
+            <nav>
+                <a href="#home" class="aktip">Home</a>
+                <a href="#about">About</a>
+                <a href="#categories">Categories</a>
+                <a href="#reviews">Reviews</a>
+            </nav>
+            <a href="login.php" class="login-btn">Log In</a>
+        </div>
     </header>
     <section class="home" id="home">
         <div class="home-content">
@@ -522,20 +572,23 @@
                 <a href="#contact" class="btn-outline">Contact Us</a>
             </div>
         </div>
-        <img src="assets/img/table-book.jpg" alt="Magic Book" class="home-book">
+        <!-- <img src="assets/img/table-book.png" alt="Magic Book" class="home-book"> -->
+        <video autoplay loop muted playsinline width="100%">
+            <!-- <source src="assets/video/book.mp4" type="video/mp4"> -->
+        </video>
     </section>
     <section class="publishers">
         <p>Featured Publishers</p>
         <div class="pub-logos" id="about">
-            <img src="https://i.ibb.co/5YZnY7h/gramedia.png" alt="Gramedia">
-            <img src="https://i.ibb.co/4p7Y7gK/mizan.png" alt="Mizan">
-            <img src="https://i.ibb.co/6P7Y8kN/bentang.png" alt="Bentang">
-            <img src="https://i.ibb.co.com/0jK7Y8P/deepublish.png" alt="Deepublish">
+            <a href="https://www.gramedia.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/gramedia-logo.png" alt="Gramedia"></a>
+            <a href="https://mizan.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/mizan-logo.png" alt="Mizan"></a>
+            <a href="https://bintangpustaka.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/bentang-pustaka-logo.png" alt="Bentang"></a>
+            <a href="https://penerbitdeepublish.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/deepublish-logo.png" alt="Deepublish"></a>
         </div>
     </section>
     <section class="about-us">
         <div class="about-img">
-            <img src="assets/img/about-us.jpg" alt="About Us Image">
+            <img src="assets/img/about-us.png" alt="About Us Image">
         </div>
         <div class="about-text">
             <h2>About Us</h2>
@@ -587,14 +640,14 @@
         <h2>Building Trust Through Real<br>Customer Experiences</h2>
         <div class="testi-wrapper">
             <div class="testi-photos">
-                <img src="https://i.ibb.co/4pXv7gK/person1.jpg" alt="">
-                <img src="https://i.ibb.co/5YZnY7h/person2.jpg" alt="">
-                <img src="https://i.ibb.co/6P7Y8kN/person3.jpg" alt="">
+                <img src="https://i.ibb.co/4pXv7gK/person1.png" alt="">
+                <img src="https://i.ibb.co/5YZnY7h/person2.png" alt="">
+                <img src="https://i.ibb.co/6P7Y8kN/person3.png" alt="">
             </div>
 
             <div class="testi-text">
-                <h3>Grateful for the Books That<br>Changed Our Access to Knowledge.</h3>
-                <p>“We’re grateful because your books broaden our knowledge, improve study access, and make learning experiences richer for everyone.”</p>
+                <h3>Grateful for the Books That<br>Changed Our Access to Knowledge.</h3><br>
+                <p>“We’re grateful because your books broaden our knowledge, improve study access, and make learning experiences richer for everyone.”</p><br>
                 <div class="author">Makayla Barron<br><small>Student at Horizon University Indonesia</small></div>
                 <div style="margin-top:20px; color:#bb86fc;">★★★★★</div>
             </div>
@@ -614,10 +667,10 @@
                 <p>daebook.work@gmail.com</p>
                 <p>+1 (212) 555-0198</p>
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><img src="assets/img/contact/facebook.png" alt="facebook"></a>
+                    <a href="#"><img src="assets/img/contact/linkedin.png" alt="linkedin"></a>
+                    <a href="#"><img src="assets/img/contact/x.png" alt="twitter"></a>
+                    <a href="#"><img src="assets/img/contact/instagram.png" alt="instagram"></a>
                 </div>
             </div>
             <div class="footer-col">

@@ -1,192 +1,107 @@
-# Sistem POS Apotek
+# POS Toko Buku (Daebook)
 
-Sistem Point of Sale (POS) untuk apotek dengan PHP PDO dan hak akses multi-role.
+Sistem Point of Sale sederhana untuk toko buku menggunakan PHP + PDO.
 
-## Fitur
+## Ringkasan proyek
+- Nama aplikasi: Daebook
+- Lokasi project: c:\laragon\www\pos_tokobuku
+- Database default di repo: pos_daebook (file SQL: database/pos_daebook.sql)
 
-### 🔐 Sistem Autentikasi
-- Login dengan username dan password
-- 3 level akses: Admin, Kasir, Gudang
-- Session management yang aman
+## Fitur utama (sesuai kode)
+- Autentikasi & role-based access (admin, kasir, gudang)
+- Manajemen buku (CRUD) — file: buku.php, models/Buku.php
+- Pembelian gudang (CRUD + terima) — file: pembelian.php, models/Pembelian.php
+- Penjualan / POS — file: penjualan.php, models/Penjualan.php
+- Manajemen stok & penyesuaian — file: stok.php
+- Kategori buku — file: kategori.php, models/KategoriBuku.php
+- Penerbit — file: penerbit.php, models/Penerbit.php
+- Customer — file: customer.php, models/Customer.php
+- Users / manajemen user — file: users.php, models/User.php
+- Pengaturan umum — file: models/Pengaturan.php (digunakan di penjualan)
+- Halaman cetak struk publik: struk.php
+- Assets: assets/css/style.css dan assets/produk/ untuk cover buku
 
-### 👨‍💼 Admin
-- Dashboard dengan statistik lengkap
-- Manajemen user (CRUD)
-- Manajemen kategori obat
-- Manajemen supplier
-- Laporan penjualan
-- Akses ke semua fitur
-
-### 🛒 Kasir
-- Dashboard dengan statistik penjualan
-- Point of Sale (POS) dengan interface modern
-- Pencarian obat otomatis
-- Perhitungan PPN otomatis
-- Cetak struk transaksi
-- Laporan penjualan
-
-### 📦 Gudang
-- Dashboard dengan statistik stok
-- Manajemen data obat (CRUD)
-- Sistem pembelian dari supplier
-- Manajemen stok dengan alert
-- Penyesuaian stok manual
-
-## Instalasi
-
-### 1. Persyaratan Sistem
-- PHP 7.4 atau lebih baru
-- MySQL 5.7 atau lebih baru
-- Web server (Apache/Nginx)
-- PDO MySQL extension
-
-### 2. Setup Database
-1. Buat database MySQL dengan nama `pos_apotek`
-2. Import file `database/schema.sql` ke database
-3. Konfigurasi koneksi database di `config/database.php`
-
-### 3. Konfigurasi
-Edit file `config/database.php`:
-```php
-private $host = 'localhost';
-private $db_name = 'pos_apotek';
-private $username = 'root';
-private $password = '';
+## Struktur file (sesuai repo)
 ```
-
-### 4. Akses Sistem
-- URL: `http://localhost/pos_apotek/`
-- Otomatis redirect ke halaman login
-
-## Akun Default
-
-| Username | Password | Role  | Akses |
-|----------|----------|-------|-------|
-| admin    | password | Admin | Semua fitur |
-| kasir1   | password | Kasir | POS dan laporan |
-| gudang1  | password | Gudang| Obat dan stok |
-
-## Struktur File
-
-```
-pos_apotek/
+Daebook/
 ├── assets/
-│   └── css/
-│       └── style.css          # CSS utama
+│   ├── css/style.css
+│   └── produk/ (cover upload)
 ├── config/
-│   ├── config.php             # Konfigurasi umum
-│   └── database.php           # Koneksi database
+│   ├── config.php        # helper, session, helper functions
+│   └── database.php      # class Database::getConnection() -> PDO
 ├── database/
-│   └── schema.sql             # Database schema
+│   └── pos_daebook.sql
 ├── models/
-│   ├── User.php               # Model user
-│   ├── Obat.php               # Model obat
-│   ├── Penjualan.php          # Model penjualan
-│   ├── Pembelian.php          # Model pembelian
-│   ├── KategoriObat.php       # Model kategori
-│   └── Supplier.php           # Model supplier
-├── index.php                  # Halaman utama
-├── login.php                  # Halaman login
-├── logout.php                 # Logout
-├── dashboard.php              # Dashboard
-├── obat.php                   # CRUD obat
-├── penjualan.php              # POS kasir
-├── struk.php                  # Cetak struk
-├── pembelian.php              # Pembelian gudang
-├── stok.php                   # Manajemen stok
-├── laporan_penjualan.php      # Laporan penjualan
-├── kategori.php               # CRUD kategori
-├── supplier.php               # CRUD supplier
-├── users.php                  # CRUD user
-└── unauthorized.php           # Halaman akses ditolak
+│   ├── Buku.php
+│   ├── KategoriBuku.php
+│   ├── Pembelian.php
+│   ├── Penjualan.php
+│   ├── Customer.php
+│   ├── User.php
+│   ├── Penerbit.php
+│   └── Pengaturan.php
+├── buku.php
+├── pembelian.php
+├── penjualan.php
+├── stok.php
+├── kategori.php
+├── penerbit.php
+├── customer.php
+├── users.php
+├── login.php
+├── dashboard.php
+├── struk.php
+└── README.md
 ```
 
-## Fitur Teknis
+## Persyaratan & setup cepat
+1. PHP 7.4+ dan ekstensi PDO_MYSQL.
+2. Jalankan MySQL (Laragon).
+3. Import database: c:\laragon\www\pos_tokobuku\database\pos_daebook.sql ke MySQL.
+4. Sesuaikan config/database.php:
+   - host, db_name (pos_daebook), username, password.
+   - Pastikan Database::getConnection() mengembalikan PDO (lihat contoh di repo jika perlu).
+5. Jalankan melalui Laragon atau:
+   ```powershell
+   cd c:\laragon\www\pos_tokobuku
+   php -S localhost:8000
+   ```
+   Akses: http://localhost:8000/ atau URL Laragon Anda.
 
-### 🔒 Keamanan
-- Password hashing dengan `password_hash()`
-- Input sanitization dengan `htmlspecialchars()`
-- SQL injection prevention dengan PDO prepared statements
-- Role-based access control
+## Catatan teknis & perbaikan penting (telah diterapkan / perlu dicek)
+- Pastikan config/config.php memanggil session_start() dan menyediakan helper:
+  - sanitizeInput(), requireLogin(), requireRole(), formatCurrency().
+- Database class harus mengembalikan PDO dengan opsi:
+  - ERRMODE_EXCEPTION, DEFAULT_FETCH_MODE=ASSOC, EMULATE_PREPARES=false.
+- Masalah umum: PDOStatement::bindParam() butuh variabel reference. Jika Anda mengikat literal/ekspresi, gunakan bindValue() atau variabel sementara.
+  - Contoh perbaikan sudah diterapkan di models/Buku.php::updateStok() (bindValue dan casting ke int).
+- Pastikan semua model mempunyai konstruktor menerima $db:
+  ```php
+  public function __construct($db) { $this->conn = $db; }
+  ```
+- Folder upload assets/produk harus writable oleh webserver.
 
-### 💾 Database
-- Normalized database design
-- Foreign key constraints
-- Auto-generated transaction numbers
-- Audit trail dengan timestamps
+## Langkah pengujian cepat (prioritas)
+1. Login sebagai admin.
+2. Tambah buku baru (buku.php) — coba upload cover, cek file ada di assets/produk dan kolom foto_cover di tabel buku.
+3. Tambah pembelian (pembelian.php) lalu klik "Terima" — cek stok bertambah (models/Buku::updateStok tidak error).
+4. Proses transaksi penjualan (penjualan.php) — cek nomor transaksi, pengurangan stok, pembuatan struk.
+5. Penyesuaian stok manual (stok.php) — submit adjust positif/negatif, cek tidak muncul fatal error.
+6. Hapus buku — cek file cover dihapus bila ada.
 
-### 🎨 Interface
-- Responsive design
-- Modern CSS dengan grid dan flexbox
-- Interactive JavaScript untuk POS
-- Print-friendly receipt design
+## Troubleshooting cepat
+- Jika muncul error PDO bindParam(): ubah pemanggilan bindParam(..., <expression>) → bindValue(...) atau gunakan variabel.
+- Error koneksi DB → periksa config/database.php dan apakah MySQL berjalan.
+- Cek log PHP / display_errors saat development.
 
-### 📊 Laporan
-- Filter berdasarkan tanggal
-- Summary statistik
-- Export ke PDF (struk)
-- Real-time dashboard updates
+## Rekomendasi
+- Konsisten gunakan bindValue jika tidak perlu binding by-reference.
+- Tambahkan logging error (error_log) di model untuk debugging.
+- Buat backup sebelum mengganti banyak file otomatis.
 
-## Cara Penggunaan
+Jika Anda ingin, saya bisa:
+- 1) Scan seluruh repo dan ubah kasus bindParam bermasalah menjadi bindValue (otomatis) — saya terapkan perubahan; atau
+- 2) Kirim daftar file yang perlu diperbaiki satu-per-satu agar Anda review.
 
-### 1. Login
-- Buka `http://localhost/pos_apotek/`
-- Gunakan akun default atau yang dibuat admin
-
-### 2. Kasir - Transaksi Penjualan
-1. Masuk ke menu "Penjualan"
-2. Cari obat dengan mengetik di search box
-3. Klik obat untuk menambah ke keranjang
-4. Atur jumlah dengan tombol +/- atau input manual
-5. Masukkan jumlah bayar
-6. Klik "Proses Transaksi"
-7. Struk akan otomatis dicetak
-
-### 3. Gudang - Pembelian Obat
-1. Masuk ke menu "Pembelian"
-2. Pilih supplier dan tanggal
-3. Tambah item obat dengan jumlah dan harga
-4. Simpan pembelian
-5. Klik "Terima" untuk update stok
-
-### 4. Admin - Manajemen
-1. Buat user baru di "Manajemen User"
-2. Kelola kategori di "Kategori Obat"
-3. Kelola supplier di "Supplier"
-4. Lihat laporan di "Laporan Penjualan"
-
-## Troubleshooting
-
-### Database Connection Error
-- Pastikan MySQL service running
-- Check username/password di `config/database.php`
-- Pastikan database `pos_apotek` sudah dibuat
-
-### Permission Denied
-- Pastikan web server memiliki akses read/write ke folder
-- Check file permissions (755 untuk folder, 644 untuk file)
-
-### CSS Tidak Load
-- Pastikan path ke `assets/css/style.css` benar
-- Check browser console untuk error
-
-## Pengembangan
-
-### Menambah Fitur Baru
-1. Buat model di folder `models/`
-2. Buat controller/view di root
-3. Update sidebar navigation
-4. Update role permissions di `requireRole()`
-
-### Custom Styling
-- Edit `assets/css/style.css`
-- Gunakan CSS Grid dan Flexbox
-- Responsive design untuk mobile
-
-## Lisensi
-
-Project ini dibuat untuk keperluan pembelajaran dan dapat digunakan secara bebas.
-
-## Support
-
-Untuk pertanyaan atau bug report, silakan buat issue di repository atau hubungi developer.
+Pilih: "otomatis lakukan" atau "tinjau dulu".

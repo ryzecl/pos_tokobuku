@@ -1,6 +1,5 @@
 <?php
 require_once 'config/config.php';
-requireRole(['admin', 'kasir']);
 
 require_once 'models/Penjualan.php';
 require_once 'models/Customer.php';
@@ -13,21 +12,54 @@ $penjualan = new Penjualan($db);
 $customer = new Customer($db);
 $pengaturan = new Pengaturan($db);
 
-// Get settings
+// ✅ PERBAIKAN: Terima token dari URL, bukan ID
+$token = $_GET['token'] ?? '';
+
+// Validasi token
+if (empty($token) || strlen($token) !== 64 || !ctype_xdigit($token)) {
+    http_response_code(400);
+    die('Token tidak valid.');
+}
+
+// Cari struk berdasarkan token
+try {
+    $stmt = $db->prepare("SELECT * FROM penjualan WHERE token_public = :token LIMIT 1");
+    $stmt->bindValue(':token', $token, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        http_response_code(404);
+        die('Struk tidak ditemukan.');
+    }
+
+    // Isi object penjualan dari row
+    $penjualan->id = $row['id'];
+    $penjualan->no_transaksi = $row['no_transaksi'];
+    $penjualan->user_id = $row['user_id'];
+    $penjualan->customer_id = $row['customer_id'];
+    $penjualan->diskon = $row['diskon'];
+    $penjualan->ppn = $row['ppn'];
+    $penjualan->total_harga = $row['total_harga'];
+    $penjualan->total_bayar = $row['total_bayar'];
+    $penjualan->kembalian = $row['kembalian'];
+    $penjualan->tanggal_penjualan = $row['tanggal_penjualan'];
+    $penjualan->metode_pembayaran = $row['metode_pembayaran'];
+    $penjualan->note = $row['note'] ?? null;
+    $penjualan->token_public = $token;
+
+} catch (Exception $e) {
+    http_response_code(500);
+    die('Error: ' . $e->getMessage());
+}
+
+// Ambil pengaturan toko
 $nama_toko = $pengaturan->get('nama_toko') ?? APP_NAME;
 $alamat_toko = $pengaturan->get('alamat_toko') ?? '';
 $telepon_toko = $pengaturan->get('telepon_toko') ?? '';
 $email_toko = $pengaturan->get('email_toko') ?? '';
 $ppn_persen = floatval($pengaturan->get('ppn_persen') ?? 10);
 $footer_struk = $pengaturan->get('footer_struk') ?? 'Terima kasih atas kunjungan Anda!';
-
-$penjualan_id = sanitizeInput($_GET['id']);
-$penjualan->id = $penjualan_id;
-
-if (!$penjualan->readOne()) {
-    header('Location: penjualan.php');
-    exit();
-}
 
 // Customer
 $customer_name = '';
@@ -38,21 +70,19 @@ if (!empty($penjualan->customer_id)) {
     }
 }
 
-// Detail transaksi
-$detail_stmt = $penjualan->getDetailPenjualan($penjualan_id);
+// URL publik struk ini
+$struk_url = BASE_URL . "struk.php?token=" . urlencode($token);
 
-// QR CODE (berdasarkan nomor transaksi saja)
-$qr_text = urlencode($penjualan->no_transaksi);
-$qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_text}";
+// QR Code: link ke struk
+$qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($struk_url);
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk Penjualan - <?php echo APP_NAME; ?></title>
+    <title>Struk Penjualan - <?php echo htmlspecialchars($nama_toko); ?></title>
 
     <style>
         body {
@@ -169,20 +199,22 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
         }
     </style>
 </head>
-
 <body>
 
+    <!-- Tombol admin hanya muncul jika login -->
+    <?php if (isset($_SESSION['user_id'])): ?>
     <div class="no-print" style="text-align:center; margin-bottom:20px;">
         <button onclick="window.print()" class="btn">Cetak Struk</button>
         <a href="penjualan.php" class="btn">Transaksi Baru</a>
         <a href="dashboard.php" class="btn">Dashboard</a>
     </div>
+    <?php endif; ?>
 
     <div class="receipt">
 
         <div class="header">
-            <?php if (file_exists("assets/logo.jpg")): ?>
-                <img src="assets/logo.jpg" class="logo" alt="Logo">
+            <?php if (file_exists("assets/logo.png")): ?>
+                <img src="assets/logo.png" class="logo" alt="Logo">
             <?php endif; ?>
 
             <h1><?php echo htmlspecialchars($nama_toko); ?></h1>
@@ -198,7 +230,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
 
         <div class="row">
             <span>No Transaksi:</span>
-            <span><?php echo $penjualan->no_transaksi; ?></span>
+            <span><?php echo htmlspecialchars($penjualan->no_transaksi); ?></span>
         </div>
 
         <div class="row">
@@ -209,19 +241,21 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
         <?php if ($customer_name): ?>
             <div class="row">
                 <span>Customer:</span>
-                <span><?php echo $customer_name; ?></span>
+                <span><?php echo htmlspecialchars($customer_name); ?></span>
             </div>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['user_id'])): ?>
         <div class="row">
             <span>Kasir:</span>
-            <span><?php echo $_SESSION['nama_lengkap']; ?></span>
+            <span><?php echo htmlspecialchars($_SESSION['nama_lengkap']); ?></span>
         </div>
+        <?php endif; ?>
+
         <div class="row">
             <span>Metode:</span>
-            <span><?php echo $penjualan->metode_pembayaran; ?></span>
+            <span><?php echo htmlspecialchars($penjualan->metode_pembayaran); ?></span>
         </div>
-
 
         <div class="divider"></div>
 
@@ -231,7 +265,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
 
         <?php
         $subtotal = 0;
-        $detail_stmt = $penjualan->getDetailPenjualan($penjualan_id);
+        $detail_stmt = $penjualan->getDetailPenjualan($penjualan->id);
 
         while ($row = $detail_stmt->fetch(PDO::FETCH_ASSOC)):
             $item_diskon = floatval($row['diskon'] ?? 0);
@@ -294,8 +328,8 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
         <?php endif; ?>
 
         <div class="qr-wrap">
-            <img src="<?php echo $qr_url; ?>" width="130" alt="QR Code">
-            <div style="font-size:10px; margin-top:5px;">QR: <?php echo $penjualan->no_transaksi; ?></div>
+            <img src="<?php echo htmlspecialchars($qr_url); ?>" width="130" alt="QR Code">
+            <div style="font-size:10px; margin-top:5px;">Scan untuk buka struk</div>
         </div>
 
         <div class="footer">
@@ -305,5 +339,4 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={$qr_te
     </div>
 
 </body>
-
 </html>

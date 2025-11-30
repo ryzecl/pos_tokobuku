@@ -26,8 +26,8 @@ if ($role === 'admin' || $role === 'kasir') {
 if ($role === 'admin' || $role === 'gudang') {
     // Get buku stats
     $buku = new Buku($db);
-    $total_buku = $buku->getTotalbuku();
-    $buku_expired = $buku->getbukuExpired();
+    $total_buku = $buku->getTotalBuku();
+    $buku_expired = $buku->getBukuExpired();
     $stok_minimum = $buku->getStokMinimum();
 
     // Get pembelian stats

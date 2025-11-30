@@ -3,10 +3,14 @@
 define('BASE_URL', 'http://localhost/pos_daebook/');
 define('APP_NAME', 'Daebook');
 
-// Konfigurasi session
+// Lingkungan: 'development' atau 'production'
+define('APP_ENV', 'development');
+
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
+
 session_start();
 
-// Autoload classes
 spl_autoload_register(function ($class_name) {
     $base_dir = dirname(__DIR__) . '/';
     $directories = [
@@ -24,42 +28,38 @@ spl_autoload_register(function ($class_name) {
     }
 });
 
-// Include database connection
-// Include database connection
 require_once __DIR__ . '/database.php';
 
-// Helper functions
-function isLoggedIn()
-{
-    return isset($_SESSION['user_id']) && isset($_SESSION['user_role']);
+function sanitizeInput($v) {
+    if (is_array($v)) {
+        return array_map('sanitizeInput', $v);
+    }
+    return trim(htmlspecialchars((string)$v, ENT_QUOTES));
 }
 
-function requireLogin()
-{
+function isLoggedIn() {
+    return !empty($_SESSION['user_id']);
+}
+
+function requireLogin() {
     if (!isLoggedIn()) {
         header('Location: login.php');
-        exit();
+        exit;
     }
 }
 
-function requireRole($allowedRoles)
-{
-    requireLogin();
-    if (!in_array($_SESSION['user_role'], $allowedRoles)) {
+function requireRole(array $roles = []) {
+    if (!isLoggedIn()) {
+        header('Location: login.php');
+        exit;
+    }
+    if (!empty($roles) && !in_array($_SESSION['user_role'] ?? '', $roles)) {
         header('Location: unauthorized.php');
-        exit();
+        exit;
     }
 }
 
-function sanitizeInput($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+function formatCurrency($v) {
+    return 'Rp ' . number_format((float)$v, 0, ',', '.');
 }
-
-function formatCurrency($amount)
-{
-    return 'Rp ' . number_format($amount, 0, ',', '.');
-}
+?>

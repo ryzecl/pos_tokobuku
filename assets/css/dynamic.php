@@ -7,11 +7,11 @@ $database = new Database();
 $db = $database->getConnection();
 $pengaturan = new Pengaturan($db);
 
-// Get color settings with defaults
-$warna_primary = $pengaturan->get('warna_primary') ?? '#667eea';
-$warna_secondary = $pengaturan->get('warna_secondary') ?? '#764ba2';
-$warna_sidebar = $pengaturan->get('warna_sidebar') ?? '#2c3e50';
-$warna_sidebar_header = $pengaturan->get('warna_sidebar_header') ?? '#34495e';
+// Get color settings dengan default UNGU sesuai index.php
+$warna_primary = $pengaturan->get('warna_primary') ?? '#A259FF';
+$warna_secondary = $pengaturan->get('warna_secondary') ?? '#9041E0';
+$warna_sidebar = $pengaturan->get('warna_sidebar') ?? '#1a1a2e';
+$warna_sidebar_header = $pengaturan->get('warna_sidebar_header') ?? '#16213e';
 $warna_success = $pengaturan->get('warna_success') ?? '#27ae60';
 $warna_danger = $pengaturan->get('warna_danger') ?? '#e74c3c';
 $warna_warning = $pengaturan->get('warna_warning') ?? '#f39c12';

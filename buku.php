@@ -19,111 +19,169 @@ if (!is_dir($uploadFolder)) {
     mkdir($uploadFolder, 0775, true);
 }
 
+/**
+ * ✅ PERBAIKAN: Upload foto & return nama file
+ */
 function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
 {
+    if (empty($kodeBuku)) {
+        return false;
+    }
+
     if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
         return false;
     }
 
-    $nama = preg_replace('/[^A-Za-z0-9_\-]/', '_', $kodeBuku);
-    $targetFile = $uploadFolder . $nama . ".jpg";
+    $tmpFile = $_FILES[$fieldName]['tmp_name'];
+    $fileSize = $_FILES[$fieldName]['size'];
 
-    $source = $_FILES[$fieldName]['tmp_name'];
-    $image = imagecreatefromstring(file_get_contents($source));
-
-    if ($image === false) {
+    // Validasi ukuran (max 5MB)
+    if ($fileSize > 5 * 1024 * 1024) {
         return false;
     }
 
-    imagejpeg($image, $targetFile, 90);
+    // Validasi MIME type
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $tmpFile);
+    finfo_close($finfo);
+
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!in_array($mimeType, $allowedMimeTypes)) {
+        return false;
+    }
+
+    // Baca & proses gambar
+    $image = null;
+    switch ($mimeType) {
+        case 'image/jpeg':
+            $image = imagecreatefromjpeg($tmpFile);
+            break;
+        case 'image/png':
+            $image = imagecreatefrompng($tmpFile);
+            break;
+        case 'image/gif':
+            $image = imagecreatefromgif($tmpFile);
+            break;
+        case 'image/webp':
+            $image = imagecreatefromwebp($tmpFile);
+            break;
+        default:
+            return false;
+    }
+
+    if (!$image) {
+        return false;
+    }
+
+    // Sanitasi nama file
+    $safeKode = preg_replace('/[^A-Za-z0-9_\-]/', '_', $kodeBuku);
+    if (empty($safeKode)) {
+        imagedestroy($image);
+        return false;
+    }
+
+    // Simpan sebagai JPG
+    $targetFile = $uploadFolder . $safeKode . ".jpg";
+    $success = imagejpeg($image, $targetFile, 85);
     imagedestroy($image);
 
-    return $nama . ".jpg";
+    return $success ? $safeKode . ".jpg" : false;
 }
 
-
-// Handle form submission
+// ✅ PERBAIKAN: Handle form dengan error handling
 if ($_POST) {
     if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'create':
-                $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
-                $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
-                $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
-                $buku->satuan = sanitizeInput($_POST['satuan']);
-                $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
-                $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
-                $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
-                $buku->stok = sanitizeInput($_POST['stok']);
-                $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
-                $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
-                $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
+        try {
+            switch ($_POST['action']) {
+                case 'create':
+                    $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
+                    $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
+                    $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
+                    $buku->satuan = sanitizeInput($_POST['satuan']);
+                    $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
+                    $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
+                    $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
+                    $buku->stok = sanitizeInput($_POST['stok']);
+                    $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
+                    $buku->tanggal_expired = !empty($_POST['tanggal_expired']) ? sanitizeInput($_POST['tanggal_expired']) : null;
+                    $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
 
-                $fileCover = uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
-
-                if ($buku->create()) {
-                    $message = 'Data buku berhasil ditambahkan!';
-                    $message_type = 'success';
-                } else {
-                    $message = 'Gagal menambahkan data buku!';
-                    $message_type = 'error';
-                }
-                break;
-
-            case 'update':
-                $buku->id = sanitizeInput($_POST['id']);
-                $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
-                $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
-                $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
-                $buku->satuan = sanitizeInput($_POST['satuan']);
-                $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
-                $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
-                $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
-                $buku->stok = sanitizeInput($_POST['stok']);
-                $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
-                $buku->tanggal_expired = sanitizeInput($_POST['tanggal_expired']);
-                $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
-
-                if (!empty($_FILES['foto_cover']['name'])) {
-                    uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
-                }
-
-                if ($buku->update()) {
-                    $message = 'Data buku berhasil diperbarui!';
-                    $message_type = 'success';
-                } else {
-                    $message = 'Gagal memperbarui data buku!';
-                    $message_type = 'error';
-                }
-                break;
-
-            case 'delete':
-                $buku->id = sanitizeInput($_POST['id']);
-
-                // FIX: readOne() gak return array, tapi isi property object
-                if ($buku->readOne()) {
-
-                    $filePath = $uploadFolder . $buku->kode_buku . ".jpg";
-
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
+                    // ✅ Upload foto & simpan nama file
+                    $fileCover = uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
+                    if ($fileCover) {
+                        $buku->foto_cover = $fileCover;
                     }
-                }
 
-                if ($buku->delete()) {
-                    $message = 'Data buku & foto cover berhasil dihapus!';
-                    $message_type = 'success';
-                } else {
-                    $message = 'Gagal menghapus data buku!';
-                    $message_type = 'error';
-                }
-                break;
+                    if ($buku->create()) {
+                        $message = 'Data buku berhasil ditambahkan!';
+                        $message_type = 'success';
+                    } else {
+                        $message = 'Gagal menambahkan data buku! Cek kode buku apakah sudah ada.';
+                        $message_type = 'error';
+                    }
+                    break;
+
+                case 'update':
+                    $buku->id = sanitizeInput($_POST['id']);
+                    $buku->kode_buku = sanitizeInput($_POST['kode_buku']);
+                    $buku->nama_buku = sanitizeInput($_POST['nama_buku']);
+                    $buku->kategori_id = sanitizeInput($_POST['kategori_id']);
+                    $buku->satuan = sanitizeInput($_POST['satuan']);
+                    $buku->harga_beli = sanitizeInput($_POST['harga_beli']);
+                    $buku->harga_jual = sanitizeInput($_POST['harga_jual']);
+                    $buku->diskon = sanitizeInput($_POST['diskon'] ?? 0);
+                    $buku->stok = sanitizeInput($_POST['stok']);
+                    $buku->stok_minimum = sanitizeInput($_POST['stok_minimum']);
+                    $buku->tanggal_expired = !empty($_POST['tanggal_expired']) ? sanitizeInput($_POST['tanggal_expired']) : null;
+                    $buku->deskripsi = sanitizeInput($_POST['deskripsi']);
+
+                    // Upload foto baru jika ada
+                    if (!empty($_FILES['foto_cover']['name'])) {
+                        $fileCover = uploadFotoCover("foto_cover", $buku->kode_buku, $uploadFolder);
+                        if ($fileCover) {
+                            $buku->foto_cover = $fileCover;
+                        }
+                    }
+
+                    if ($buku->update()) {
+                        $message = 'Data buku berhasil diperbarui!';
+                        $message_type = 'success';
+                    } else {
+                        $message = 'Gagal memperbarui data buku!';
+                        $message_type = 'error';
+                    }
+                    break;
+
+                case 'delete':
+                    $buku->id = sanitizeInput($_POST['id']);
+
+                    // Baca data lama untuk hapus file
+                    if ($buku->readOne()) {
+                        if (!empty($buku->foto_cover)) {
+                            $filePath = $uploadFolder . $buku->foto_cover;
+                            if (file_exists($filePath)) {
+                                unlink($filePath);
+                            }
+                        }
+                    }
+
+                    if ($buku->delete()) {
+                        $message = 'Data buku & foto berhasil dihapus!';
+                        $message_type = 'success';
+                    } else {
+                        $message = 'Gagal menghapus data buku!';
+                        $message_type = 'error';
+                    }
+                    break;
+            }
+        } catch (Exception $e) {
+            $message = 'Error: ' . $e->getMessage();
+            $message_type = 'error';
         }
     }
 }
 
 $stmt = $buku->readAll();
-
 $kategori_stmt = $kategori->readAll();
 ?>
 
@@ -172,40 +230,44 @@ $kategori_stmt = $kategori->readAll();
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kode_buku">Kode Buku</label>
-                                <input type="text" id="kode_buku" name="kode_buku" required>
+                                <label for="kode_buku">Kode Buku <span style="color: red;">*</span></label>
+                                <input type="text" id="kode_buku" name="kode_buku" required placeholder="cth: B001">
                             </div>
                             <div class="form-group">
-                                <label for="nama_buku">Nama buku</label>
+                                <label for="nama_buku">Nama Buku <span style="color: red;">*</span></label>
                                 <input type="text" id="nama_buku" name="nama_buku" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="kategori_id">Kategori</label>
+                                <label for="kategori_id">Kategori <span style="color: red;">*</span></label>
                                 <select id="kategori_id" name="kategori_id" required>
-                                    <option value="">Pilih Kategori</option>
-                                    <?php while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                                        <option value="<?php echo $row['id']; ?>">
-                                            <?php echo $row['nama_kategori']; ?>
-                                        </option>
-                                    <?php endwhile; ?>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <?php 
+                                    if ($kategori_stmt) {
+                                        while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                                            <option value="<?php echo $row['id']; ?>">
+                                                <?php echo $row['nama_kategori']; ?>
+                                            </option>
+                                        <?php endwhile;
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="satuan">Satuan</label>
-                                <input type="text" id="satuan" name="satuan" required placeholder="cth: Pcs (pieces), Lusin, Loyang">
+                                <label for="satuan">Satuan <span style="color: red;">*</span></label>
+                                <input type="text" id="satuan" name="satuan" required placeholder="cth: Pcs, Lusin">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="harga_beli">Harga Beli</label>
+                                <label for="harga_beli">Harga Beli <span style="color: red;">*</span></label>
                                 <input type="number" id="harga_beli" name="harga_beli" required min="0" step="100">
                             </div>
                             <div class="form-group">
-                                <label for="harga_jual">Harga Jual</label>
+                                <label for="harga_jual">Harga Jual <span style="color: red;">*</span></label>
                                 <input type="number" id="harga_jual" name="harga_jual" required min="0" step="100">
                             </div>
                         </div>
@@ -219,11 +281,11 @@ $kategori_stmt = $kategori->readAll();
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="stok">Stok</label>
+                                <label for="stok">Stok <span style="color: red;">*</span></label>
                                 <input type="number" id="stok" name="stok" required min="0">
                             </div>
                             <div class="form-group">
-                                <label for="stok_minimum">Stok Minimum</label>
+                                <label for="stok_minimum">Stok Minimum <span style="color: red;">*</span></label>
                                 <input type="number" id="stok_minimum" name="stok_minimum" required min="0">
                             </div>
                         </div>
@@ -231,7 +293,7 @@ $kategori_stmt = $kategori->readAll();
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="foto_cover">Foto Cover Buku</label>
-                                <input type="file" id="foto_cover" name="foto_cover" accept="image/*" capture="environment" required>
+                                <input type="file" id="foto_cover" name="foto_cover" accept="image/*">
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_expired">Tanggal Expired</label>
@@ -250,7 +312,7 @@ $kategori_stmt = $kategori->readAll();
 
                 <div class="table-container">
                     <div class="table-header">
-                        <h3 class="table-title">Daftar buku</h3>
+                        <h3 class="table-title">Daftar Buku (Total: <?php echo $buku->getTotalBuku(); ?>)</h3>
                     </div>
                     <table class="table">
                         <thead>
@@ -263,54 +325,56 @@ $kategori_stmt = $kategori->readAll();
                                 <th>Harga Jual</th>
                                 <th>Diskon</th>
                                 <th>Stok</th>
-                                <th>Stok Min</th>
                                 <th>Expired</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-                                <tr>
-                                    <td><?php echo $row['kode_buku']; ?></td>
-                                    <td><?php echo $row['nama_buku']; ?></td>
-                                    <td><?php echo $row['nama_kategori']; ?></td>
-                                    <td><?php echo $row['satuan']; ?></td>
-                                    <td><?php echo formatCurrency($row['harga_beli']); ?></td>
-                                    <td><?php echo formatCurrency($row['harga_jual']); ?></td>
-                                    <td><?php echo formatCurrency($row['diskon'] ?? 0); ?></td>
-                                    <td>
-                                        <span class="badge <?php echo $row['stok'] <= $row['stok_minimum'] ? 'badge-danger' : 'badge-success'; ?>">
-                                            <?php echo $row['stok']; ?>
-                                        </span>
-                                    </td>
-                                    <td><?php echo $row['stok_minimum']; ?></td>
-                                    <td>
-                                        <?php
-                                        if ($row['tanggal_expired']) {
-                                            $expired = strtotime($row['tanggal_expired']);
-                                            $now = time();
-                                            $days_left = ($expired - $now) / (60 * 60 * 24);
+                            <?php 
+                            if ($stmt) {
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                                    <tr>
+                                        <td><strong><?php echo $row['kode_buku']; ?></strong></td>
+                                        <td><?php echo $row['nama_buku']; ?></td>
+                                        <td><?php echo $row['nama_kategori'] ?? '-'; ?></td>
+                                        <td><?php echo $row['satuan']; ?></td>
+                                        <td><?php echo formatCurrency($row['harga_beli']); ?></td>
+                                        <td><?php echo formatCurrency($row['harga_jual']); ?></td>
+                                        <td><?php echo formatCurrency($row['diskon'] ?? 0); ?></td>
+                                        <td>
+                                            <span class="badge <?php echo $row['stok'] <= $row['stok_minimum'] ? 'badge-danger' : 'badge-success'; ?>">
+                                                <?php echo $row['stok']; ?> / <?php echo $row['stok_minimum']; ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($row['tanggal_expired']) {
+                                                $expired = strtotime($row['tanggal_expired']);
+                                                $now = time();
+                                                $days_left = ($expired - $now) / (60 * 60 * 24);
 
-                                            if ($days_left < 0) {
-                                                echo '<span class="badge badge-danger">Expired</span>';
-                                            } elseif ($days_left <= 30) {
-                                                echo '<span class="badge badge-warning">' . date('d/m/Y', $expired) . '</span>';
+                                                if ($days_left < 0) {
+                                                    echo '<span class="badge badge-danger">Expired</span>';
+                                                } elseif ($days_left <= 30) {
+                                                    echo '<span class="badge badge-warning">' . date('d/m/Y', $expired) . '</span>';
+                                                } else {
+                                                    echo date('d/m/Y', $expired);
+                                                }
                                             } else {
-                                                echo date('d/m/Y', $expired);
+                                                echo '-';
                                             }
-                                        } else {
-                                            echo '-';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <button onclick="editbuku(<?php echo htmlspecialchars(json_encode($row)); ?>)"
-                                            class="btn btn-warning btn-sm">Edit</button>
-                                        <button onclick="deletebuku(<?php echo $row['id']; ?>)"
-                                            class="btn btn-danger btn-sm">Hapus</button>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <button onclick="editbuku(<?php echo htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8'); ?>)"
+                                                class="btn btn-warning btn-sm">Edit</button>
+                                            <button onclick="deletebuku(<?php echo $row['id']; ?>)"
+                                                class="btn btn-danger btn-sm">Hapus</button>
+                                        </td>
+                                    </tr>
+                                <?php endwhile;
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -321,18 +385,18 @@ $kategori_stmt = $kategori->readAll();
     <!-- Edit Modal -->
     <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto;">
-            <h2>Edit buku</h2>
-            <form method="POST" id="editForm">
+            <h2>Edit Buku</h2>
+            <form method="POST" id="editForm" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="edit_kode_buku">Kode buku</label>
+                        <label for="edit_kode_buku">Kode Buku</label>
                         <input type="text" id="edit_kode_buku" name="kode_buku" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit_nama_buku">Nama buku</label>
+                        <label for="edit_nama_buku">Nama Buku</label>
                         <input type="text" id="edit_nama_buku" name="nama_buku" required>
                     </div>
                 </div>
@@ -341,12 +405,6 @@ $kategori_stmt = $kategori->readAll();
                     <div class="form-group">
                         <label for="edit_kategori_id">Kategori</label>
                         <select id="edit_kategori_id" name="kategori_id" required>
-                            <?php
-                            $kategori_stmt = $kategori->readAll();
-                            while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)):
-                            ?>
-                                <option value="<?php echo $row['id']; ?>"><?php echo $row['nama_kategori']; ?></option>
-                            <?php endwhile; ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -368,7 +426,7 @@ $kategori_stmt = $kategori->readAll();
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="edit_diskon">Diskon Default (Rp)</label>
+                        <label for="edit_diskon">Diskon (Rp)</label>
                         <input type="number" id="edit_diskon" name="diskon" min="0" step="100" value="0">
                     </div>
                 </div>
@@ -396,7 +454,7 @@ $kategori_stmt = $kategori->readAll();
                     <textarea id="edit_deskripsi" name="deskripsi" rows="3"></textarea>
                 </div>
 
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <button type="submit" class="btn btn-primary">Update</button>
                     <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Batal</button>
                 </div>
@@ -405,7 +463,29 @@ $kategori_stmt = $kategori->readAll();
     </div>
 
     <script>
+        // ✅ Load kategori untuk edit modal
+        function loadKategori() {
+            const select = document.getElementById('edit_kategori_id');
+            <?php 
+            $kategori_stmt = $kategori->readAll();
+            if ($kategori_stmt) {
+                $options = [];
+                while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $options[] = "{value: '{$row['id']}', text: '{$row['nama_kategori']}'}";
+                }
+                echo "const options = [" . implode(",", $options) . "];";
+                echo "options.forEach(opt => {
+                    const o = document.createElement('option');
+                    o.value = opt.value;
+                    o.text = opt.text;
+                    select.appendChild(o);
+                });";
+            }
+            ?>
+        }
+
         function editbuku(data) {
+            loadKategori();
             document.getElementById('edit_id').value = data.id;
             document.getElementById('edit_kode_buku').value = data.kode_buku;
             document.getElementById('edit_nama_buku').value = data.nama_buku;
@@ -416,8 +496,8 @@ $kategori_stmt = $kategori->readAll();
             document.getElementById('edit_diskon').value = data.diskon || 0;
             document.getElementById('edit_stok').value = data.stok;
             document.getElementById('edit_stok_minimum').value = data.stok_minimum;
-            document.getElementById('edit_tanggal_expired').value = data.tanggal_expired;
-            document.getElementById('edit_deskripsi').value = data.deskripsi;
+            document.getElementById('edit_tanggal_expired').value = data.tanggal_expired || '';
+            document.getElementById('edit_deskripsi').value = data.deskripsi || '';
             document.getElementById('editModal').style.display = 'block';
         }
 
@@ -426,7 +506,7 @@ $kategori_stmt = $kategori->readAll();
         }
 
         function deletebuku(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data buku ini?')) {
+            if (confirm('Apakah Anda yakin ingin menghapus buku ini?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.innerHTML = `
@@ -438,7 +518,7 @@ $kategori_stmt = $kategori->readAll();
             }
         }
 
-        // Close modal when clicking outside
+        // Close modal saat klik di luar
         document.getElementById('editModal').onclick = function(e) {
             if (e.target === this) {
                 closeEditModal();
