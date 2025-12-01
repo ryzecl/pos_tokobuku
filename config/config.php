@@ -1,6 +1,6 @@
 <?php
 // Konfigurasi umum aplikasi
-define('BASE_URL', 'http://localhost/pos_daebook/');
+define('BASE_URL', 'http://localhost/daebook/');
 define('APP_NAME', 'Daebook');
 
 // Lingkungan: 'development' atau 'production'

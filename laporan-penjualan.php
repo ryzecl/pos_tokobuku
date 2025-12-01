@@ -78,7 +78,16 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         </div>
                         <button type="submit" class="btn btn-primary">Filter</button>
                         <button type="button" onclick="window.print()" class="btn btn-secondary">Cetak</button>
+                        <button type="button" onclick="exportExcel()" class="btn btn-Tertiary" >Rekap Excel</button>
                     </form>
+                    <script>
+                        function exportExcel() {
+                            const startDate = document.getElementById('start_date').value;
+                            const endDate = document.getElementById('end_date').value;
+                            window.location.href = `format-excel.php?start_date=${startDate}&end_date=${endDate}`;
+                        }
+                    </script>
+
                 </div>
 
                 <!-- Summary Cards -->

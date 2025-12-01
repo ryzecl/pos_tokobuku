@@ -21,7 +21,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
             </li>
             <li class="nav-item">
-                <a href="laporan_penjualan.php" class="nav-link <?php echo ($current_page === 'laporan_penjualan.php') ? 'active' : ''; ?>">
+                <a href="laporan-penjualan.php" class="nav-link <?php echo ($current_page === 'laporan-penjualan.php') ? 'active' : ''; ?>">
                     <i>📈</i> Laporan Penjualan
                 </a>
             </li>
@@ -39,7 +39,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
             </li>
             <li class="nav-item">
-                <a href="laporan_pembelian.php" class="nav-link <?php echo ($current_page === 'laporan_pembelian.php') ? 'active' : ''; ?>">
+                <a href="laporan-pembelian.php" class="nav-link <?php echo ($current_page === 'laporan-pembelian.php') ? 'active' : ''; ?>">
                     <i>📉</i> Laporan Pembelian
                 </a>
             </li>

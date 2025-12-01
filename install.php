@@ -6,6 +6,7 @@ $host = 'localhost';
 $db_name = 'pos_daebook';
 $username = 'root';
 $password = '';
+$filesql = '/database/pos_daebook.sql';
 
 function render_form($message = '') {
     $msgHtml = $message 
@@ -112,7 +113,7 @@ try {
         $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
         $pdo->exec("USE `$db_name`");
 
-        $schemaFile = __DIR__ . '/database/pos_daebook.sql';
+        $schemaFile = __DIR__ . $filesql ;
         if (!file_exists($schemaFile)) {
             throw new Exception('File schema tidak ditemukan: ' . $schemaFile);
         }

@@ -213,8 +213,8 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . url
     <div class="receipt">
 
         <div class="header">
-            <?php if (file_exists("assets/logo.png")): ?>
-                <img src="assets/logo.png" class="logo" alt="Logo">
+            <?php if (file_exists("assets/logo.jpg")): ?>
+                <img src="assets/logo.jpg" class="logo" alt="Logo">
             <?php endif; ?>
 
             <h1><?php echo htmlspecialchars($nama_toko); ?></h1>
