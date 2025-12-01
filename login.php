@@ -90,7 +90,10 @@ if ($_SESSION['login_attempts'] >= 3 && ($now - $_SESSION['last_attempt_time']) 
     <div class="login-container">
         <div class="login-box">
             <div class="login-header">
-                <h1><?php echo htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8'); ?></h1>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                    <img src="assets/DaebookLogo.svg" alt="Daebook Logo" style="height: 50px;">
+                    <h1><?php echo htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8'); ?></h1>
+                </div>
                 <p>Silakan masuk dengan akun Anda</p>
             </div>
 
@@ -124,7 +127,7 @@ if ($_SESSION['login_attempts'] >= 3 && ($now - $_SESSION['last_attempt_time']) 
                 <p>Kasir: <code>kasir1</code> / password</p>
                 <p>Gudang: <code>gudang1</code> / password</p>
                 <p style="margin-top: 15px;">
-                    <a href="index.php" style="color: #007bff; text-decoration: none;">← Kembali ke Beranda</a>
+                    <a href="index.php" style="color: #A259FF; text-decoration: none;">← Kembali ke Beranda</a>
                 </p>
             </div>
             <?php endif; ?>

@@ -6,7 +6,7 @@
   --color-primary: #A259FF;
   --color-primary-dark: #9041E0;
   --color-primary-light: #bb86fc;
-  --color-secondary: #A259FF;
+  --color-secondary: #3B3B98;
 
   /* =========================================
      Warna Sidebar
@@ -37,6 +37,14 @@
   --color-info: #3498db;
   --color-info-light: #d1ecf1;
   --color-info-dark: #0c5460;
+
+  /* Warna Netral */
+  --color-bgWhite: #f5f5f5;
+  --color-textWhite: #fff;
+
+  /* Login Page */
+  --color-loginBox: #0F0F1A;
+  --color-footerBox: #313167;
 }
 
 * {
@@ -49,12 +57,16 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: #f5f5f5;
+  background-color: var(--color-bgWhite);
 }
 
 /* Login Page Styles */
+/* Login Page Styles */
 .login-page {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #9041E0 100%);
+  background-image: url('../LoginBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -68,10 +80,12 @@ body {
 }
 
 .login-box {
-  background: white;
+  background: var(--color-loginBox); /* Dark background from design */
+  border: 1px solid #A259FF; /* Purple border */
   border-radius: 10px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(162, 89, 255, 0.2); /* Purple glow */
   padding: 40px;
+  color: var(--color-textWhite);
 }
 
 .login-header {
@@ -80,14 +94,14 @@ body {
 }
 
 .login-header h1 {
-  color: #333;
+  color: var(--color-primary);
   margin-bottom: 10px;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .login-header p {
-  color: #666;
+  color: var(--color-textWhite);
   font-size: 14px;
 }
 
@@ -95,35 +109,41 @@ body {
   margin-bottom: 20px;
 }
 
-.login-form label {
+.login-form .form-group label {
   display: block;
   margin-bottom: 5px;
-  color: #333;
+  color: var(--color-textWhite);
   font-weight: 500;
 }
 
 .login-form input {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #e1e1e1;
+  background: transparent;
+  border: 1px solid var(--color-primary);
   border-radius: 5px;
   font-size: 14px;
-  transition: border-color 0.3s ease;
+  color: var(--color-textWhite);
+  transition: all 0.3s ease;
 }
 
 .login-form input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(var(--color-primary), 0.3);
 }
 
 .login-footer {
   margin-top: 20px;
   padding: 15px;
-  background: #f8f9fa;
+  background: var(--color-footerBox);
   border-radius: 5px;
   font-size: 12px;
-  color: #666;
+  color: var(--color-textWhite);
 }
+
+/* .login-footer code {
+    color: #A259FF;
+} */
 
 /* Button Styles */
 .btn {
