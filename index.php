@@ -23,6 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -541,6 +542,31 @@
             border-radius: 25%;
             background: #000;
         }
+
+        .reveal {
+            will-change: transform, opacity, filter;
+            filter: blur(5px);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* aktif pas muncul */
+.reveal.active {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* delay animasi untuk tiap elemen di dalamnya */
+.reveal > *:nth-child(1) { transition-delay: .1s; }
+.reveal > *:nth-child(2) { transition-delay: .25s; }
+.reveal > *:nth-child(3) { transition-delay: .4s; }
+.reveal > *:nth-child(4) { transition-delay: .55s; }
+.reveal > *:nth-child(5) { transition-delay: .7s; }
+.reveal > *:nth-child(6) { transition-delay: .85s; }
+
+
     </style>
     <!-- Menambahkan font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -563,7 +589,7 @@
             <a href="login.php" class="login-btn">Log In</a>
         </div>
     </header>
-    <section class="home" id="home">
+    <section class="home reveal" id="home">
         <div class="home-content">
             <h1>Discover Books<br><span>Worth</span> Your <span>Time</span><br>Today.</h1>
             <p>Curated books to sharpen thinking, spark curiosity, and inspire meaningful personal growth.</p>
@@ -577,7 +603,7 @@
             <!-- <source src="assets/video/book.mp4" type="video/mp4"> -->
         </video>
     </section>
-    <section class="publishers">
+    <section class="publishers reveal">
         <p>Featured Publishers</p>
         <div class="pub-logos" id="about">
             <a href="https://www.gramedia.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/gramedia-logo.png" alt="Gramedia"></a>
@@ -586,7 +612,7 @@
             <a href="https://penerbitdeepublish.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/deepublish-logo.png" alt="Deepublish"></a>
         </div>
     </section>
-    <section class="about-us">
+    <section class="about-us reveal reveal-left">
         <div class="about-img">
             <img src="assets/img/about-us.png" alt="About Us Image">
         </div>
@@ -600,7 +626,7 @@
             </div>
         </div>
     </section>
-    <section class="genres" id="categories">
+    <section class="genres reveal" id="categories">
         <p>Book Genres</p>
         <h2>Explore different book genres<br>and categories.</h2>
 
@@ -636,7 +662,7 @@
             </div>
         </div>
     </section>
-    <section class="testimonial" id="reviews">
+    <section class="testimonial reveal" id="reviews">
         <h2>Building Trust Through Real<br>Customer Experiences</h2>
         <div class="testi-wrapper">
             <div class="testi-photos">
@@ -659,7 +685,7 @@
             </div>
         </div>
     </section>
-    <footer>
+    <footer class="reveal">
         <div class="footer-grid" id="contact">
             <div class="footer-col">
                 <h4>Contact Information</h4>
@@ -703,5 +729,25 @@
         </div>
     </footer>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.reveal');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // animasi sekali aja = hemat!
+            }
+        });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(reveal => {
+        observer.observe(reveal);
+    });
+});
+
+</script>
 
 </html>
