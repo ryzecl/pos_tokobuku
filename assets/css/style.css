@@ -165,8 +165,7 @@ body {
 }
 
 .btn-primary {
-  background: var(--color-warning);
-  /* background: linear-gradient(135deg, var(--color-primary) 0%, #9041E0 100%); */
+  background: linear-gradient(135deg, var(--color-primary) 0%, #9041E0 100%);
   color: white;
 }
 
@@ -177,8 +176,7 @@ body {
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #9041E0 100%);
-  /* background: #6c757d; */
+  background: var(--color-warning);
   color: white;
 }
 
