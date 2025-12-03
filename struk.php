@@ -70,8 +70,18 @@ if (!empty($penjualan->customer_id)) {
     }
 }
 
+// Dapatkan IPv4 dari ipconfig (Windows)
+function getIpv4FromIpconfig() {
+    $output = shell_exec('ipconfig');
+    if (!$output) return null;
+    // Ambil baris yang ada tulisan IPv4
+    preg_match('/IPv4[^:]*:\s*([0-9\.]+)/', $output, $match);
+    return $match[1] ?? null;
+}
+$ipv4 = getIpv4FromIpconfig();
+
 // URL publik struk ini
-$struk_url = BASE_URL . "struk.php?token=" . urlencode($token);
+$struk_url = $ipv4 . "struk.php?token=" . urlencode($token);
 
 // QR Code: link ke struk
 $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . urlencode($struk_url);
