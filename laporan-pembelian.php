@@ -93,7 +93,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon primary">
-                                <i>💰</i>
+                                <i class="bi bi-handbag"></i>
                             </div>
                             <div class="card-title">Total Pembelian</div>
                         </div>
@@ -104,7 +104,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon success">
-                                <i>📊</i>
+                                <i class="bi bi-cart"></i>
                             </div>
                             <div class="card-title">Total Transaksi</div>
                         </div>
@@ -115,7 +115,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon warning">
-                                <i>📈</i>
+                                <i class="bi bi-graph-up"></i>
                             </div>
                             <div class="card-title">Rata-rata per Transaksi</div>
                         </div>
@@ -126,7 +126,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon danger">
-                                <i>✅</i>
+                                <i class="bi bi-check-square"></i>
                             </div>
                             <div class="card-title">Status</div>
                         </div>

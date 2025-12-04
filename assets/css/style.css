@@ -43,7 +43,7 @@
   --color-textWhite: #fff;
 
   /* Login Page */
-  --color-loginBox: #0F0F1A;
+  --color-bgPrimary: #0F0F1A;
   --color-footerBox: #313167;
 }
 
@@ -58,7 +58,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
-  background-color: var(--color-bgWhite);
+  background-color: var(--color-bgPrimary);
 }
 
 /* Login Page Styles */
@@ -81,7 +81,7 @@ body {
 }
 
 .login-box {
-  background: var(--color-loginBox);
+  background: var(--color-bgPrimary);
   /* Dark background from design */
   border: 1px solid #A259FF;
   /* Purple border */
@@ -292,9 +292,9 @@ body {
 }
 
 .alert-info {
-  background: var(--color-info-light);
-  border-color: var(--color-info);
-  color: var(--color-info-dark);
+  background: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  border-color: var(--color-primary);
+  color: var(--color-textWhite);
 }
 
 /* Main Layout */
@@ -317,9 +317,12 @@ body {
 }
 
 .sidebar-header {
+  position: relative;
+  display: flex;
+  align-items: center;
   padding: 20px;
-  background: var(--color-sidebar-header);
-  border-bottom: 1px solid var(--color-sidebar-dark);
+  background: var(--color-bgPrimary);
+  border-bottom: 1px solid var(--color-primary);
 }
 
 .sidebar-header h2 {
@@ -368,12 +371,12 @@ body {
 .main-content {
   flex: 1;
   margin-left: 250px;
-  padding: 0;
+  padding: 0; 
 }
 
 /* Top Navigation */
 .top-nav {
-  background: white;
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   padding: 15px 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -382,12 +385,12 @@ body {
   position: sticky;
   top: 0;
   z-index: 999;
-  border-bottom: 2px solid var(--color-primary);
+  /* border-bottom: 2px solid var(--color-primary); */
 }
 
 .top-nav h1 {
   font-size: 24px;
-  color: var(--color-primary);
+  color: var(--color-textWhite);
   margin: 0;
   font-weight: 700;
 }
@@ -417,20 +420,20 @@ body {
 
 .user-name {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--color-textWhite);
   font-size: 14px;
 }
 
 .user-role {
   font-size: 12px;
-  color: #7f8c8d;
+  color: var(--color-textWhite);
   text-transform: capitalize;
 }
 
 /* Content Area */
 .content {
   padding: 30px;
-  background: #f5f5f5;
+  background: var(--color-bgPrimary);
 }
 
 /* Dashboard Cards */
@@ -442,12 +445,12 @@ body {
 }
 
 .dashboard-card {
-  background: white;
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   border-radius: 10px;
   padding: 25px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  border-top: 4px solid var(--color-primary);
+  /* border-top: 4px solid var(--color-primary); */
 }
 
 .dashboard-card:hover {
@@ -474,46 +477,46 @@ body {
 }
 
 .card-icon.primary {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #9041E0 100%);
+  background: color-mix(in srgb, var(--color-primary), 50% transparent);
 }
 
 .card-icon.success {
-  background: var(--color-success);
+  background: color-mix(in srgb, var(--color-success), 50% transparent);
 }
 
 .card-icon.warning {
-  background: var(--color-warning);
+  background: color-mix(in srgb, var(--color-warning), 50% transparent);
 }
 
 .card-icon.danger {
-  background: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger), 50% transparent);
 }
 
 .card-icon.info {
-  background: var(--color-info);
+  background: color-mix(in srgb, var(--color-info), 50% transparent);
 }
 
 .card-title {
   font-size: 16px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--color-textWhite);
 }
 
 .card-value {
   font-size: 28px;
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-textWhite);
   margin-bottom: 5px;
 }
 
 .card-subtitle {
   font-size: 12px;
-  color: #7f8c8d;
+  color: var(--color-textWhite);
 }
 
 /* Tables */
 .table-container {
-  background: white;
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -531,7 +534,7 @@ body {
 .table-title {
   font-size: 18px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-textWhite);
 }
 
 .table {
@@ -543,19 +546,19 @@ body {
 .table td {
   padding: 15px 25px;
   text-align: left;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid var(--color-primary);
 }
 
 .table th {
-  background: #f8f9fa;
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-textWhite);
   font-size: 14px;
 }
 
 .table td {
   font-size: 14px;
-  color: #555;
+  color: var(--color-textWhite);
 }
 
 .table tbody tr:hover {
@@ -564,17 +567,17 @@ body {
 
 /* Forms */
 .form-container {
-  background: white;
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 30px;
   margin-bottom: 30px;
-  border-top: 4px solid var(--color-primary);
+  /* border-top: 4px solid var(--color-primary); */
 }
 
 .form-container h2,
 .form-container h3 {
-  color: var(--color-primary);
+  color: var(--color-textWhite);
   margin-bottom: 20px;
 }
 
@@ -593,15 +596,17 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #2c3e50;
+  color: var(--color-textWhite);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
+  background: color-mix(in srgb, var(--color-secondary) 15%, transparent);
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #e1e1e1;
+  border: 2px solid var(--color-primary);
+  color: var(--color-textWhite);
   border-radius: 5px;
   font-size: 14px;
   transition: border-color 0.3s ease;
@@ -630,23 +635,23 @@ body {
 }
 
 .badge-success {
-  background: var(--color-success-light);
-  color: var(--color-success-dark);
+  background: color-mix(in srgb, var(--color-success) 40%, transparent);
+  color: var(--color-textWhite);
 }
 
 .badge-warning {
-  background: var(--color-warning-light);
-  color: var(--color-warning-dark);
+  background: color-mix(in srgb, var(--color-warning) 40%, transparent);
+  color: var(--color-textWhite);
 }
 
 .badge-danger {
-  background: var(--color-danger-light);
-  color: var(--color-danger-dark);
+  background: color-mix(in srgb, var(--color-danger) 40%, transparent);
+  color: var(--color-textWhite);
 }
 
 .badge-info {
-  background: var(--color-info-light);
-  color: var(--color-info-dark);
+  background: color-mix(in srgb, var(--color-info) 40%, transparent);
+  color: var(--color-textWhite);
 }
 
 /* Pagination */

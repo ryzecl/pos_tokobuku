@@ -101,7 +101,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon primary">
-                                    <i>💰</i>
+                                    <i class="bi bi-handbag"></i>
                                 </div>
                                 <div class="card-title">Penjualan Hari Ini</div>
                             </div>
@@ -112,7 +112,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon success">
-                                    <i>📊</i>
+                                    <i class="bi bi-cart"></i>
                                 </div>
                                 <div class="card-title">Transaksi Hari Ini</div>
                             </div>
@@ -125,7 +125,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon warning">
-                                    <i>💊</i>
+                                    <i class="bi bi-journal"></i>
                                 </div>
                                 <div class="card-title">Total buku</div>
                             </div>
@@ -136,7 +136,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon danger">
-                                    <i>⚠️</i>
+                                    <i class="bi bi-exclamation-triangle"></i>
                                 </div>
                                 <div class="card-title">Stok Minimum</div>
                             </div>
@@ -149,7 +149,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon info">
-                                    <i>📈</i>
+                                    <i class="bi bi-graph-up"></i>
                                 </div>
                                 <div class="card-title">Penjualan Bulan Ini</div>
                             </div>
@@ -160,7 +160,7 @@ if ($role === 'admin' || $role === 'gudang') {
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon primary">
-                                    <i>📦</i>
+                                    <i class="bi bi-boxes"></i>
                                 </div>
                                 <div class="card-title">Pembelian Bulan Ini</div>
                             </div>
@@ -179,7 +179,7 @@ if ($role === 'admin' || $role === 'gudang') {
                             </div>
                             <div style="padding: 0;">
                                 <?php if (empty($recent_penjualan)): ?>
-                                    <p style="padding: 20px; text-align: center; color: #666;">Tidak ada data penjualan</p>
+                                    <p style="padding: 20px; text-align: center; color: var(--color-textWhite);">Tidak ada data penjualan</p>
                                 <?php else: ?>
                                     <table class="table">
                                         <thead>
@@ -211,7 +211,7 @@ if ($role === 'admin' || $role === 'gudang') {
                             </div>
                             <div style="padding: 0;">
                                 <?php if (empty($recent_pembelian)): ?>
-                                    <p style="padding: 20px; text-align: center; color: #666;">Tidak ada data pembelian</p>
+                                    <p style="padding: 20px; text-align: center; color: var(--color-textWhite);">Tidak ada data pembelian</p>
                                 <?php else: ?>
                                     <table class="table">
                                         <thead>

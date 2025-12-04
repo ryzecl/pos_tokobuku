@@ -11,7 +11,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <body>
     <nav class="sidebar">
         <div class="sidebar-header">
-            <h2><?php echo APP_NAME; ?></h2>
+            <img src="assets/DaebookLogo.svg" alt="Daebook Logo" style="height: 40px; margin-right: 10px;">
+            <h2><?php echo htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8'); ?></h2>
         </div>
 
         <ul class="sidebar-nav">

@@ -32,6 +32,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,10 +40,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dynamic.php">
 </head>
+
 <body>
     <div class="main-container">
         <!-- Sidebar -->
-        <?php 
+        <?php
         $role = $_SESSION['user_role'];
         require_once 'sidebar.php'; ?>
 
@@ -78,7 +80,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         </div>
                         <button type="submit" class="btn btn-primary">Filter</button>
                         <button type="button" onclick="window.print()" class="btn btn-secondary">Cetak</button>
-                        <button type="button" onclick="exportExcel()" class="btn btn-Tertiary" >Rekap Excel</button>
+                        <button type="button" onclick="exportExcel()" class="btn btn-Tertiary">Rekap Excel</button>
                     </form>
                     <script>
                         function exportExcel() {
@@ -95,7 +97,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon primary">
-                                <i>💰</i>
+                                <i class="bi bi-handbag"></i>
                             </div>
                             <div class="card-title">Total Penjualan</div>
                         </div>
@@ -106,7 +108,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon success">
-                                <i>📊</i>
+                                <i class="bi bi-cart"></i>
                             </div>
                             <div class="card-title">Total Transaksi</div>
                         </div>
@@ -117,7 +119,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon warning">
-                                <i>📈</i>
+                                <i class="bi bi-graph-up"></i>
                             </div>
                             <div class="card-title">Rata-rata per Transaksi</div>
                         </div>
@@ -128,7 +130,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     <div class="dashboard-card">
                         <div class="card-header">
                             <div class="card-icon danger">
-                                <i>🎁</i>
+                                <i class="bi bi-tags"></i>
                             </div>
                             <div class="card-title">Total Diskon</div>
                         </div>
@@ -164,19 +166,19 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($laporan_data as $row): ?>
-                                <tr>
-                                    <td><?php echo $row['no_transaksi']; ?></td>
-                                    <td><?php echo $row['kasir']; ?></td>
-                                    <td><?php echo formatCurrency($row['diskon'] ?? 0); ?></td>
-                                    <td><?php echo formatCurrency($row['total_harga']); ?></td>
-                                    <td><?php echo formatCurrency($row['total_bayar']); ?></td>
-                                    <td><?php echo formatCurrency($row['kembalian']); ?></td>
-                                    <td><?php echo date('d/m/Y H:i', strtotime($row['tanggal_penjualan'])); ?></td>
-                                    <td>
-                                        <a href="struk.php?token=<?php echo urlencode($row['token_public'] ?? ''); ?>" 
-                                           class="btn btn-info btn-sm" target="_blank">Struk</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><?php echo $row['no_transaksi']; ?></td>
+                                        <td><?php echo $row['kasir']; ?></td>
+                                        <td><?php echo formatCurrency($row['diskon'] ?? 0); ?></td>
+                                        <td><?php echo formatCurrency($row['total_harga']); ?></td>
+                                        <td><?php echo formatCurrency($row['total_bayar']); ?></td>
+                                        <td><?php echo formatCurrency($row['kembalian']); ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($row['tanggal_penjualan'])); ?></td>
+                                        <td>
+                                            <a href="struk.php?token=<?php echo urlencode($row['token_public'] ?? ''); ?>"
+                                                class="btn btn-info btn-sm" target="_blank">Struk</a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -188,27 +190,32 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     <style>
         @media print {
-            .sidebar, .top-nav, .form-container, .btn {
+
+            .sidebar,
+            .top-nav,
+            .form-container,
+            .btn {
                 display: none !important;
             }
-            
+
             .main-content {
                 margin-left: 0 !important;
             }
-            
+
             .content {
                 padding: 0 !important;
             }
-            
+
             .table-container {
                 box-shadow: none !important;
                 border: 1px solid #000 !important;
             }
-            
+
             .dashboard-grid {
                 display: none !important;
             }
         }
     </style>
 </body>
+
 </html>
