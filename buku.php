@@ -5,6 +5,34 @@ requireRole(['admin', 'gudang']);
 require_once 'models/Buku.php';
 require_once 'models/KategoriBuku.php';
 
+// ==================== KONFIGURASI REFRESH CACHE NODE.JS ====================
+define('NODE_SERVER_URL', 'http://localhost:3000/refresh-buku-cache');
+define('CACHE_REFRESH_SECRET', 'AkusukAC00kl4444T');
+
+function refreshNodeCache() {
+    $ch = curl_init(NODE_SERVER_URL);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'X-Secret-Key: ' . CACHE_REFRESH_SECRET
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // Log untuk debugging (bisa dilihat di error_log Apache/PHP)
+    if ($httpCode !== 200) {
+        error_log("Gagal refresh cache Node.js: HTTP $httpCode | Response: $response");
+    } else {
+        error_log("Cache Node.js berhasil di-refresh setelah perubahan buku.");
+    }
+}
+
+// =============================================================================
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -115,6 +143,7 @@ if ($_POST) {
                     if ($buku->create()) {
                         $message = 'Data buku berhasil ditambahkan!';
                         $message_type = 'success';
+                        refreshNodeCache(); // ← Refresh cache langsung
                     } else {
                         $message = 'Gagal menambahkan data buku! Cek kode buku apakah sudah ada.';
                         $message_type = 'error';
@@ -146,6 +175,7 @@ if ($_POST) {
                     if ($buku->update()) {
                         $message = 'Data buku berhasil diperbarui!';
                         $message_type = 'success';
+                        refreshNodeCache(); // ← Refresh cache langsung
                     } else {
                         $message = 'Gagal memperbarui data buku!';
                         $message_type = 'error';
@@ -168,6 +198,7 @@ if ($_POST) {
                     if ($buku->delete()) {
                         $message = 'Data buku & foto berhasil dihapus!';
                         $message_type = 'success';
+                        refreshNodeCache(); // ← Refresh cache langsung
                     } else {
                         $message = 'Gagal menghapus data buku!';
                         $message_type = 'error';
@@ -245,8 +276,9 @@ $kategori_stmt = $kategori->readAll();
                                 <select id="kategori_id" name="kategori_id" required>
                                     <option value="">-- Pilih Kategori --</option>
                                     <?php 
-                                    if ($kategori_stmt) {
-                                        while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                                    $kategori_stmt_temp = $kategori->readAll();
+                                    if ($kategori_stmt_temp) {
+                                        while ($row = $kategori_stmt_temp->fetch(PDO::FETCH_ASSOC)): ?>
                                             <option value="<?php echo $row['id']; ?>">
                                                 <?php echo $row['nama_kategori']; ?>
                                             </option>
@@ -466,20 +498,16 @@ $kategori_stmt = $kategori->readAll();
         // ✅ Load kategori untuk edit modal
         function loadKategori() {
             const select = document.getElementById('edit_kategori_id');
+            select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
             <?php 
             $kategori_stmt = $kategori->readAll();
             if ($kategori_stmt) {
-                $options = [];
                 while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $options[] = "{value: '{$row['id']}', text: '{$row['nama_kategori']}'}";
+                    echo "const opt = document.createElement('option');";
+                    echo "opt.value = '{$row['id']}';";
+                    echo "opt.text = '{$row['nama_kategori']}';";
+                    echo "select.appendChild(opt);";
                 }
-                echo "const options = [" . implode(",", $options) . "];";
-                echo "options.forEach(opt => {
-                    const o = document.createElement('option');
-                    o.value = opt.value;
-                    o.text = opt.text;
-                    select.appendChild(o);
-                });";
             }
             ?>
         }
@@ -489,7 +517,7 @@ $kategori_stmt = $kategori->readAll();
             document.getElementById('edit_id').value = data.id;
             document.getElementById('edit_kode_buku').value = data.kode_buku;
             document.getElementById('edit_nama_buku').value = data.nama_buku;
-            document.getElementById('edit_kategori_id').value = data.kategori_id;
+            document.getElementById('edit_kategori_id').value = data.kategori_id || '';
             document.getElementById('edit_satuan').value = data.satuan;
             document.getElementById('edit_harga_beli').value = data.harga_beli;
             document.getElementById('edit_harga_jual').value = data.harga_jual;
@@ -510,15 +538,15 @@ $kategori_stmt = $kategori->readAll();
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.innerHTML = `
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" value="${id}">
-                `;
+                <input type="hidden" name="action" value="delete">
+                                  <input type="hidden" name="id" value="${id}">
+                                  `;
                 document.body.appendChild(form);
                 form.submit();
             }
         }
 
-        // Close modal saat klik di luar
+   // Close modal saat klik di luar
         document.getElementById('editModal').onclick = function(e) {
             if (e.target === this) {
                 closeEditModal();
