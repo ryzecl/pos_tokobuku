@@ -123,6 +123,7 @@ body {
 .login-form input {
   width: 100%;
   padding: 12px 15px;
+  padding-right: 40px;
   background: transparent;
   border: 1px solid var(--color-primary);
   border-radius: 5px;
@@ -135,6 +136,21 @@ body {
   outline: none;
   box-shadow: 0 0 10px rgba(var(--color-primary), 0.3);
 }
+
+.input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;   /* jarak dari kanan */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+
 
 .login-footer {
   margin-top: 20px;
@@ -728,4 +744,24 @@ body {
   .content {
     padding: 0 !important;
   }
+}
+
+/* Fix for password toggle positioning */
+.login-form .input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.login-form .password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }

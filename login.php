@@ -79,13 +79,16 @@ if ($_SESSION['login_attempts'] >= 3 && ($now - $_SESSION['last_attempt_time']) 
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - <?php echo htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8'); ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/dynamic.php">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body class="login-page">
     <div class="login-container">
         <div class="login-box">
@@ -109,29 +112,52 @@ if ($_SESSION['login_attempts'] >= 3 && ($now - $_SESSION['last_attempt_time']) 
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required
-                           value="<?php echo isset($_POST['username']) ? htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8') : ''; ?>">
+                        value="<?php echo isset($_POST['username']) ? htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8') : ''; ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye-slash" id="toggleIcon"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-full">Masuk</button>
             </form>
 
             <?php if ($show_demo): ?>
-            <div class="login-footer">
-                <p><strong>Demo Account:</strong></p>
-                <p>Admin: <code>admin</code> / password</p>
-                <p>Kasir: <code>kasir1</code> / password</p>
-                <p>Gudang: <code>gudang1</code> / password</p>
-                <p style="margin-top: 15px;">
-                    <a href="index.php" style="color: #A259FF; text-decoration: none;">← Kembali ke Beranda</a>
-                </p>
-            </div>
+                <div class="login-footer">
+                    <p><strong>Demo Account:</strong></p>
+                    <p>Admin: <code>admin</code> / password</p>
+                    <p>Kasir: <code>kasir1</code> / password</p>
+                    <p>Gudang: <code>gudang1</code> / password</p>
+                    <p style="margin-top: 15px;">
+                        <a href="index.php" style="color: #A259FF; text-decoration: none;">← Kembali ke Beranda</a>
+                    </p>
+                </div>
             <?php endif; ?>
         </div>
     </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        }
+    </script>
 </body>
+
 </html>

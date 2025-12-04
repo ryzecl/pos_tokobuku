@@ -30,25 +30,29 @@ spl_autoload_register(function ($class_name) {
 
 require_once __DIR__ . '/database.php';
 
-function sanitizeInput($v) {
+function sanitizeInput($v)
+{
     if (is_array($v)) {
         return array_map('sanitizeInput', $v);
     }
     return trim(htmlspecialchars((string)$v, ENT_QUOTES));
 }
 
-function isLoggedIn() {
+function isLoggedIn()
+{
     return !empty($_SESSION['user_id']);
 }
 
-function requireLogin() {
+function requireLogin()
+{
     if (!isLoggedIn()) {
         header('Location: login.php');
         exit;
     }
 }
 
-function requireRole(array $roles = []) {
+function requireRole(array $roles = [])
+{
     if (!isLoggedIn()) {
         header('Location: login.php');
         exit;
@@ -59,7 +63,7 @@ function requireRole(array $roles = []) {
     }
 }
 
-function formatCurrency($v) {
+function formatCurrency($v)
+{
     return 'Rp ' . number_format((float)$v, 0, ',', '.');
 }
-?>

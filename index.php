@@ -249,7 +249,7 @@
             left: -20px;
             width: 100%;
             height: 100%;
-            border: 4px solid var(--light-primary);
+            /* border: 4px solid var(--light-primary); */
             border-radius: 24px;
             z-index: -1;
         }
@@ -546,27 +546,42 @@
         .reveal {
             will-change: transform, opacity, filter;
             filter: blur(5px);
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
 
-/* aktif pas muncul */
-.reveal.active {
-    filter: blur(0);
-    opacity: 1;
-    transform: translateY(0);
-}
+        /* aktif pas muncul */
+        .reveal.active {
+            filter: blur(0);
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-/* delay animasi untuk tiap elemen di dalamnya */
-.reveal > *:nth-child(1) { transition-delay: .1s; }
-.reveal > *:nth-child(2) { transition-delay: .25s; }
-.reveal > *:nth-child(3) { transition-delay: .4s; }
-.reveal > *:nth-child(4) { transition-delay: .55s; }
-.reveal > *:nth-child(5) { transition-delay: .7s; }
-.reveal > *:nth-child(6) { transition-delay: .85s; }
+        /* delay animasi untuk tiap elemen di dalamnya */
+        .reveal>*:nth-child(1) {
+            transition-delay: .1s;
+        }
 
+        .reveal>*:nth-child(2) {
+            transition-delay: .25s;
+        }
 
+        .reveal>*:nth-child(3) {
+            transition-delay: .4s;
+        }
+
+        .reveal>*:nth-child(4) {
+            transition-delay: .55s;
+        }
+
+        .reveal>*:nth-child(5) {
+            transition-delay: .7s;
+        }
+
+        .reveal>*:nth-child(6) {
+            transition-delay: .85s;
+        }
     </style>
     <!-- Menambahkan font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -732,22 +747,23 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const reveals = document.querySelectorAll('.reveal');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // animasi sekali aja = hemat!
-            }
+        const reveals = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // animasi sekali aja = hemat!
+                }
+            });
+        }, {
+            threshold: 0.15
         });
-    }, { threshold: 0.15 });
 
-    reveals.forEach(reveal => {
-        observer.observe(reveal);
+        reveals.forEach(reveal => {
+            observer.observe(reveal);
+        });
     });
-});
-
 </script>
 
 </html>
