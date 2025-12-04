@@ -86,8 +86,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php endif; ?>
 
             <li class="nav-item">
-                <a href="logout.php" class="nav-link <?php echo ($current_page === 'logout.php') ? 'active' : ''; ?>">
-                    <i class="bi bi-box-arrow-right"></i> Logout
+                <a href="logout.php" class="nav-link <?php echo ($current_page === 'logout.php') ? 'active' : ''; ?>" style="color: red">
+                    <i class="bi bi-power"></i> Logout
                 </a>
             </li>
         </ul>
