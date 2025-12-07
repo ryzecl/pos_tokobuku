@@ -1210,7 +1210,7 @@
             padding: 0.25rem;
             border-radius: 0.5rem;
         } */
-             .newsletter input {
+        .newsletter input {
             padding: 13px 10px;
             border: none;
             border-radius: 50px 0 0 50px;
@@ -1344,10 +1344,10 @@
                 <a href="#categories" class="nav-link">All Books</a>
                 <a href="#reviews" class="nav-link">Reviews</a>
                 <div class="nav-cta">
-                <button class="btn-primary">Log In</button>
+                    <button class="btn-primary">Log In</button>
+                </div>
             </div>
-            </div>
-            
+
             <button class="mobile-toggle" id="mobile-toggle">
                 <i data-lucide="menu" id="menu-icon"></i>
                 <i data-lucide="x" id="close-icon" style="display: none;"></i>
@@ -1387,6 +1387,10 @@
                     </div>
                 </div>
             </div>
+            <?php
+            define('ALLOW_CHAT_ACCESS', true);
+            include 'chat.php';
+            ?>
         </section>
 
         <section class="publishers">
@@ -1602,9 +1606,9 @@
                         <button type="submit" class="newsletter-btn">Sign Up</button>
                     </form> -->
                     <div class="newsletter" style="margin-top:25px;">
-                    <input type="email" placeholder="Enter your email">
-                    <button>Sign Up</button>
-                </div>
+                        <input type="email" placeholder="Enter your email">
+                        <button>Sign Up</button>
+                    </div>
                 </div>
             </div>
             <div class="footer-copyright">Copyright Daebook © 2025 All Rights Reserved.</div>
