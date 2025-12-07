@@ -211,7 +211,7 @@ $customer_stmt = $customer->readAll();
 </head>
 <body>
     <div class="main-container">
-        <?php require_once 'sidebar.php'; ?>
+        <?php require_once 'components/sidebar.php'; ?>
         <main class="main-content">
             <header class="top-nav">
                 <h1>Point of Sale (POS)</h1>

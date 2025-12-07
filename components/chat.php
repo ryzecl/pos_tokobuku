@@ -484,7 +484,7 @@ if (!defined('ALLOW_CHAT_ACCESS')) {
 (function() {
     // ==================== KONFIGURASI ====================
     // PERUBAHAN PENTING: Gunakan path absolut dari root agar selalu menunjuk ke file yang benar
-    const API_URL = '/chat.php?action=chat'; 
+    const API_URL = 'components/chat.php?action=chat'; 
     
     // ==================== ELEMEN DOM ====================
     const launcherBtn = document.getElementById('daebook-launcher-btn');

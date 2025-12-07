@@ -231,7 +231,7 @@ $kategori_stmt = $kategori->readAll();
     <div class="main-container">
         <?php
         $role = $_SESSION['user_role'];
-        require_once 'sidebar.php'; ?>
+        require_once 'components/sidebar.php'; ?>
 
         <main class="main-content">
             <header class="top-nav">

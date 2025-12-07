@@ -124,7 +124,7 @@ $penerbit_stmt = $penerbit->readAll();
         <!-- Sidebar -->
         <?php
         $role = $_SESSION['user_role'];
-        require_once 'sidebar.php'; ?>
+        require_once 'components/sidebar.php'; ?>
 
         <!-- Main Content -->
         <main class="main-content">

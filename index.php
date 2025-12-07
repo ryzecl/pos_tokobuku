@@ -1389,7 +1389,7 @@
             </div>
             <?php
             define('ALLOW_CHAT_ACCESS', true);
-            include 'chat.php';
+            include 'components/chat.php';
             ?>
         </section>
 

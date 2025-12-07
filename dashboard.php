@@ -69,7 +69,7 @@ if ($role === 'admin' || $role === 'gudang') {
     <div class="main-container">
         <!-- Sidebar -->
         <?php
-        require_once 'sidebar.php'; ?>
+        require_once 'components/sidebar.php'; ?>
 
         <!-- Main Content -->
         <main class="main-content">
