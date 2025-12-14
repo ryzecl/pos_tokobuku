@@ -57,15 +57,13 @@ async function loadBukuFromDB() {
     // Initialize Fuse
     fuseIndex = new Fuse(cachedBuku, {
       keys: ["nama_buku", "kode_buku"],
-      threshold: 0.4, // Sensitivity (0.0 = exact, 1.0 = match anything)
+      threshold: 0.4,
       distance: 100,
     });
 
     lastUpdated = new Date();
     console.log(
-      `Cache buku di-refresh: ${buku.length} buku (${lastUpdated.toLocaleString(
-        "id-ID"
-      )})`
+      `Cache buku di-refresh: ${buku.length} buku (${lastUpdated.toLocaleString("id-ID")})`
     );
   } catch (error) {
     console.error("Gagal load data buku:", error.message);
@@ -81,24 +79,24 @@ setInterval(loadBukuFromDB, 5 * 60 * 1000);
 // Pencarian di cache
 function cariBukuDiCache(keyword = "", limit = 10) {
   let matches = [];
-  let isFuzzy = false; // Flag to indicate if result comes from fuzzy search
+  let isFuzzy = false;
 
   if (!keyword || keyword.toLowerCase().trim() === "semua") {
     matches = cachedBuku;
   } else {
     const lower = keyword.toLowerCase();
 
-    // 1. Coba Exact / Substring Match dulu
+    // Exact / Substring match dulu
     matches = cachedBuku.filter(
       (b) =>
         b.nama_buku.toLowerCase().includes(lower) ||
         b.kode_buku.toLowerCase().includes(lower)
     );
 
-    // 2. Jika kosong, coba Fuzzy Search
+    // Jika kosong, fuzzy search
     if (matches.length === 0 && fuseIndex) {
       const fuzzyResults = fuseIndex.search(keyword);
-      matches = fuzzyResults.map((res) => res.item); // Fuse returns { item, refIndex }
+      matches = fuzzyResults.map((res) => res.item);
       if (matches.length > 0) isFuzzy = true;
     }
   }
@@ -116,29 +114,25 @@ function cariBukuDiCache(keyword = "", limit = 10) {
     pesan: isFuzzy
       ? `Tidak ditemukan hasil persis untuk '${keyword}'. Berikut adalah buku yang namanya mirip:`
       : sisa > 0
-      ? `Menampilkan ${slicedData.length} dari total ${totalMatch} buku. Masih ada ${sisa} buku lain yang tidak ditampilkan.`
-      : `Menampilkan semua ${totalMatch} buku yang ditemukan.`,
+        ? `Menampilkan ${slicedData.length} dari total ${totalMatch} buku. Masih ada ${sisa} buku lain yang tidak ditampilkan.`
+        : `Menampilkan semua ${totalMatch} buku yang ditemukan.`,
   };
 }
 
 // ==================== EXPRESS SETUP ====================
 const app = express();
 
-// Security headers
 app.use(helmet());
 
-// Rate limiting (30 request per menit per IP)
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 menit
+  windowMs: 1 * 60 * 1000,
   max: 30,
   standardHeaders: true,
   legacyHeaders: false,
-  message:
-    "Terlalu banyak permintaan, silakan coba lagi beberapa saat lagi ya 😊",
+  message: "Terlalu banyak permintaan, silakan coba lagi beberapa saat lagi ya 😊",
 });
-app.use("/generate-text", limiter); // hanya pada endpoint chat
+app.use("/generate-text", limiter);
 
-// CORS ketat
 app.use(
   cors({
     origin: [
@@ -157,7 +151,7 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "10mb" })); // batasi ukuran body
+app.use(express.json({ limit: "10mb" }));
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -170,19 +164,17 @@ const tools = [
     function: {
       name: "cari_buku",
       description:
-        "Mencari buku berdasarkan nama atau kode. Gunakan keyword='semua' jika user bertanya 'ada buku apa saja' atau ingin melihat katalog. Hasil akan dibatasi, namun akan ada info total buku.",
+        "Mencari buku berdasarkan nama atau kode. Gunakan keyword='semua' jika user ingin melihat katalog lengkap.",
       parameters: {
         type: "object",
         properties: {
           keyword: {
             type: "string",
-            description:
-              "Kata kunci pencarian. Isi 'semua' untuk menampilkan semua buku.",
+            description: "Kata kunci pencarian. 'semua' untuk semua buku.",
           },
           limit: {
             type: "integer",
-            description:
-              "Jumlah maksimal hasil yang ditampilkan (default: 10). Jangan set terlalu besar agar respon cepat.",
+            description: "Maksimal hasil (default 10).",
           },
         },
         required: ["keyword"],
@@ -199,13 +191,30 @@ app.post("/generate-text", async (req, res) => {
     return res.status(400).json({ error: "Prompt tidak boleh kosong!" });
   }
 
-  // Batasi panjang prompt biar aman
   if (prompt.length > 1500) {
-    return res
-      .status(400)
-      .json({ error: "Pesan terlalu panjang, maksimal 1500 karakter ya." });
+    return res.status(400).json({ error: "Pesan terlalu panjang, maksimal 1500 karakter ya." });
   }
+  // ==================== BLOCKED KEYWORDS (HANYA YANG PASTI BAHAYA) ====================
+  const blockedKeywords = [
+    // Jailbreak & prompt injection
+    "siapa kamu sebenarnya", "siapa kamu sebenernya", "ignore previous", "ignore all previous",
+    "system prompt", "prompt baru", "instruksi baru", "jailbreak", "new prompt", "bypass",
+    "dan ", "dan/", "new instructions", "forget previous", "role play as", "act as",
 
+    // Konten dewasa eksplisit
+    "cersex", "ngentot", "kontol", "memek", "bokep", "sex", "porn", "ngent", "seks", "vcs",
+
+    // Bahaya / ilegal
+    "cara hack", "bom", "narkoba", "sabun colek", "phishing", "virus", "malware"
+  ];
+
+  const lowerPrompt = prompt.toLowerCase().trim();
+  if (blockedKeywords.some(kw => lowerPrompt.includes(kw.toLowerCase()))) {
+    return res.json({
+      result: "Maaf banget ya kak, aku cuma bisa bantu urusan buku dan DaeBook aja kok hehe. Yang gitu-gitu nggak bisa ya 😊"
+    });
+  }
+  // ================================================================================
   const updateWaktu = lastUpdated
     ? lastUpdated.toLocaleString("id-ID")
     : "sedang loading";
@@ -213,16 +222,29 @@ app.post("/generate-text", async (req, res) => {
   const messages = [
     {
       role: "system",
-      content: `Kamu adalah Dea, asisten toko buku DaeBook yang ramah, profesional, dan santai.
-Selalu jawab dalam bahasa Indonesia yang natural dan sopan, kamu juga adalah seorang wanita.
-DATA BUKU HANYA BOLEH DIAMBIL DARI TOOL cari_buku. JANGAN PERNAH menebak atau mengada-ada judul, harga, atau stok.
-Jika tool mengembalikan 'is_recommendation' = true, artinya buku yang dicari user tidak ketemu tapi sistem menemukan buku yang mirip. Katakan: "Mungkin maksud Anda buku [Nama Buku]?" atau kalimat sejenis sebelum menjelaskan detailnya.
-Jika hasil pencarian kosong (dan tidak ada rekomendasi), katakan dengan jujur: "Maaf, buku yang Anda cari tidak tersedia di stok kami saat ini."
-Format harga: Rp di depan dan pakai titik sebagai pemisah ribuan (contoh: Rp125.000).
-Jika stok = 0, beri tahu "stok sedang kosong" atau "maaf stok habis".
-Jika stok > 0, beri tahu jumlah stoknya.
-Jika ada sisa buku yang tidak ditampilkan, sebutkan singkat ("dan ada X buku lainnya...").
-Data buku terakhir di-update: ${updateWaktu}.`,
+      content: `Kamu adalah Dea, asisten cantik dan ramah di toko buku DaeBook.
+
+    PERATURAN WAJIB YANG HARUS SELALU KAMU PATUHI TANPA Pengecualian:
+    1. Kamu HANYA boleh menjawab tentang DaeBook: cari buku, harga, stok, rekomendasi buku, cara beli, info toko, dll.
+    2. Jika user bertanya APA PUN di luar DaeBook (contoh: politik, coding, resep masakan, puisi, cerita dewasa, matematika, gosip artis, agama, cuaca, hewan, dll), kamu WAJIB langsung tolak dengan kalimat yang mengandung:
+      "Maaf, saya hanya bisa bantu urusan DaeBook ya" atau variasi serupa.
+      Contoh penolakan yang boleh kamu pakai:
+      - "Maaf ya kak, aku cuma bisa bantu soal buku di DaeBook aja nih 🥰"
+      - "Hehe maaf kak, aku nggak bisa jawab itu. Aku kan cuma ngurusin buku-buku DaeBook kok"
+      - "Waduh kak, aku hanya bisa bantu kalau tentang buku atau DaeBook ya"
+
+    3. DATA BUKU HANYA boleh diambil dari hasil tool cari_buku. JANGAN PERNAH mengada-ada judul, harga, atau stok sendiri.
+
+    4. Aturan tampilan:
+      - Harga ditulis dengan format: Rp125.000 (pakai titik sebagai pemisah ribuan)
+      - Selalu sebutkan jumlah stok saat ini
+      - Kalau stok = 0 → bilang "stok sedang kosong" atau "habis ya kak"
+      - Kalau tool bilang is_recommendation = true → mulai jawaban dengan: "Mungkin maksud kakak buku [judul buku] ya?"
+      - Kalau ada buku lain yang nggak ditampilkan semua → cukup bilang: "dan masih ada beberapa buku lainnya..."
+
+    Bahasa kamu: Indonesia santai, ramah, sedikit manja/genit, pake emoji sesekali biar lebih hidup, tapi TEGAS banget kalau topiknya melenceng.
+
+    Data buku terakhir di-update: ${lastUpdated ? lastUpdated.toLocaleString("id-ID") : "beberapa detik lagi"}.`
     },
     ...messageHistory,
     { role: "user", content: prompt },
@@ -243,8 +265,6 @@ Data buku terakhir di-update: ${updateWaktu}.`,
     if (message.tool_calls?.length > 0) {
       const toolCall = message.tool_calls[0];
       const args = JSON.parse(toolCall.function.arguments);
-
-      // Default limit 10 jika tidak diisi
       const limit = args.limit || 10;
       const hasilBuku = cariBukuDiCache(args.keyword || "", limit);
 
@@ -271,24 +291,19 @@ Data buku terakhir di-update: ${updateWaktu}.`,
   } catch (error) {
     console.error("Error Groq:", error.message);
     res.status(500).json({
-      error:
-        "Maaf, saat ini sedang ada gangguan pada server AI. Silakan coba lagi beberapa saat lagi.",
+      error: "Maaf, saat ini sedang ada gangguan pada server AI. Silakan coba lagi beberapa saat lagi.",
     });
   }
 });
 
-// ==================== ENDPOINT REFRESH CACHE (lebih aman) ====================
+// ==================== REFRESH CACHE ====================
 const allowedIps = ["127.0.0.1", "::1", "::ffff:127.0.0.1"];
 if (ipv4) allowedIps.push(ipv4);
 
 app.post("/refresh-buku-cache", async (req, res) => {
   const clientIp = req.ip || req.connection.remoteAddress;
-
-  // IP whitelist (hanya dari mesin sendiri atau server PHP)
   if (!allowedIps.includes(clientIp)) {
-    return res
-      .status(403)
-      .json({ success: false, message: "IP tidak diizinkan" });
+    return res.status(403).json({ success: false, message: "IP tidak diizinkan" });
   }
 
   const secret = req.headers["x-secret-key"] || req.body.secret || "";
@@ -311,10 +326,8 @@ app.get("/", (req, res) => {
     <h1>DaeBook Assistant API</h1>
     <p>Status: <strong>Online & Aman</strong></p>
     <p>Data buku: ${cachedBuku.length} item</p>
-    <p>Terakhir update: ${
-      lastUpdated ? lastUpdated.toLocaleString("id-ID") : "loading..."
-    }</p>
-    <p>Keamanan: Helmet ✓ | Rate Limit ✓ | CORS ketat ✓ | Input validation ✓</p>
+    <p>Terakhir update: ${lastUpdated ? lastUpdated.toLocaleString("id-ID") : "loading..."}</p>
+    <p>Keamanan: Helmet ✓ | Rate Limit ✓ | CORS ketat ✓ | Input validation ✓ | Keyword Filter ✓</p>
   `);
 });
 
