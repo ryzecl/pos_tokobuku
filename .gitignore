@@ -22,3 +22,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Assets >git rm --cached -r assets/produk
+assets/produk
