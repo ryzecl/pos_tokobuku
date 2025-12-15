@@ -9,7 +9,8 @@ require_once 'models/KategoriBuku.php';
 define('NODE_SERVER_URL', 'http://localhost:3000/refresh-buku-cache');
 define('CACHE_REFRESH_SECRET', 'AkusukAC00kl4444T');
 
-function refreshNodeCache() {
+function refreshNodeCache()
+{
     $ch = curl_init(NODE_SERVER_URL);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -53,10 +54,13 @@ if (!is_dir($uploadFolder)) {
 function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
 {
     if (empty($kodeBuku)) {
+        error_log("Upload failed: Kode buku empty");
         return false;
     }
 
     if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
+        $error = $_FILES[$fieldName]['error'] ?? 'Not set';
+        error_log("Upload failed for $kodeBuku: File error code $error");
         return false;
     }
 
@@ -65,6 +69,7 @@ function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
 
     // Validasi ukuran (max 5MB)
     if ($fileSize > 5 * 1024 * 1024) {
+        error_log("Upload failed for $kodeBuku: Size $fileSize exceeds limit");
         return false;
     }
 
@@ -75,6 +80,7 @@ function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
 
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!in_array($mimeType, $allowedMimeTypes)) {
+        error_log("Upload failed for $kodeBuku: Mime type $mimeType not allowed");
         return false;
     }
 
@@ -98,6 +104,7 @@ function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
     }
 
     if (!$image) {
+        error_log("Upload failed for $kodeBuku: Failed to create image resource");
         return false;
     }
 
@@ -113,7 +120,13 @@ function uploadFotoCover($fieldName, $kodeBuku, $uploadFolder)
     $success = imagejpeg($image, $targetFile, 85);
     imagedestroy($image);
 
-    return $success ? $safeKode . ".jpg" : false;
+    if ($success) {
+        error_log("Upload success for $kodeBuku: Saved to $targetFile");
+        return $safeKode . ".jpg";
+    } else {
+        error_log("Upload failed for $kodeBuku: imagejpeg returned false");
+        return false;
+    }
 }
 
 // ✅ PERBAIKAN: Handle form dengan error handling
@@ -275,14 +288,14 @@ $kategori_stmt = $kategori->readAll();
                                 <label for="kategori_id">Kategori <span style="color: red;">*</span></label>
                                 <select id="kategori_id" name="kategori_id" required>
                                     <option value="">-- Pilih Kategori --</option>
-                                    <?php 
+                                    <?php
                                     $kategori_stmt_temp = $kategori->readAll();
                                     if ($kategori_stmt_temp) {
                                         while ($row = $kategori_stmt_temp->fetch(PDO::FETCH_ASSOC)): ?>
                                             <option value="<?php echo $row['id']; ?>">
                                                 <?php echo $row['nama_kategori']; ?>
                                             </option>
-                                        <?php endwhile;
+                                    <?php endwhile;
                                     }
                                     ?>
                                 </select>
@@ -362,7 +375,7 @@ $kategori_stmt = $kategori->readAll();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
+                            <?php
                             if ($stmt) {
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                     <tr>
@@ -379,23 +392,7 @@ $kategori_stmt = $kategori->readAll();
                                             </span>
                                         </td>
                                         <td>
-                                            <?php
-                                            if ($row['tanggal_expired']) {
-                                                $expired = strtotime($row['tanggal_expired']);
-                                                $now = time();
-                                                $days_left = ($expired - $now) / (60 * 60 * 24);
-
-                                                if ($days_left < 0) {
-                                                    echo '<span class="badge badge-danger">Expired</span>';
-                                                } elseif ($days_left <= 30) {
-                                                    echo '<span class="badge badge-warning">' . date('d/m/Y', $expired) . '</span>';
-                                                } else {
-                                                    echo date('d/m/Y', $expired);
-                                                }
-                                            } else {
-                                                echo '-';
-                                            }
-                                            ?>
+                                            <span class=""><?php echo date('d/m/Y', strtotime($row['tanggal_expired'])); ?></span>
                                         </td>
                                         <td>
                                             <button onclick="editbuku(<?php echo htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8'); ?>)"
@@ -404,7 +401,7 @@ $kategori_stmt = $kategori->readAll();
                                                 class="btn btn-danger btn-sm">Hapus</button>
                                         </td>
                                     </tr>
-                                <?php endwhile;
+                            <?php endwhile;
                             }
                             ?>
                         </tbody>
@@ -479,6 +476,13 @@ $kategori_stmt = $kategori->readAll();
                         <label for="edit_tanggal_expired">Tanggal Expired</label>
                         <input type="date" id="edit_tanggal_expired" name="tanggal_expired">
                     </div>
+                    <div class="form-group">
+                        <label for="edit_foto_cover">Foto Cover (Biarkan kosong jika tidak diubah)</label>
+                        <input type="file" id="edit_foto_cover" name="foto_cover" accept="image/*">
+                        <div style="margin-top: 10px;">
+                            <img id="edit_foto_preview" src="" alt="Preview Cover" style="max-height: 100px; display: none; border: 1px solid #ddd; padding: 5px;">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -499,7 +503,7 @@ $kategori_stmt = $kategori->readAll();
         function loadKategori() {
             const select = document.getElementById('edit_kategori_id');
             select.innerHTML = '<option value="">-- Pilih Kategori --</option>';
-            <?php 
+            <?php
             $kategori_stmt = $kategori->readAll();
             if ($kategori_stmt) {
                 while ($row = $kategori_stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -526,6 +530,15 @@ $kategori_stmt = $kategori->readAll();
             document.getElementById('edit_stok_minimum').value = data.stok_minimum;
             document.getElementById('edit_tanggal_expired').value = data.tanggal_expired || '';
             document.getElementById('edit_deskripsi').value = data.deskripsi || '';
+
+            const preview = document.getElementById('edit_foto_preview');
+            if (data.foto_cover) {
+                preview.src = 'assets/produk/' + data.foto_cover + '?t=' + new Date().getTime(); // Prevent caching
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+
             document.getElementById('editModal').style.display = 'block';
         }
 
@@ -546,7 +559,7 @@ $kategori_stmt = $kategori->readAll();
             }
         }
 
-   // Close modal saat klik di luar
+        // Close modal saat klik di luar
         document.getElementById('editModal').onclick = function(e) {
             if (e.target === this) {
                 closeEditModal();

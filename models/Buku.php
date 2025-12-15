@@ -306,10 +306,11 @@ class Buku
             $query = "SELECT o.*, k.nama_kategori 
                       FROM " . $this->table_name . " o
                       LEFT JOIN kategori_buku k ON o.kategori_id = k.id
-                      WHERE o.nama_buku LIKE :kw OR o.kode_buku LIKE :kw
+                      WHERE o.nama_buku LIKE :kw1 OR o.kode_buku LIKE :kw2
                       ORDER BY o.nama_buku ASC";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindValue(':kw', $kw, PDO::PARAM_STR);
+            $stmt->bindValue(':kw1', $kw, PDO::PARAM_STR);
+            $stmt->bindValue(':kw2', $kw, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt;
         } catch (PDOException $e) {

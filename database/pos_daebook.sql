@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 30 Nov 2025 pada 22.19
--- Versi server: 9.5.0
--- Versi PHP: 8.4.12
+-- Generation Time: Dec 13, 2025 at 04:55 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.5.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Basis data: `pos_daebook`
+-- Database: `pos_daebook`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `buku`
+-- Table structure for table `buku`
 --
 
 CREATE TABLE `buku` (
@@ -45,14 +45,13 @@ CREATE TABLE `buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `buku`
+-- Dumping data for table `buku`
 --
-
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -64,15 +63,10 @@ CREATE TABLE `customer` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `customer`
---
-
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_pembelian`
+-- Table structure for table `detail_pembelian`
 --
 
 CREATE TABLE `detail_pembelian` (
@@ -87,7 +81,7 @@ CREATE TABLE `detail_pembelian` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_penjualan`
+-- Table structure for table `detail_penjualan`
 --
 
 CREATE TABLE `detail_penjualan` (
@@ -99,15 +93,10 @@ CREATE TABLE `detail_penjualan` (
   `subtotal` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `detail_penjualan`
---
-
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori_buku`
+-- Table structure for table `kategori_buku`
 --
 
 CREATE TABLE `kategori_buku` (
@@ -118,14 +107,20 @@ CREATE TABLE `kategori_buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `kategori_buku`
+-- Dumping data for table `kategori_buku`
 --
 
+INSERT INTO `kategori_buku` (`id`, `nama_kategori`, `deskripsi`, `created_at`) VALUES
+(1, 'Self Improvement', '', '2025-12-13 03:18:21'),
+(2, 'Romance', '', '2025-12-13 04:52:29'),
+(3, 'Fantasy', '', '2025-12-13 04:52:40'),
+(4, 'Mistery', '', '2025-12-13 04:52:56'),
+(5, 'Thriller', '', '2025-12-13 04:53:00');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pembelian`
+-- Table structure for table `pembelian`
 --
 
 CREATE TABLE `pembelian` (
@@ -142,7 +137,7 @@ CREATE TABLE `pembelian` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `penerbit`
+-- Table structure for table `penerbit`
 --
 
 CREATE TABLE `penerbit` (
@@ -157,7 +152,7 @@ CREATE TABLE `penerbit` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pengaturan`
+-- Table structure for table `pengaturan`
 --
 
 CREATE TABLE `pengaturan` (
@@ -167,7 +162,7 @@ CREATE TABLE `pengaturan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `pengaturan`
+-- Dumping data for table `pengaturan`
 --
 
 INSERT INTO `pengaturan` (`id`, `nama`, `nilai`) VALUES
@@ -176,7 +171,7 @@ INSERT INTO `pengaturan` (`id`, `nama`, `nilai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `penjualan`
+-- Table structure for table `penjualan`
 --
 
 CREATE TABLE `penjualan` (
@@ -192,18 +187,13 @@ CREATE TABLE `penjualan` (
   `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `tanggal_penjualan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `metode_pembayaran` enum('CASH','QRIS','TRANSFER') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'CASH',
-  `token_public` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `token_public` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `penjualan`
---
-
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -218,7 +208,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `email`, `role`, `created_at`, `updated_at`) VALUES
@@ -227,11 +217,11 @@ INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `email`, `rol
 (3, 'gudang1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff Gudang', 'gudang@apotek.com', 'gudang', '2025-11-06 12:34:38', '2025-11-06 12:34:38');
 
 --
--- Indeks untuk tabel yang dibuang
+-- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `buku`
+-- Indexes for table `buku`
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`id`),
@@ -239,13 +229,13 @@ ALTER TABLE `buku`
   ADD KEY `kategori_id` (`kategori_id`);
 
 --
--- Indeks untuk tabel `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `detail_pembelian`
+-- Indexes for table `detail_pembelian`
 --
 ALTER TABLE `detail_pembelian`
   ADD PRIMARY KEY (`id`),
@@ -253,7 +243,7 @@ ALTER TABLE `detail_pembelian`
   ADD KEY `buku_id` (`buku_id`);
 
 --
--- Indeks untuk tabel `detail_penjualan`
+-- Indexes for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
   ADD PRIMARY KEY (`id`),
@@ -261,13 +251,13 @@ ALTER TABLE `detail_penjualan`
   ADD KEY `buku_id` (`buku_id`);
 
 --
--- Indeks untuk tabel `kategori_buku`
+-- Indexes for table `kategori_buku`
 --
 ALTER TABLE `kategori_buku`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pembelian`
+-- Indexes for table `pembelian`
 --
 ALTER TABLE `pembelian`
   ADD PRIMARY KEY (`id`),
@@ -276,20 +266,20 @@ ALTER TABLE `pembelian`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `penerbit`
+-- Indexes for table `penerbit`
 --
 ALTER TABLE `penerbit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pengaturan`
+-- Indexes for table `pengaturan`
 --
 ALTER TABLE `pengaturan`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nama` (`nama`);
 
 --
--- Indeks untuk tabel `penjualan`
+-- Indexes for table `penjualan`
 --
 ALTER TABLE `penjualan`
   ADD PRIMARY KEY (`id`),
@@ -298,109 +288,109 @@ ALTER TABLE `penjualan`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `buku`
+-- AUTO_INCREMENT for table `buku`
 --
 ALTER TABLE `buku`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_pembelian`
+-- AUTO_INCREMENT for table `detail_pembelian`
 --
 ALTER TABLE `detail_pembelian`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_penjualan`
+-- AUTO_INCREMENT for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `kategori_buku`
+-- AUTO_INCREMENT for table `kategori_buku`
 --
 ALTER TABLE `kategori_buku`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT untuk tabel `pembelian`
+-- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `penerbit`
+-- AUTO_INCREMENT for table `penerbit`
 --
 ALTER TABLE `penerbit`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `pengaturan`
+-- AUTO_INCREMENT for table `pengaturan`
 --
 ALTER TABLE `pengaturan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `penjualan`
+-- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `buku`
+-- Constraints for table `buku`
 --
 ALTER TABLE `buku`
   ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori_buku` (`id`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `detail_pembelian`
+-- Constraints for table `detail_pembelian`
 --
 ALTER TABLE `detail_pembelian`
   ADD CONSTRAINT `detail_pembelian_ibfk_1` FOREIGN KEY (`pembelian_id`) REFERENCES `pembelian` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `detail_penjualan`
+-- Constraints for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
   ADD CONSTRAINT `detail_penjualan_ibfk_1` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pembelian`
+-- Constraints for table `pembelian`
 --
 ALTER TABLE `pembelian`
   ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`penerbit_id`) REFERENCES `penerbit` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `penjualan`
+-- Constraints for table `penjualan`
 --
 ALTER TABLE `penjualan`
   ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;

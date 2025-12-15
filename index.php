@@ -131,11 +131,11 @@
                     <h2 class="section-title-center">Explore different type book <br> and genres</h2>
                     <div class="search-wrapper">
                         <div class="search-glow"></div>
-                        <form class="search-form" id="search-form">
-                            <input type="text" id="search-input" placeholder="Search all books: e.g. 'The Da Vinci Code' or 'Cyberpunk Novels'" class="search-input">
+                        <form class="search-form" id="search-form" action="all_book.php" method="GET">
+                            <input type="text" name="search" id="search-input" placeholder="Search all books: e.g. 'The Da Vinci Code' or 'Cyberpunk Novels'" class="search-input">
                             <button type="submit" class="search-btn" id="search-btn">
                                 <i data-lucide="search" id="search-icon"></i>
-                                <i data-lucide="loader-2" id="loader-icon" class="spin" style="display: none;"></i>
+                                <!-- <i data-lucide="loader-2" id="loader-icon" class="spin" style="display: none;"></i> -->
                             </button>
                         </form>
                     </div>
@@ -291,7 +291,7 @@
                     </form> -->
                     <div class="newsletter" style="margin-top:25px;">
                         <input type="email" placeholder="Enter your email">
-                        <button>Sign Up</button>
+                        <button class="btn-newsletter">Sign Up</button>
                     </div>
                 </div>
             </div>
@@ -373,73 +373,14 @@
             observer.observe(el);
         });
 
-        // Book Search with API
+        // Simpel Search Handler redirect to all_book.php
         const searchForm = document.getElementById('search-form');
-        const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');
-        const searchIcon = document.getElementById('search-icon');
-        const loaderIcon = document.getElementById('loader-icon');
-        const aiResults = document.getElementById('ai-results');
-
-        searchForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const query = searchInput.value.trim();
-
-            if (!query) return;
-
-            // Show loading
-            searchBtn.disabled = true;
-            searchIcon.style.display = 'none';
-            loaderIcon.style.display = 'block';
-            lucide.createIcons();
-
-            try {
-                const response = await fetch('api.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        query
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success && data.books) {
-                    displayBooks(data.books);
-                } else {
-                    aiResults.innerHTML = '<p style="color: #EF4444; text-align: center;">Error: ' + (data.error || 'Failed to fetch recommendations') + '</p>';
-                }
-            } catch (error) {
-                aiResults.innerHTML = '<p style="color: #EF4444; text-align: center;">Network error. Please try again.</p>';
-            } finally {
-                searchBtn.disabled = false;
-                searchIcon.style.display = 'block';
-                loaderIcon.style.display = 'none';
-                lucide.createIcons();
-            }
+        searchForm.addEventListener('submit', (e) => {
+            // Biarkan form melakukan submit jika method/action sudah diset di HTML, 
+            // atau kita set manual di sini jika belum.
+            // Kita akan update HTML formnya juga, tapi untuk safety kita bisa force redirect via JS
+            // jika update HTML terpisah.
         });
-
-        function displayBooks(books) {
-            if (!books || books.length === 0) {
-                aiResults.innerHTML = '';
-                return;
-            }
-
-            const html = books.map(book => `
-                <div class="book-card">
-                    <div class="book-genre">${book.genre || 'General'}</div>
-                    <h3 class="book-title">${book.title}</h3>
-                    <p class="book-author">by ${book.author}</p>
-                    <p class="book-description">${book.description}</p>
-                    <button class="book-details">Details <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i></button>
-                </div>
-            `).join('');
-
-            aiResults.innerHTML = html;
-            lucide.createIcons();
-        }
     </script>
 </body>
 
