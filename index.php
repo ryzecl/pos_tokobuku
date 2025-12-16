@@ -256,10 +256,10 @@
                     <p class="footer-text">daebook.work@gmail.com</p>
                     <p class="footer-text">+1 (212) 555-0198</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="linkedin"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="twitter"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100074331092431" class="social-link"><i data-lucide="facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/daebook-app-24b076394/" class="social-link"><i data-lucide="linkedin"></i></a>
+                        <a href="https://x.com/Daebook01" class="social-link"><i data-lucide="X"></i></a>
+                        <a href="https://www.instagram.com/daebook.id_/" class="social-link"><i data-lucide="instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
