@@ -71,14 +71,15 @@ if (!empty($penjualan->customer_id)) {
 }
 
 // Dapatkan IPv4 dari ipconfig (Windows)
-function getIpv4FromIpconfig() {
-    $output = shell_exec('ipconfig');
-    if (!$output) return null;
-    // Ambil baris yang ada tulisan IPv4
-    preg_match('/IPv4[^:]*:\s*([0-9\.]+)/', $output, $match);
-    return $match[1] ?? null;
-}
-$ipv4 = getIpv4FromIpconfig();
+// function getIpv4FromIpconfig() {
+//     $output = shell_exec('ipconfig');
+//     if (!$output) return null;
+//     // Ambil baris yang ada tulisan IPv4
+//     preg_match('/IPv4[^:]*:\s*([0-9\.]+)/', $output, $match);
+//     return $match[1] ?? null;
+// }
+// $ipv4 = getIpv4FromIpconfig();
+$ipv4 = "https://daebook.dpdns.org/";
 
 // URL publik struk ini
 $struk_url = $ipv4 . "struk.php?token=" . urlencode($token);
