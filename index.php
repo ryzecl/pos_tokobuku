@@ -10,6 +10,39 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <link rel="stylesheet" href="assets/css/index.css">
+    <style>
+        /* Tambahan CSS untuk membuat carousel berputar (infinite horizontal scroll) */
+        .publishers-grid {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: carousel-scroll 20s linear infinite; /* Durasi animasi bisa disesuaikan */
+        }
+
+        .publisher-item {
+            flex: none; /* Pastikan item tidak fleksibel */
+            min-width: 150px; /* Sesuaikan lebar item sesuai kebutuhan, misalnya 150px per logo */
+            margin: 0 20px; /* Jarak antar item */
+        }
+
+        @keyframes carousel-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%); /* Geser setengah karena ada duplikat item */
+            }
+        }
+
+        /* Opsional: Pause on hover */
+        .publishers-grid:hover .carousel-track {
+            animation-play-state: paused;
+        }
+    </style>
 </head>
 
 <body>
@@ -80,18 +113,34 @@
         <section class="publishers">
             <div class="container">
                 <p class="publishers-label">Featured Publishers</p>
-                <div class="publishers-grid " id="about">
-                    <div class="publisher-item">
-                        <a href="https://www.gramedia.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/gramedia-logo.png" alt="Gramedia"></a>
-                    </div>
-                    <div class="publisher-item">
-                        <a href="https://mizan.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/mizan-logo.png" alt="Mizan"></a>
-                    </div>
-                    <div class="publisher-item">
-                        <a href="https://bintangpustaka.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/bentang-pustaka-logo.png" alt="Bentang"></a>
-                    </div>
-                    <div class="publisher-item">
-                        <a href="https://penerbitdeepublish.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/deepublish-logo.png" alt="Deepublish"></a>
+                <div class="publishers-grid" id="about">
+                    <div class="carousel-track">
+                        <!-- Item asli -->
+                        <div class="publisher-item">
+                            <a href="https://www.gramedia.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/gramedia-logo.png" alt="Gramedia"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://mizan.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/mizan-logo.png" alt="Mizan"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://bintangpustaka.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/bentang-pustaka-logo.png" alt="Bentang"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://penerbitdeepublish.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/deepublish-logo.png" alt="Deepublish"></a>
+                        </div>
+                        <!-- Duplikat item untuk efek infinite loop -->
+                        <div class="publisher-item">
+                            <a href="https://www.gramedia.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/gramedia-logo.png" alt="Gramedia"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://mizan.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/mizan-logo.png" alt="Mizan"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://bintangpustaka.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/bentang-pustaka-logo.png" alt="Bentang"></a>
+                        </div>
+                        <div class="publisher-item">
+                            <a href="https://penerbitdeepublish.com/" target="_blank" rel="noopener noreferrer"><img src="assets/img/logo/deepublish-logo.png" alt="Deepublish"></a>
+                        </div>
                     </div>
                 </div>
             </div>
