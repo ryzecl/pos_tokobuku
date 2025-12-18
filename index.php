@@ -225,9 +225,9 @@
                                 </div>
                             </div>
                             <div class="genre-books">
-                                <img src="assets/img/books/romance-1.jpg" class="book-cover book-left" alt="Romance 1">
-                                <img src="assets/img/books/romance-2.jpg" class="book-cover book-center" alt="Romance 2">
-                                <img src="assets/img/books/romance-3.jpg" class="book-cover book-right" alt="Romance 3">
+                                <img src="assets/img/Book-Romance/serangkai3.png" class="book-cover book-left" alt="Romance 1">
+                                <img src="assets/img/Book-Romance/theatlas1.png" class="book-cover book-center" alt="Romance 2">
+                                <img src="assets/img/Book-Romance/ToshikazuKawaguchi.png" class="book-cover book-right" alt="Romance 3">
                             </div>
                             <div class="genre-footer">
                                 <div class="genre-text">
@@ -248,9 +248,9 @@
                                 </div>
                             </div>
                             <div class="genre-books">
-                                <img src="assets/img/books/thriller-1.jpg" class="book-cover book-left" alt="Thriller 1">
-                                <img src="assets/img/books/thriller-2.jpg" class="book-cover book-center" alt="Thriller 2">
-                                <img src="assets/img/books/thriller-3.jpg" class="book-cover book-right" alt="Thriller 3">
+                                <img src="assets/img/Book-Thriler/darkmater1.png" class="book-cover book-left" alt="Thriller 1">
+                                <img src="assets/img/Book-Thriler/DaVinciCode1.png" class="book-cover book-center" alt="Thriller 2">
+                                <img src="assets/img/Book-Thriler/iamwatching1.png" class="book-cover book-right" alt="Thriller 3">
                             </div>
                             <div class="genre-footer">
                                 <div class="genre-text">
@@ -272,9 +272,9 @@
                 </div>
                 <div class="testimonials-grid">
                     <div class="avatars-column">
-                        <img src="assets/img/testimonial/person1.jpg" class="avatar" alt="User 1">
-                        <img src="assets/img/testimonial/person2.jpg" class="avatar avatar-active" alt="User 2">
-                        <img src="assets/img/testimonial/person3.jpg" class="avatar" alt="User 3">
+                        <img src="assets/img/customer-review/Model 1.png" class="avatar" alt="User 1">
+                        <img src="assets/img/customer-review/Model 2.png" class="avatar avatar-active" alt="User 2">
+                        <img src="assets/img/customer-review/Model 3.png" class="avatar" alt="User 3">
                     </div>
                     <div class="testimonial-content">
                         <div class="quote-mark">"</div>
@@ -347,11 +347,11 @@
                 <div class="footer-column">
                     <h4 class="footer-title">Our Team</h4>
                     <ul class="footer-links">
-                        <li>Fhazar R A - PM</li>
-                        <li>Fadel R - QA</li>
-                        <li>Hildan A T P - Frontend</li>
-                        <li>Ferry N H - Backend</li>
-                        <li>Daffa N Z - UI/UX</li>
+                        <li><a href="https://www.instagram.com/fhazar_aqyla/" target="_blank" rel="noopener noreferrer">Fhazar R A - PM</a></li>
+                        <li><a href="https://www.instagram.com/ouldmanz/" target="_blank" rel="noopener noreferrer">Fadel R - QA</a></li>
+                        <li><a href="https://www.instagram.com/hildan_hyell/" target="_blank" rel="noopener noreferrer">Hildan A T P - Frontend</a></li>
+                        <li><a href="https://www.instagram.com/ferrynoerh__/" target="_blank" rel="noopener noreferrer">Ferry N H - Backend</a></li>
+                        <li><a href="https://www.instagram.com/daffa.enz7/" target="_blank" rel="noopener noreferrer">Daffa N Z - UI/UX</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
