@@ -1,10 +1,10 @@
 <?php
 // Konfigurasi umum aplikasi
-define('BASE_URL', 'http://localhost/daebook/');
+define('BASE_URL', 'https://case-beefier-covetingly.ngrok-free.dev');
 define('APP_NAME', 'Daebook');
 
 // Lingkungan: 'development' atau 'production'
-define('APP_ENV', 'development');
+define('APP_ENV', 'production');
 
 ini_set('session.cookie_httponly', 1);
 ini_set('session.use_strict_mode', 1);

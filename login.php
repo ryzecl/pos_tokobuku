@@ -134,11 +134,11 @@ if ($_SESSION['login_attempts'] >= 3 && ($now - $_SESSION['last_attempt_time']) 
                     <p>Admin: <code>admin</code> / password</p>
                     <p>Kasir: <code>kasir1</code> / password</p>
                     <p>Gudang: <code>gudang1</code> / password</p>
-                    <p style="margin-top: 15px;">
-                        <a href="index.php" style="color: #A259FF; text-decoration: none;">← Kembali ke Beranda</a>
-                    </p>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
+                <p style="margin-top: 15px;">
+                    <a href=".." style="color: #A259FF; text-decoration: none;">← Kembali ke Beranda</a>
+                </p>
         </div>
     </div>
 
