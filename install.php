@@ -14,6 +14,13 @@ function render_form($message = '') {
         : "";
 
     echo <<<HTML
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+    <title>Instalasi Database</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -55,6 +62,8 @@ function render_form($message = '') {
         margin: 24px 0;
     }
 </style>
+</head>
+<body>
 
 <h1>Instalasi Database POS Daebook</h1>
 {$msgHtml}
@@ -91,6 +100,9 @@ function confirmAction(){
 <hr>
 
 <p><small>File ini dapat dihapus setelah proses instalasi atau maintenance selesai.</small></p>
+
+</body>
+</html>
 HTML;
 }
 

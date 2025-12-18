@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /config/
+Disallow: /database/
+Disallow: /server/
+Disallow: /install.php
+Disallow: /format-excel.php
+
+Allow: /
+
+Sitemap: https://daebook.dpdns.org/sitemap.xml
+Host: https://daebook.dpdns.org/

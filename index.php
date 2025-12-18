@@ -4,8 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Daebook - Online bookstore platform to discover and purchase your favorite book collections at the best prices.">
+    <meta name="keywords" content="books, online bookstore, book purchase, book collection, literature">
+    <meta name="author" content="Daebook">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Daebook - Discover Books">
+    <meta property="og:description" content="Online bookstore platform to discover and purchase your favorite book collections">
+    <meta property="og:image" content="assets/img/logo/logo.png">
     <title>Daebook - Discover Books</title>
-    <!-- Font diganti jadi Poppins seperti code 2 -->
+        <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+        <link rel="canonical" href="https://daebook.dpdns.org/">
+        <!-- Structured data for search engines -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Daebook",
+            "url": "https://daebook.dpdns.org/",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://daebook.dpdns.org/all_book.php?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+        </script>
+        <!-- Font diganti jadi Poppins seperti code 2 -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
