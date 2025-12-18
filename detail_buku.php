@@ -2,9 +2,10 @@
 require_once 'config/database.php';
 require_once 'models/Buku.php';
 
-$id = isset($_GET['id']) ? $_GET['id'] : null;
+// sanitize and validate id
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if (!$id) {
+if ($id <= 0) {
     header("Location: all_book.php");
     exit;
 }
@@ -130,13 +131,28 @@ $all_stmt = $buku->readAll(); // This is inefficient but fits within current sco
     </nav>
 
     <main class="container detail-section">
+         <?php
+            define('ALLOW_CHAT_ACCESS', true);
+            include 'components/chat.php';
+            ?>
         <div class="detail-container">
             <div class="book-cover-large">
-                <?php if (!empty($buku->kode_buku)): ?>
-                    <img src="assets/produk/<?php echo htmlspecialchars($buku->kode_buku); ?>.jpg" alt="Cover">
-                <?php else: ?>
-                    <i data-lucide="book" size="100" color="#6b7280"></i>
-                <?php endif; ?>
+                <?php
+                    // Build a safe filename and prefer server-side file existence check
+                    $kode_safe = '';
+                    if (!empty($buku->kode_buku)) {
+                        $kode_safe = basename($buku->kode_buku);
+                    }
+                    $coverPath = 'assets/produk/' . $kode_safe . '.jpg';
+                    $defaultCover = 'assets/img/default.jpg';
+
+                    if (!empty($kode_safe) && file_exists($coverPath)) {
+                        echo '<img src="' . htmlspecialchars($coverPath) . '" alt="' . htmlspecialchars($buku->nama_buku) . '" loading="lazy">';
+                    } else {
+                        // Fallback to default image (server-side) so it shows even when file missing
+                        echo '<img src="' . $defaultCover . '" alt="No cover available" loading="lazy">';
+                    }
+                ?>
             </div>
             <div class="book-info">
                 <a href="all_book.php" style="text-decoration: none; color: #9ca3af; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
@@ -182,38 +198,101 @@ $all_stmt = $buku->readAll(); // This is inefficient but fits within current sco
             <h2 class="section-title-center" style="margin-bottom: 2rem; font-size: 1.5rem;">Relevant to your search</h2>
             <div class="ai-results" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); display: grid; gap: 2rem;">
                 <?php
-                // Display 3 random books
-                $count = 0;
-                while ($row = $all_stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($row['id'] == $id) continue;
-                    if ($count >= 3) break;
-                ?>
-                    <div class="book-card">
-                        <div class="book-genre"><?php echo htmlspecialchars($row['nama_kategori'] ?? 'General'); ?></div>
-                        <h3 class="book-title"><?php echo htmlspecialchars($row['nama_buku']); ?></h3>
-                        <p class="book-author">Rp <?php echo number_format($row['harga_jual'], 0, ',', '.'); ?></p>
-                        <p class="book-description">
-                            <?php
-                            $d = $row['deskripsi'] ?? '';
-                            echo htmlspecialchars(substr($d, 0, 80)) . '...';
-                            ?>
-                        </p>
-                        <a href="detail_buku.php?id=<?php echo $row['id']; ?>" class="book-details">
-                            Details <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                <?php
-                    $count++;
-                }
-                ?>
+// Display up to 3 related books (skip current)
+$count = 0;
+while ($row = $all_stmt->fetch(PDO::FETCH_ASSOC)) {
+    if ((int)$row['id'] === $id) continue;
+    if ($count >= 3) break;
+
+    $rel_id       = (int)$row['id'];
+    $rel_kategori = htmlspecialchars($row['nama_kategori'] ?? 'General');
+    $rel_nama     = htmlspecialchars($row['nama_buku'] ?? '');
+    $rel_price    = number_format($row['harga_jual'] ?? 0, 0, ',', '.');
+    $rel_desc     = htmlspecialchars(substr($row['deskripsi'] ?? '', 0, 100));
+    $rel_kode     = htmlspecialchars($row['kode_buku'] ?? '');
+?>
+    <div class="book-card">
+        <?php
+            // sanitize related book code and prepare image path
+            $rel_kode_raw = $row['kode_buku'] ?? '';
+            $rel_kode_safe = htmlspecialchars(basename($rel_kode_raw));
+            $rel_img_path = 'assets/produk/' . $rel_kode_safe . '.jpg';
+        ?>
+        <img src="<?php echo $rel_img_path; ?>" 
+             onerror="this.onerror=null; this.src='assets/img/default.jpg';" 
+             alt="<?php echo $rel_nama; ?>"
+             loading="lazy"
+             style="width: 100%; height: 200px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2);">
+        <div class="book-genre"><?php echo $rel_kategori; ?></div>
+        <h3 class="book-title"><?php echo $rel_nama; ?></h3>
+        <p class="book-author">Rp <?php echo $rel_price; ?></p>
+        <p class="book-description"><?php echo $rel_desc . (strlen($row['deskripsi'] ?? '') > 100 ? '...' : ''); ?></p>
+        <a href="detail_buku.php?id=<?php echo $rel_id; ?>" class="book-details">
+            Details <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+        </a>
+    </div>
+<?php
+    $count++;
+}
+?>
             </div>
         </div>
 
     </main>
 
-    <footer class="footer">
+     <footer class="footer" id="contact">
         <div class="container">
-            <div class="footer-copyright" style="text-align: center;">Copyright Daebook © 2025 All Rights Reserved.</div>
+            <div class="footer-logo-mobile">
+                <div class="logo-icon"><i data-lucide="book-open"></i></div>
+                <span class="logo-text">Daebook</span>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4 class="footer-title">Contact Information</h4>
+                    <p class="footer-text">Jl. Pangkal Perjuangan By Pass<br>Tanjungpura, Karawang, Jawa Barat</p>
+                    <p class="footer-text">daebook.work@gmail.com</p>
+                    <p class="footer-text">+1 (212) 555-0198</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100074331092431" class="social-link"><i data-lucide="facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/daebook-app-24b076394/" class="social-link"><i data-lucide="linkedin"></i></a>
+                        <a href="https://x.com/Daebook01" class="social-link"><i data-lucide="X"></i></a>
+                        <a href="https://www.instagram.com/daebook.id_/" class="social-link"><i data-lucide="instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Daebook Pages</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#">Log In</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Our Team</h4>
+                    <ul class="footer-links">
+                        <li>Fhazar R A - PM</li>
+                        <li>Fadel R - QA</li>
+                        <li>Hildan A T P - Frontend</li>
+                        <li>Ferry N H - Backend</li>
+                        <li>Daffa N Z - UI/UX</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Get Latest Update</h4>
+                    <p class="footer-text">Sign up now to receive fresh updates, product releases, and news you would regret missing later.</p>
+                    <!-- <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email.." class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">Sign Up</button>
+                    </form> -->
+                    <div class="newsletter" style="margin-top:25px;">
+                        <input type="email" placeholder="Enter your email">
+                        <button class="btn-newsletter">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">Copyright Daebook © 2025 All Rights Reserved.</div>
         </div>
     </footer>
 

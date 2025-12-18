@@ -72,6 +72,10 @@ if (!empty($search_query)) {
     </nav>
 
     <main class="container">
+         <?php
+            define('ALLOW_CHAT_ACCESS', true);
+            include 'components/chat.php';
+            ?>
         <div class="page-header">
             <h1 class="section-title-center"><?php echo $title_display; ?></h1>
             <div class="search-wrapper" style="max-width: 600px; margin: 0 auto;">
@@ -93,7 +97,7 @@ if (!empty($search_query)) {
                         <!-- Placeholder image logic since DB might not have valid paths or actual files -->
                         <div style="height: 420px; background: #1f1f3a; margin-bottom: 1rem; border-radius: 0.5rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                             <?php if (!empty($row['kode_buku'])): ?>
-                                <img src="assets/produk/<?php echo $row['kode_buku'] ?>.jpg" alt="Cover" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img src="assets/produk/<?php echo htmlspecialchars($row['kode_buku']); ?>.jpg" alt="Cover" style="width: 100%; height: 100%; object-fit: cover;">
                             <?php else: ?>
                                 <i data-lucide="book" size="48" color="#6b7280"></i>
                             <?php endif; ?>
@@ -107,7 +111,7 @@ if (!empty($search_query)) {
                             echo htmlspecialchars(substr($desc, 0, 100)) . (strlen($desc) > 100 ? '...' : '');
                             ?>
                         </p>
-                        <a href="detail_buku.php?id=<?php echo $row['id']; ?>" class="book-details" style="text-decoration: none;">
+                        <a href="detail_buku.php?id=<?php echo (int)$row['id']; ?>" class="book-details" style="text-decoration: none;">
                             Details <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
                         </a>
                     </div>

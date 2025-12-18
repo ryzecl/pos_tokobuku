@@ -150,8 +150,8 @@ if (isset($query)) {
                                     $buku_stmt = $buku->readAll();
                                     while ($row = $buku_stmt->fetch(PDO::FETCH_ASSOC)):
                                     ?>
-                                        <option value="<?php echo $row['id']; ?>">
-                                            <?php echo $row['nama_buku'] . ' (Stok: ' . $row['stok'] . ')'; ?>
+                                        <option value="<?php echo (int)$row['id']; ?>">
+                                            <?php echo htmlspecialchars($row['nama_buku']) . ' (Stok: ' . (int)$row['stok'] . ')'; ?>
                                         </option>
                                     <?php endwhile; ?>
                                 </select>
@@ -196,15 +196,15 @@ if (isset($query)) {
                         <tbody>
                             <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                                 <tr>
-                                    <td><?php echo $row['kode_buku']; ?></td>
-                                    <td><?php echo $row['nama_buku']; ?></td>
-                                    <td><?php echo $row['nama_kategori']; ?></td>
+                                    <td><?php echo htmlspecialchars($row['kode_buku']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['nama_buku']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['nama_kategori']); ?></td>
                                     <td>
                                         <span class="badge <?php echo $row['stok'] <= $row['stok_minimum'] ? 'badge-danger' : 'badge-success'; ?>">
-                                            <?php echo $row['stok']; ?>
+                                            <?php echo (int)$row['stok']; ?>
                                         </span>
                                     </td>
-                                    <td><?php echo $row['stok_minimum']; ?></td>
+                                    <td><?php echo (int)$row['stok_minimum']; ?></td>
                                     <td>
                                         <?php
                                         if ($row['stok'] <= 0) {
