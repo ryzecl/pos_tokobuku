@@ -12,7 +12,7 @@
     <meta property="og:description" content="Online bookstore platform to discover and purchase your favorite book collections">
     <meta property="og:image" content="assets/img/logo/logo.png">
     <title>Daebook - Discover Books</title>
-        <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+        <link rel="icon" type="image/png" href="assets/img/logo/logo1.png">
         <link rel="canonical" href="https://daebook.dpdns.org/">
         <!-- Structured data for search engines -->
         <script type="application/ld+json">

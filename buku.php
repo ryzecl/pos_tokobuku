@@ -261,7 +261,7 @@ $kategori_stmt = $kategori->readAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+    <link rel="icon" type="image/png" href="assets/img/logo/logo1.png">
     <title>Data Buku - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dynamic.php">

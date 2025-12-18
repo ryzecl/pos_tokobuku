@@ -93,7 +93,7 @@ $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" . url
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/img/logo/logo.png">
+    <link rel="icon" type="image/png" href="assets/img/logo/logo1.png">
     <title>Struk Penjualan - <?php echo htmlspecialchars($nama_toko); ?></title>
 
     <style>
