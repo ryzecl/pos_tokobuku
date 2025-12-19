@@ -318,4 +318,27 @@ class Buku
             return null;
         }
     }
+
+    public function getRelatedByKategori($kategori_id, $excludeId = null, $limit = 3)
+    {
+        try {
+            $limit = (int)$limit;
+            if ($limit <= 0) $limit = 3;
+
+            $query = "SELECT o.*, k.nama_kategori\n                      FROM " . $this->table_name . " o\n                      LEFT JOIN kategori_buku k ON o.kategori_id = k.id\n                      WHERE o.kategori_id = :kategori_id";
+            if ($excludeId) {
+                $query .= " AND o.id != :exclude_id";
+            }
+            $query .= " ORDER BY RAND() LIMIT " . $limit;
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':kategori_id', (int)$kategori_id, PDO::PARAM_INT);
+            if ($excludeId) $stmt->bindValue(':exclude_id', (int)$excludeId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt;
+        } catch (PDOException $e) {
+            error_log("Buku::getRelatedByKategori error: " . $e->getMessage());
+            return null;
+        }
+    }
 }

@@ -20,11 +20,12 @@ if (!$buku->readOne()) {
     exit;
 }
 
-// Fetch relative products (same category)
-// Since there's no dedicated method, we'll crudely reuse readAll and filter in loop or specialized query if needed. 
-// For now let's just create a quick custom query here or reuse readAll but limit output.
-// Better practice: Add getByKategori to model, but I will just use readAll() and pick first 3 random ones for "Relevant" section.
-$all_stmt = $buku->readAll(); // This is inefficient but fits within current scope without Modifying Model too much
+// Fetch related products (same category) — use model helper to get up to 3 random books
+// Falls back to readAll() if the query fails for any reason.
+$related_stmt = $buku->getRelatedByKategori($buku->kategori_id, $buku->id, 3);
+if (!$related_stmt) {
+    $related_stmt = $buku->readAll();
+}
 ?>
 
 <!DOCTYPE html>
@@ -199,9 +200,9 @@ $all_stmt = $buku->readAll(); // This is inefficient but fits within current sco
             <h2 class="section-title-center" style="margin-bottom: 2rem; font-size: 1.5rem;">Relevant to your search</h2>
             <div class="ai-results" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); display: grid; gap: 2rem;">
                 <?php
-// Display up to 3 related books (skip current)
+// Display up to 3 related books (skip current) — result already limited by model
 $count = 0;
-while ($row = $all_stmt->fetch(PDO::FETCH_ASSOC)) {
+while ($row = $related_stmt->fetch(PDO::FETCH_ASSOC)) {
     if ((int)$row['id'] === $id) continue;
     if ($count >= 3) break;
 

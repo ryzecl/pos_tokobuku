@@ -18,102 +18,191 @@ ALTER TABLE buku AUTO_INCREMENT = 1;
 
 -- Sanitized INSERTs: one statement per row to improve compatibility with import tools
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (1,'BK001','Atomic Habits',1,'pcs',85000,120000,0,50,2,'2018-10-16','Buku ini menjelaskan bagaimana perubahan kecil yang konsisten dapat menghasilkan dampak besar dalam hidup melalui pembentukan kebiasaan yang efektif.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (1,'BK001','Atomic Habits',1,'pcs',85000,120000,0,50,2,'2018-10-16','Buku ini membahas bagaimana kebiasaan kecil yang dilakukan secara konsisten dapat membawa perubahan besar dalam kehidupan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (2,'BK002','The 7 Habits of Highly Effective People',1,'pcs',90000,130000,0,40,2,'1989-08-15','Stephen R. Covey menguraikan tujuh kebiasaan utama yang membantu seseorang menjadi lebih efektif dalam kehidupan pribadi dan profesional.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (2,'BK002','The 7 Habits of Highly Effective People',1,'pcs',90000,130000,0,40,2,'1989-08-15','Stephen R. Covey menjelaskan tujuh kebiasaan utama untuk meningkatkan efektivitas pribadi dan profesional.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (3,'BK003','Rich Dad Poor Dad',1,'pcs',80000,115000,0,60,2,'1997-04-01','Melalui dua sudut pandang ayah, buku ini mengajarkan pola pikir finansial dan pentingnya literasi keuangan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (3,'BK003','Rich Dad Poor Dad',1,'pcs',80000,115000,0,45,2,'1997-04-01','Buku ini mengajarkan perbedaan pola pikir keuangan antara orang kaya dan orang miskin.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (4,'BK004','Think and Grow Rich',1,'pcs',75000,110000,0,30,2,'1937-01-01','Buku motivasi klasik yang membahas kekuatan pikiran, tujuan hidup, dan keyakinan dalam meraih kesuksesan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (4,'BK004','Think and Grow Rich',1,'pcs',75000,110000,0,35,2,'1937-03-01','Karya klasik yang membahas kekuatan pikiran dan keyakinan dalam meraih kesuksesan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (5,'BK005','The Power of Now',1,'pcs',70000,105000,0,25,2,'1997-01-01','Eckhart Tolle mengajak pembaca untuk hidup sepenuhnya di saat ini demi mencapai kedamaian batin.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (5,'BK005','The Power of Now',1,'pcs',85000,125000,0,30,2,'1997-01-01','Buku ini menekankan pentingnya hidup di masa kini untuk mencapai ketenangan batin.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (6,'BK006','How to Win Friends and Influence People',1,'pcs',85000,125000,0,35,2,'1936-10-01','Buku ini mengajarkan cara berkomunikasi dan membangun hubungan yang baik secara efektif.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (6,'BK006','How to Win Friends and Influence People',1,'pcs',90000,135000,0,38,2,'1936-10-01','Buku ini membahas teknik komunikasi dan hubungan sosial yang efektif.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (7,'BK007','Deep Work',1,'pcs',90000,135000,0,20,2,'2016-01-05','Cal Newport membahas pentingnya fokus mendalam di dunia yang penuh distraksi.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (7,'BK007','Deep Work',1,'pcs',88000,128000,0,34,2,'2016-01-05','Buku ini menjelaskan pentingnya fokus mendalam untuk produktivitas maksimal.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (8,'BK008','Mindset',1,'pcs',80000,120000,0,45,2,'2006-02-28','Carol Dweck menjelaskan perbedaan antara fixed mindset dan growth mindset dalam meraih kesuksesan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (8,'BK008','Mindset',1,'pcs',83000,120000,0,36,2,'2006-02-28','Carol Dweck menguraikan perbedaan growth mindset dan fixed mindset.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (9,'BK009','Grit',1,'pcs',82000,122000,0,28,2,'2016-05-03','Buku ini menyoroti pentingnya ketekunan dan konsistensi dibandingkan bakat semata.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (9,'BK009','Grit',1,'pcs',82000,118000,0,32,2,'2016-05-03','Buku ini menekankan peran ketekunan dan konsistensi dalam meraih tujuan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (10,'BK010','Ikigai',1,'pcs',70000,100000,0,55,2,'2016-08-01','Mengungkap filosofi hidup orang Jepang dalam menemukan tujuan dan kebahagiaan hidup.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (10,'BK010','Ikigai',1,'pcs',78000,112000,0,40,2,'2016-08-29','Buku ini mengulas konsep hidup bahagia dan bermakna dari Jepang.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (11,'BK011','Pride and Prejudice',2,'pcs',65000,95000,0,40,2,'1813-01-28','Kisah cinta klasik antara Elizabeth Bennet dan Mr. Darcy yang penuh konflik sosial dan emosi.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES (11,'BK011','Pride and Prejudice',2,'pcs',70000,100000,0,28,2,'1813-01-28','Novel klasik tentang cinta, kelas sosial, dan kesalahpahaman antara Elizabeth Bennet dan Mr. Darcy.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (12,'BK012','Me Before You',2,'pcs',75000,110000,0,35,2,'2012-01-05','Novel ini mengisahkan cinta, pilihan hidup, dan pengorbanan antara Louisa dan Will.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(12,'BK012','Me Before You',2,'pcs',75000,110000,0,30,2,'2012-01-05','Kisah emosional tentang hubungan yang mengubah cara pandang seseorang terhadap hidup dan cinta.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (13,'BK013','The Notebook',2,'pcs',70000,105000,0,30,2,'1996-10-01','Kisah cinta sejati yang bertahan melawan waktu dan keadaan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(13,'BK013','The Notebook',2,'pcs',72000,105000,0,26,2,'1996-10-01','Cerita cinta abadi yang bertahan melawan waktu, jarak, dan keadaan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (14,'BK014','It Ends With Us',2,'pcs',80000,120000,0,45,2,'2016-08-02','Novel romansa yang mengangkat isu cinta, luka emosional, dan keberanian mengambil keputusan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(14,'BK014','It Ends With Us',2,'pcs',78000,115000,0,34,2,'2016-08-02','Novel tentang cinta, luka masa lalu, dan keberanian untuk mengakhiri siklus yang menyakitkan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (15,'BK015','Twilight',2,'pcs',72000,108000,0,50,2,'2005-10-05','Kisah cinta antara manusia dan vampir yang penuh konflik dan pengorbanan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(15,'BK015','Twilight',2,'pcs',76000,112000,0,29,2,'2005-10-05','Kisah cinta remaja antara manusia dan vampir dengan konflik supernatural.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (16,'BK016','Harry Potter and the Sorcerer Stone',3,'pcs',90000,140000,0,60,2,'1997-06-26','Awal petualangan Harry Potter di dunia sihir Hogwarts yang penuh misteri.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(16,'BK016','The Fault in Our Stars',2,'pcs',74000,108000,0,31,2,'2012-01-10','Cerita cinta remaja yang tumbuh di tengah perjuangan melawan penyakit.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (17,'BK017','The Hobbit',3,'pcs',85000,130000,0,35,2,'1937-09-21','Bilbo Baggins memulai petualangan berbahaya yang mengubah hidupnya selamanya.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(17,'BK017','Love & Other Words',2,'pcs',77000,113000,0,27,2,'2018-04-10','Novel tentang cinta pertama, kehilangan, dan kesempatan kedua.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (18,'BK018','The Lord of the Rings',3,'pcs',150000,220000,0,25,2,'1954-07-29','Fantasi epik tentang perjuangan menghancurkan cincin kekuasaan demi menyelamatkan dunia.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(18,'BK018','Eleanor & Park',2,'pcs',73000,107000,0,25,2,'2013-02-26','Kisah cinta remaja yang sederhana namun penuh emosi.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (19,'BK019','Percy Jackson: The Lightning Thief',3,'pcs',78000,115000,0,40,2,'2005-06-28','Petualangan remaja setengah dewa dalam dunia mitologi Yunani modern.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(19,'BK019','Five Feet Apart',2,'pcs',76000,110000,0,24,2,'2018-11-20','Cerita cinta yang terhalang jarak karena kondisi medis.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (20,'BK020','Game of Thrones',3,'pcs',140000,210000,0,20,2,'1996-08-06','Intrik politik, peperangan, dan perebutan kekuasaan di dunia fantasi Westeros.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(20,'BK020','Call Me by Your Name',2,'pcs',80000,118000,0,22,2,'2007-01-23','Kisah cinta musim panas yang intim dan emosional di Italia.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (21,'BK021','Sherlock Holmes',4,'pcs',85000,125000,0,50,2,'1892-10-14','Kumpulan kisah detektif jenius yang memecahkan kasus rumit dengan logika tajam.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(21,'BK021','Harry Potter and the Sorcerer’s Stone',3,'pcs',90000,140000,0,50,2,'1997-06-26','Petualangan awal Harry Potter memasuki dunia sihir.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (22,'BK022','The Da Vinci Code',4,'pcs',90000,135000,0,30,2,'2003-04-03','Petualangan misteri simbol kuno yang mengungkap rahasia besar sejarah.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(22,'BK022','The Hobbit',3,'pcs',88000,135000,0,40,2,'1937-09-21','Petualangan Bilbo Baggins dalam dunia fantasi penuh makhluk ajaib.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (23,'BK023','Gone Girl',4,'pcs',88000,130000,0,25,2,'2012-06-05','Kisah hilangnya seorang istri yang penuh manipulasi dan kejutan psikologis.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(23,'BK023','The Lord of the Rings',3,'pcs',95000,150000,0,45,2,'1954-07-29','Epos fantasi tentang perjuangan menghancurkan cincin kekuasaan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (24,'BK024','The Girl with the Dragon Tattoo',4,'pcs',92000,138000,0,20,2,'2005-08-01','Investigasi kriminal yang mengungkap rahasia keluarga gelap.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(24,'BK024','Percy Jackson: The Lightning Thief',3,'pcs',85000,130000,0,38,2,'2005-06-28','Petualangan remaja setengah dewa di dunia mitologi Yunani modern.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (25,'BK025','Big Little Lies',4,'pcs',87000,128000,0,30,2,'2014-07-29','Kehidupan sempurna yang menyimpan kebohongan dan tragedi.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(25,'BK025','A Game of Thrones',3,'pcs',98000,155000,0,42,2,'1996-08-06','Intrik politik dan peperangan di dunia fantasi Westeros.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (26,'BK026','The Silent Patient',5,'pcs',90000,135000,0,40,2,'2019-02-05','Seorang wanita membisu setelah membunuh suaminya, menyimpan kebenaran mengejutkan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(26,'BK026','The Name of the Wind',3,'pcs',90000,145000,0,36,2,'2007-03-27','Kisah perjalanan seorang legenda dalam dunia sihir dan musik.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (27,'BK027','The Girl on the Train',5,'pcs',88000,130000,0,35,2,'2015-01-13','Thriller psikologis tentang pengamatan, ingatan, dan misteri.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(27,'BK027','Divergent',3,'pcs',86000,132000,0,33,2,'2011-04-25','Dunia distopia dengan sistem faksi yang menentukan masa depan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (28,'BK028','Shutter Island',5,'pcs',92000,138000,0,25,2,'2003-04-15','Penyelidikan di rumah sakit jiwa yang berubah menjadi mimpi buruk.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(28,'BK028','The Chronicles of Narnia',3,'pcs',92000,148000,0,37,2,'1950-10-16','Petualangan anak-anak ke dunia magis penuh keajaiban.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (29,'BK029','Inferno',5,'pcs',95000,145000,0,20,2,'2013-05-14','Perburuan simbol berbahaya yang mengancam umat manusia.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(29,'BK029','Shadow and Bone',3,'pcs',88000,138000,0,35,2,'2012-06-05','Kisah kekuatan tersembunyi di dunia fantasi yang gelap.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (30,'BK030','The Hunger Games',5,'pcs',85000,125000,0,45,2,'2008-09-14','Permainan mematikan yang menjadi simbol perlawanan terhadap tirani.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(30,'BK030','The Maze Runner',3,'pcs',87000,134000,0,34,2,'2009-10-06','Sekelompok remaja terjebak dalam labirin misterius.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (31,'BK031','1984',5,'pcs',80000,120000,0,30,2,'1949-06-08','Dunia distopia dengan pengawasan total dan manipulasi kebenaran.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(31,'BK031','Sherlock Holmes',4,'pcs',82000,125000,0,30,2,'1892-10-14','Kumpulan kisah detektif legendaris dengan analisis tajam.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (32,'BK032','To Kill a Mockingbird',4,'pcs',78000,115000,0,25,2,'1960-07-11','Kisah keadilan dan moral di tengah diskriminasi.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(32,'BK032','The Da Vinci Code',4,'pcs',88000,135000,0,32,2,'2003-03-18','Misteri simbol dan sejarah yang mengungkap rahasia besar.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (33,'BK033','The Alchemist',1,'pcs',75000,110000,0,60,2,'1988-01-01','Perjalanan menemukan mimpi, makna hidup, dan takdir.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(33,'BK033','Gone Girl',4,'pcs',86000,132000,0,28,2,'2012-06-05','Thriller misteri tentang hilangnya seorang istri.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (34,'BK034','Fahrenheit 451',5,'pcs',82000,123000,0,20,2,'1953-10-19','Dunia masa depan di mana buku dilarang dan dibakar.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(34,'BK034','The Girl with the Dragon Tattoo',4,'pcs',90000,140000,0,27,2,'2005-08-01','Penyelidikan kasus lama yang penuh konspirasi.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (35,'BK035','Dracula',4,'pcs',70000,105000,0,30,2,'1897-05-26','Kisah vampir legendaris yang penuh teror dan misteri.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(35,'BK035','Big Little Lies',4,'pcs',84000,128000,0,26,2,'2014-07-29','Rahasia kelam di balik kehidupan yang tampak sempurna.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (36,'BK036','The Catcher in the Rye',1,'pcs',78000,118000,0,25,2,'1951-07-16','Pencarian jati diri remaja dalam dunia yang membingungkan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(36,'BK036','The Woman in White',4,'pcs',78000,118000,0,24,2,'1859-08-01','Novel misteri klasik dengan nuansa gotik.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (37,'BK037','Little Women',2,'pcs',75000,110000,0,35,2,'1868-09-30','Kisah keluarga, cinta, dan kedewasaan empat bersaudara.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(37,'BK037','The Hound of the Baskervilles',4,'pcs',80000,122000,0,25,2,'1902-04-01','Kasus legendaris Sherlock Holmes dengan legenda menyeramkan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (38,'BK038','Divergent',3,'pcs',80000,120000,0,40,2,'2011-04-25','Dunia distopia dengan sistem faksi yang menentukan nasib.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(38,'BK038','In the Woods',4,'pcs',83000,127000,0,23,2,'2007-05-17','Kasus pembunuhan yang terhubung dengan masa lalu.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (39,'BK039','The Maze Runner',5,'pcs',82000,123000,0,45,2,'2009-10-06','Remaja terjebak dalam labirin mematikan penuh misteri.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(39,'BK039','The Silent Patient',4,'pcs',85000,130000,0,29,2,'2019-02-05','Misteri psikologis tentang seorang wanita yang memilih diam.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (40,'BK040','The Shining',5,'pcs',90000,135000,0,20,2,'1977-01-28','Teror psikologis di hotel terpencil.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(40,'BK040','And Then There Were None',4,'pcs',82000,125000,0,31,2,'1939-11-06','Sepuluh orang terjebak dalam permainan pembunuhan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (41,'BK041','The Road',5,'pcs',85000,128000,0,15,2,'2006-09-26','Perjalanan ayah dan anak di dunia pasca-apokaliptik.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(41,'BK041','The Girl on the Train',5,'pcs',86000,132000,0,28,2,'2015-01-13','Thriller psikologis tentang pengamatan yang berujung misteri.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (42,'BK042','A Game of Thrones',3,'pcs',140000,215000,0,25,2,'1996-08-06','Intrik politik dan perebutan kekuasaan di dunia Westeros.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(42,'BK042','Shutter Island',5,'pcs',88000,135000,0,26,2,'2003-04-15','Penyelidikan di rumah sakit jiwa dengan akhir mengejutkan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (43,'BK043','The Book Thief',4,'pcs',90000,135000,0,30,2,'2005-03-14','Kisah kemanusiaan dan harapan di tengah perang.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(43,'BK043','Inferno',5,'pcs',90000,138000,0,30,2,'2013-05-14','Perlombaan melawan waktu untuk mencegah bencana global.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (44,'BK044','Life of Pi',1,'pcs',80000,120000,0,35,2,'2001-09-11','Perjuangan bertahan hidup yang sarat makna spiritual.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(44,'BK044','The Hunger Games',5,'pcs',87000,134000,0,35,2,'2008-09-14','Pertarungan hidup mati dalam dunia distopia.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (45,'BK045','The Fault in Our Stars',2,'pcs',78000,118000,0,50,2,'2012-01-10','Kisah cinta remaja yang manis dan menyayat hati.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(45,'BK045','1984',5,'pcs',78000,120000,0,33,2,'1949-06-08','Novel distopia tentang pengawasan dan kebebasan.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (46,'BK046','The Name of the Wind',3,'pcs',95000,145000,0,20,2,'2007-03-27','Kisah hidup penyihir legendaris yang penuh misteri.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(46,'BK046','Fahrenheit 451',5,'pcs',76000,118000,0,29,2,'1953-10-19','Dunia di mana buku dilarang dan dibakar.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (47,'BK047','American Psycho',5,'pcs',90000,140000,0,15,2,'1991-03-06','Potret gelap psikologi dan kekerasan.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(47,'BK047','American Psycho',5,'pcs',88000,135000,0,21,2,'1991-03-01','Thriller gelap tentang kehidupan ganda seorang psikopat.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (48,'BK048','The Outsider',5,'pcs',88000,132000,0,18,2,'2018-05-22','Kasus kriminal yang menantang logika.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(48,'BK048','The Shining',5,'pcs',89000,138000,0,27,2,'1977-01-28','Teror psikologis di hotel terpencil.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (49,'BK049','Sapiens',1,'pcs',100000,150000,0,40,2,'2011-01-01','Sejarah singkat umat manusia dari masa purba hingga modern.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(49,'BK049','The Road',5,'pcs',83000,128000,0,24,2,'2006-09-26','Perjalanan ayah dan anak di dunia pasca-apokaliptik.');
 
-INSERT INTO `buku` (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi) VALUES (50,'BK050','Homo Deus',1,'pcs',105000,160000,0,35,2,'2015-01-01','Pandangan tentang masa depan manusia dan teknologi.');
+INSERT INTO buku (id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
+(50,'BK050','The Outsider',5,'pcs',87000,134000,0,22,2,'2018-05-22','Kasus kriminal yang mengaburkan logika dan realitas.');
