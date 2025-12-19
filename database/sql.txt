@@ -1,0 +1,59 @@
+-- SELF IMPROVEMENT
+1. Atomic Habits - BK001
+2. The 7 Habits of Highly Effective People - BK002
+3. Rich Dad Poor Dad - BK003
+4. Think and Grow Rich - BK004
+5. The Power of Now - BK005
+6. How to Win Friends and Influence People - BK006
+7. Deep Work - BK007
+8. Mindset - BK008
+9. Grit - BK009
+10. Ikigai - BK010
+
+-- ROMANCE
+11. Pride and Prejudice - BK011
+12. Me Before You - BK012
+13. The Notebook - BK013
+14. It Ends With Us - BK014
+15. Twilight - BK015
+16. The Fault in Our Stars - BK016
+17. Love & Other Words - BK017
+18. Eleanor & Park - BK018
+19. Five Feet Apart - BK019
+20. Call Me by Your Name - BK020
+
+-- FANTASY
+21. Harry Potter and the Sorcerer’s Stone - BK021
+22. The Hobbit - BK022
+23. The Lord of the Rings - BK023
+24. Percy Jackson: The Lightning Thief - BK024
+25. A Game of Thrones - BK025
+26. The Name of the Wind - BK026
+27. Divergent - BK027
+28. The Chronicles of Narnia - BK028
+29. Shadow and Bone - BK029
+30. The Maze Runner - BK030
+
+-- MISTERY
+31. Sherlock Holmes - BK031
+32. The Da Vinci Code - BK032
+33. Gone Girl - BK033
+34. The Girl with the Dragon Tattoo - BK034
+35. Big Little Lies - BK035
+36. The Woman in White - BK036
+37. The Hound of the Baskervilles - BK037
+38. In the Woods - BK038
+39. The Silent Patient - BK039
+40. And Then There Were None - BK040
+
+-- THRILLER
+41. The Girl on the Train - BK041
+42. Shutter Island - BK042
+43. Inferno - BK043
+44. The Hunger Games - BK044
+45. 1984 - BK045
+46. Fahrenheit 451 - BK046
+47. American Psycho - BK047
+48. The Shining - BK048
+49. The Road - BK049
+50. The Outsider - BK050
