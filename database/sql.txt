@@ -12,6 +12,9 @@ INSERT INTO kategori_buku (id, nama_kategori, deskripsi) VALUES
 (4, 'Mistery', 'Buku misteri dan detektif'),
 (5, 'Thriller', 'Buku suspense dan thriller');
 
+-- Kosongkan dulu kalau perlu
+DELETE FROM buku;
+
 
 DELETE FROM buku;
 ALTER TABLE buku AUTO_INCREMENT = 1;

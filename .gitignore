@@ -24,4 +24,4 @@ Thumbs.db
 *.swo
 
 # Assets >git rm --cached -r assets/produk
-assets/produk
+# assets/produk
