@@ -41,21 +41,6 @@ switch ($filter) {
                   WHERE o.stok <= o.stok_minimum
                   ORDER BY o.nama_buku";
         break;
-    case 'expired':
-        $query = "SELECT o.*, k.nama_kategori 
-                  FROM buku o
-                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
-                  WHERE o.tanggal_expired <= CURDATE()
-                  ORDER BY o.nama_buku";
-        break;
-    case 'expiring_soon':
-        $query = "SELECT o.*, k.nama_kategori 
-                  FROM buku o
-                  LEFT JOIN kategori_buku k ON o.kategori_id = k.id
-                  WHERE o.tanggal_expired <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)
-                  AND o.tanggal_expired > CURDATE()
-                  ORDER BY o.tanggal_expired";
-        break;
     default:
         if (!empty($search)) {
             $stmt = $buku->search($search);
@@ -122,8 +107,6 @@ if (isset($query)) {
                             <select id="filter" name="filter" onchange="this.form.submit()">
                                 <option value="all" <?php echo $filter === 'all' ? 'selected' : ''; ?>>Semua buku</option>
                                 <option value="low_stock" <?php echo $filter === 'low_stock' ? 'selected' : ''; ?>>Stok Minimum</option>
-                                <option value="expired" <?php echo $filter === 'expired' ? 'selected' : ''; ?>>Sudah Expired</option>
-                                <option value="expiring_soon" <?php echo $filter === 'expiring_soon' ? 'selected' : ''; ?>>Akan Expired (30 hari)</option>
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
@@ -189,7 +172,6 @@ if (isset($query)) {
                                 <th>Stok</th>
                                 <th>Stok Min</th>
                                 <th>Status</th>
-                                <th>Expired</th>
                                 <th>Harga Beli</th>
                                 <th>Harga Jual</th>
                             </tr>
@@ -214,25 +196,6 @@ if (isset($query)) {
                                             echo '<span class="badge badge-warning">Minimal</span>';
                                         } else {
                                             echo '<span class="badge badge-success">Aman</span>';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($row['tanggal_expired']) {
-                                            $expired = strtotime($row['tanggal_expired']);
-                                            $now = time();
-                                            $days_left = ($expired - $now) / (60 * 60 * 24);
-
-                                            if ($days_left < 0) {
-                                                echo '<span class="badge badge-danger">Expired</span>';
-                                            } elseif ($days_left <= 30) {
-                                                echo '<span class="badge badge-warning">' . date('d/m/Y', $expired) . '</span>';
-                                            } else {
-                                                echo date('d/m/Y', $expired);
-                                            }
-                                        } else {
-                                            echo '-';
                                         }
                                         ?>
                                     </td>

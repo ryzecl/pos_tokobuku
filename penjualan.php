@@ -190,24 +190,26 @@ $customer_stmt = $customer->readAll();
     <link rel="stylesheet" href="assets/css/dynamic.php">
     <style>
         .pos-container { display: grid; grid-template-columns: 1fr 420px; gap: 20px; height: calc(100vh - 120px); }
-        .product-section, .cart-section { background: white; border-radius: 16px; box-shadow: 0 0 8px 25px rgba(162, 89, 255, 0.1); padding: 24px; }
-        .search-box input { width: 100%; padding: 14px; border: 2px solid #e6d6e8; border-radius: 12px; font-size: 16px; }
-        .search-box input:focus { outline: none; border-color: #A259FF; }
+        .product-section, .cart-section { background: #0f0f1a; border-radius: 16px; box-shadow: 0 0 8px 25px rgba(162, 89, 255, 0.1); padding: 24px; }
+        .search-box input { width: 100%; padding: 14px; border: 2px solid #2a2a3e; border-radius: 12px; font-size: 16px; background: #1a1a2e; color: #e0e0e0; }
+        .search-box input:focus { outline: none; border-color: #A259FF; background: #1a1a2e; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
-        .product-card { border: 2px solid #f0e6f8; border-radius: 14px; padding: 10px; cursor: pointer; transition: all 0.3s; background: #faf6ff; }
+        .product-card { border: 2px solid #2a2a3e; border-radius: 14px; padding: 10px; cursor: pointer; transition: all 0.3s; background: #1a1a2e; }
         .product-card:hover { border-color: #A259FF; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(162, 89, 255, 0.2); }
-        .product-name { font-weight: 700; color: #2c1b4a; margin-bottom: 6px; }
-        .product-price { color: #7c3aed; font-weight: bold; font-size: 18px; }
+        .product-name { font-weight: 700; color: #e0e0e0; margin-bottom: 6px; }
+        .product-price { color: #A259FF; font-weight: bold; font-size: 18px; }
         .product-stock { font-size: 13px; color: #9f7aea; }
         .cart-items { flex: 1; overflow-y: auto; margin-bottom: 20px; padding-right: 8px; }
-        .cart-summary { border-top: 3px solid #A259FF; padding-top: 18px; background: #faf6ff; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; }
-        .summary-row.total { font-weight: bold; font-size: 20px; color: #7c3aed; padding-top: 12px; border-top: 1px dashed #A259FF; }
-        .payment-section input, .payment-section select { width: 100%; padding: 14px; border: 2px solid #e6d6e8; border-radius: 12px; margin-bottom: 12px; font-size: 15px; }
-        .payment-section input:focus, .payment-section select:focus { outline: none; border-color: #A259FF; background: #faf6ff; }
+        .cart-summary { border-top: 3px solid #A259FF; padding-top: 18px; background: #1a1a2e; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; color: #e0e0e0; }
+        .summary-row.total { font-weight: bold; font-size: 20px; color: #A259FF; padding-top: 12px; border-top: 1px dashed #A259FF; }
+        .payment-section input, .payment-section select { width: 100%; padding: 14px; border: 2px solid #2a2a3e; border-radius: 12px; margin-bottom: 12px; font-size: 15px; background: #1a1a2e; color: #e0e0e0; }
+        .payment-section input:focus, .payment-section select:focus { outline: none; border-color: #A259FF; background: #1a1a2e; color: #e0e0e0; }
+        .payment-section input::placeholder { color: #6b6b8a; }
+        .payment-section label { color: #a0a0c0; font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px; }
         .btn-process { width: 100%; padding: 18px; background: linear-gradient(135deg, #A259FF, #9041E0); color: white; border: none; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 20px rgba(162, 89, 255, 0.3); }
         .btn-process:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(162, 89, 255, 0.4); }
-        .btn-process:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-process:disabled { background: #3a3a4e; cursor: not-allowed; color: #7a7a9e; }
     </style>
 </head>
 <body>
@@ -239,12 +241,12 @@ $customer_stmt = $customer->readAll();
                     </div>
 
                     <div class="cart-section">
-                        <h3 style="margin:0 0 20px 0; color:#7c3aed; font-size:22px;">Keranjang Belanja</h3>
+                        <h3 style="margin:0 0 20px 0; color:#A259FF; font-size:22px;">Keranjang Belanja</h3>
                         <div class="cart-items" id="cartItems">
-                            <div style="text-align:center;padding:60px 20px;color:#9f7aea;">
-                                <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">Keranjang</div>
-                                <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
-                                <small>Pilih buku untuk memulai transaksi</small>
+                            <div style="text-align:center;padding:60px 20px;color:#6b6b8a;">
+                                <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">🛒</div>
+                                <p style="font-size:18px;font-weight:600;margin:0;color:#e0e0e0;">Keranjang Kosong</p>
+                                <small style="color:#7a7a9e;">Pilih buku untuk memulai transaksi</small>
                             </div>
                         </div>
 
@@ -298,11 +300,11 @@ $customer_stmt = $customer->readAll();
                         <div class="product-card" onclick="addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})">
                             <div style="display:flex;align-items:center;gap:10px;padding:1px;">
                                 <img src="assets/produk/${p.kode_buku}.jpg" onerror="this.src='assets/img/default.jpg'" 
-                                     style="width:50px;height:50px;border-radius:12px;object-fit:cover;box-shadow:0 4px 10px rgba(139,69,19,0.2);">
+                                     style="width:50px;height:50px;border-radius:12px;object-fit:cover;box-shadow:0 4px 10px rgba(162,89,255,0.2);">
                                 <div style="flex:1;">
-                                    <div style="font-weight:700;color:#2c1b18;">${p.nama_buku}</div>
-                                    <div style="color:#8B4513;font-weight:bold;font-size:16px;">Rp ${p.harga_jual.toLocaleString()}</div>
-                                    <div style="font-size:12px;color:#A0522D;">Stok: ${p.stok} ${p.satuan || 'pcs'}</div>
+                                    <div style="font-weight:700;color:#e0e0e0;">${p.nama_buku}</div>
+                                    <div style="color:#A259FF;font-weight:bold;font-size:16px;">Rp ${p.harga_jual.toLocaleString()}</div>
+                                    <div style="font-size:12px;color:#7a7a9e;">Stok: ${p.stok} ${p.satuan || 'pcs'}</div>
                                 </div>
                             </div>
                         </div>
@@ -342,10 +344,10 @@ $customer_stmt = $customer->readAll();
         function updateCartDisplay() {
             const el = document.getElementById('cartItems');
             if (cart.length === 0) {
-                el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#9f7aea;">
+                el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#6b6b8a;">
                     <div style="font-size:80px;margin-bottom:20px;opacity:0.3;">🛒</div>
-                    <p style="font-size:18px;font-weight:600;margin:0;">Keranjang Kosong</p>
-                    <small>Pilih buku untuk memulai transaksi</small>
+                    <p style="font-size:18px;font-weight:600;margin:0;color:#e0e0e0;">Keranjang Kosong</p>
+                    <small style="color:#7a7a9e;">Pilih buku untuk memulai transaksi</small>
                 </div>`;
                 updateSummary();
                 return;
@@ -354,20 +356,20 @@ $customer_stmt = $customer->readAll();
             el.innerHTML = cart.map((item, i) => {
                 const subtotal = (item.price * item.quantity) - (item.diskon || 0);
                 return `
-                <div style="background:white;border:2px solid #f0e6f8;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 4px 15px rgba(162,89,255,0.08);">
+                <div style="background:#1a1a2e;border:2px solid #2a2a3e;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 4px 15px rgba(162,89,255,0.08);">
                     <div style="display:flex;gap:14px;align-items:start;">
                         <div style="flex:1;">
-                            <div style="font-weight:700;font-size:15px;color:#2c1b4a;margin-bottom:4px;">${item.nama_buku}</div>
-                            <div style="font-size:13px;color:#9f7aea;margin-bottom:8px;">
+                            <div style="font-weight:700;font-size:15px;color:#e0e0e0;margin-bottom:4px;">${item.nama_buku}</div>
+                            <div style="font-size:13px;color:#7a7a9e;margin-bottom:8px;">
                                 Rp ${item.price.toLocaleString()} × ${item.quantity}
-                                ${item.diskon > 0 ? '<span style="background:#f3e8ff;color:#c026d3;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:6px;">−Rp'+item.diskon.toLocaleString()+'</span>' : ''}
+                                ${item.diskon > 0 ? '<span style="background:#2a2a3e;color:#A259FF;padding:2px 8px;border-radius:8px;font-size:11px;margin-left:6px;">−Rp'+item.diskon.toLocaleString()+'</span>' : ''}
                             </div>
-                            <div style="font-weight:bold;color:#7c3aed;font-size:16px;">Rp ${Math.max(0, subtotal).toLocaleString()}</div>
+                            <div style="font-weight:bold;color:#A259FF;font-size:16px;">Rp ${Math.max(0, subtotal).toLocaleString()}</div>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:8px;align-items:end;">
-                            <div style="background:#faf6ff;border:2px solid #A259FF;border-radius:12px;padding:4px;display:flex;align-items:center;gap:6px;">
+                            <div style="background:#0f0f1a;border:2px solid #A259FF;border-radius:12px;padding:4px;display:flex;align-items:center;gap:6px;">
                                 <button onclick="updateQty(${i},-1)" style="width:28px;height:28px;background:#A259FF;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">−</button>
-                                <input type="number" value="${item.quantity}" min="1" max="${item.stok}" style="width:40px;text-align:center;border:none;background:transparent;font-weight:bold;color:#7c3aed;" onchange="setQty(${i},this.value)">
+                                <input type="number" value="${item.quantity}" min="1" max="${item.stok}" style="width:40px;text-align:center;border:none;background:transparent;font-weight:bold;color:#A259FF;" onchange="setQty(${i},this.value)">
                                 <button onclick="updateQty(${i},1)" style="width:28px;height:28px;background:#A259FF;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;">+</button>
                             </div>
                             <button onclick="rm(${i})" style="background:#dc2626;color:white;border:none;border-radius:10px;padding:6px 12px;font-size:11px;cursor:pointer;">Hapus</button>

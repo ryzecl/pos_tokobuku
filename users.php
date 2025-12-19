@@ -216,9 +216,9 @@ $stmt = $user->readAll();
     </div>
 
     <!-- Edit Modal -->
-    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto;">
-            <h2>Edit User</h2>
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0f0f1a; color:#e0e0e0; padding: 30px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto; border:1px solid #2a2a3e; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+            <h2 style="margin-top:0;color:#A259FF;">Edit User</h2>
             <form method="POST" id="editForm">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
@@ -226,22 +226,22 @@ $stmt = $user->readAll();
                 <div class="form-row">
                     <div class="form-group">
                         <label for="edit_username">Username</label>
-                        <input type="text" id="edit_username" name="username" required>
+                        <input type="text" id="edit_username" name="username" required style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                     <div class="form-group">
                         <label for="edit_nama_lengkap">Nama Lengkap</label>
-                        <input type="text" id="edit_nama_lengkap" name="nama_lengkap" required>
+                        <input type="text" id="edit_nama_lengkap" name="nama_lengkap" required style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="edit_email">Email</label>
-                        <input type="email" id="edit_email" name="email">
+                        <input type="email" id="edit_email" name="email" style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                     <div class="form-group">
                         <label for="edit_role">Role</label>
-                        <select id="edit_role" name="role" required>
+                        <select id="edit_role" name="role" required style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                             <option value="admin">Admin</option>
                             <option value="kasir">Kasir</option>
                             <option value="gudang">Gudang</option>
@@ -258,21 +258,21 @@ $stmt = $user->readAll();
     </div>
 
     <!-- Change Password Modal -->
-    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px;">
-            <h2>Ubah Password</h2>
+    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0f0f1a; color:#e0e0e0; padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; border:1px solid #2a2a3e; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+            <h2 style="margin-top:0;color:#A259FF;">Ubah Password</h2>
             <form method="POST" id="passwordForm">
                 <input type="hidden" name="action" value="change_password">
                 <input type="hidden" name="id" id="password_user_id">
                 
                 <div class="form-group">
                     <label>Username:</label>
-                    <input type="text" id="password_username" readonly style="background: #f8f9fa;">
+                    <input type="text" id="password_username" readonly style="background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;padding:8px;border-radius:6px;">
                 </div>
                 
                 <div class="form-group">
                     <label for="new_password">Password Baru</label>
-                    <input type="password" id="new_password" name="new_password" required>
+                    <input type="password" id="new_password" name="new_password" required style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                 </div>
 
                 <div style="display: flex; gap: 10px;">

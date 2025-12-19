@@ -178,9 +178,9 @@ $stmt = $customer->readAll();
     </div>
 
     <!-- Edit Modal -->
-    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto;">
-            <h2>Edit customer</h2>
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0f0f1a; color:#e0e0e0; padding: 30px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 90%; overflow-y: auto; border:1px solid #2a2a3e; box-shadow:0 10px 30px rgba(0,0,0,0.6);">
+            <h2 style="margin-top:0;color:#A259FF;">Edit customer</h2>
             <form method="POST" id="editForm">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
@@ -188,24 +188,24 @@ $stmt = $customer->readAll();
                 <div class="form-row">
                     <div class="form-group">
                         <label for="edit_nama_customer">Nama customer</label>
-                        <input type="text" id="edit_nama_customer" name="nama_customer" required>
+                        <input type="text" id="edit_nama_customer" name="nama_customer" required style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                     <div class="form-group">
                         <label for="edit_telepon">Telepon</label>
-                        <input type="text" id="edit_telepon" name="telepon">
+                        <input type="text" id="edit_telepon" name="telepon" style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="edit_email">Email</label>
-                        <input type="email" id="edit_email" name="email">
+                        <input type="email" id="edit_email" name="email" style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="edit_alamat">Alamat</label>
-                    <textarea id="edit_alamat" name="alamat" rows="3"></textarea>
+                        <textarea id="edit_alamat" name="alamat" rows="3" style="width:100%;padding:8px;background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a3e;border-radius:6px;"></textarea>
                 </div>
 
                 <div style="display: flex; gap: 10px;">

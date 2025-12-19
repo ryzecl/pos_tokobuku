@@ -434,7 +434,7 @@ $kategori_stmt = $kategori->readAll();
     <!-- EDIT MODAL (DARK MODE) -->
     <div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; backdrop-filter:blur(4px);">
         <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#1a1a1a; color:#e0e0e0; padding:30px; border-radius:12px; width:90%; max-width:620px; max-height:90vh; overflow-y:auto; box-shadow:0 10px 30px rgba(0,0,0,0.7);">
-            <h2 style="margin-top:0; color:#fff; font-size:1.6em;">Edit Buku</h2>
+            <h2 style="margin-top:0; color:#A259FF; font-size:1.6em;">Edit Buku</h2>
             <form method="POST" id="editForm" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" id="edit_id">
