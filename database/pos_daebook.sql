@@ -1,9 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 5.2.3
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Dec 13, 2025 at 04:55 AM
+-- phpMyAdmin SQL Dump (Disesuaikan agar semua ID mulai dari 1)
+-- Generation Time: December 19, 2025
 -- Server version: 8.0.30
 -- PHP Version: 8.5.0
 
@@ -11,11 +7,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+SET NAMES utf8mb4;
 
 --
 -- Database: `pos_daebook`
@@ -47,6 +39,8 @@ CREATE TABLE `buku` (
 --
 -- Dumping data for table `buku`
 --
+
+-- Kosong, siap mulai dari ID 1
 
 -- --------------------------------------------------------
 
@@ -107,15 +101,15 @@ CREATE TABLE `kategori_buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `kategori_buku`
+-- Dumping data for table `kategori_buku` (ID mulai dari 1)
 --
 
 INSERT INTO `kategori_buku` (`id`, `nama_kategori`, `deskripsi`, `created_at`) VALUES
-(1, 'Self Improvement', '', '2025-12-13 03:18:21'),
-(2, 'Romance', '', '2025-12-13 04:52:29'),
-(3, 'Fantasy', '', '2025-12-13 04:52:40'),
-(4, 'Mistery', '', '2025-12-13 04:52:56'),
-(5, 'Thriller', '', '2025-12-13 04:53:00');
+(1, 'Self Improvement', '', NOW()),
+(2, 'Romance', '', NOW()),
+(3, 'Fantasy', '', NOW()),
+(4, 'Mistery', '', NOW()),
+(5, 'Thriller', '', NOW());
 
 -- --------------------------------------------------------
 
@@ -162,7 +156,7 @@ CREATE TABLE `pengaturan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `pengaturan`
+-- Dumping data for table `pengaturan` (ID mulai dari 1)
 --
 
 INSERT INTO `pengaturan` (`id`, `nama`, `nilai`) VALUES
@@ -208,194 +202,68 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `users` (ID mulai dari 1)
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `email`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin@apotek.com', 'admin', '2025-11-06 12:34:38', '2025-11-06 12:34:38'),
-(2, 'kasir1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kasir Utama', 'kasir@apotek.com', 'kasir', '2025-11-06 12:34:38', '2025-11-06 12:34:38'),
-(3, 'gudang1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff Gudang', 'gudang@apotek.com', 'gudang', '2025-11-06 12:34:38', '2025-11-06 12:34:38');
+(1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin@apotek.com', 'admin', NOW(), NOW()),
+(2, 'kasir1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kasir Utama', 'kasir@apotek.com', 'kasir', NOW(), NOW()),
+(3, 'gudang1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff Gudang', 'gudang@apotek.com', 'gudang', NOW(), NOW());
 
 --
--- Indexes for dumped tables
+-- Indexes dan Constraints tetap sama
 --
 
---
--- Indexes for table `buku`
---
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kode_buku` (`kode_buku`),
   ADD KEY `kategori_id` (`kategori_id`);
 
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `customer` ADD PRIMARY KEY (`id`);
+ALTER TABLE `detail_pembelian` ADD PRIMARY KEY (`id`);
+ALTER TABLE `detail_penjualan` ADD PRIMARY KEY (`id`);
+ALTER TABLE `kategori_buku` ADD PRIMARY KEY (`id`);
+ALTER TABLE `pembelian` ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `no_faktur` (`no_faktur`);
+ALTER TABLE `penerbit` ADD PRIMARY KEY (`id`);
+ALTER TABLE `pengaturan` ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `nama` (`nama`);
+ALTER TABLE `penjualan` ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `no_transaksi` (`no_transaksi`);
+ALTER TABLE `users` ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `detail_pembelian`
---
-ALTER TABLE `detail_pembelian`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pembelian_id` (`pembelian_id`),
-  ADD KEY `buku_id` (`buku_id`);
-
---
--- Indexes for table `detail_penjualan`
---
-ALTER TABLE `detail_penjualan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `penjualan_id` (`penjualan_id`),
-  ADD KEY `buku_id` (`buku_id`);
-
---
--- Indexes for table `kategori_buku`
---
-ALTER TABLE `kategori_buku`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pembelian`
---
-ALTER TABLE `pembelian`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `no_faktur` (`no_faktur`),
-  ADD KEY `penerbit_id` (`penerbit_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `penerbit`
---
-ALTER TABLE `penerbit`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pengaturan`
---
-ALTER TABLE `pengaturan`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nama` (`nama`);
-
---
--- Indexes for table `penjualan`
---
-ALTER TABLE `penjualan`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `no_transaksi` (`no_transaksi`),
-  ADD UNIQUE KEY `token_public` (`token_public`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT diatur ulang agar mulai dari nilai yang benar
 --
 
---
--- AUTO_INCREMENT for table `buku`
---
-ALTER TABLE `buku`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `buku` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `customer` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `detail_pembelian` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `detail_penjualan` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `kategori_buku` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;     -- lanjut dari 5
+ALTER TABLE `pembelian` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `penerbit` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `pengaturan` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;     -- lanjut dari 1
+ALTER TABLE `penjualan` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `users` MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;         -- lanjut dari 3
 
 --
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `detail_pembelian`
---
-ALTER TABLE `detail_pembelian`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `detail_penjualan`
---
-ALTER TABLE `detail_penjualan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `kategori_buku`
---
-ALTER TABLE `kategori_buku`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT for table `pembelian`
---
-ALTER TABLE `pembelian`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `penerbit`
---
-ALTER TABLE `penerbit`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `pengaturan`
---
-ALTER TABLE `pengaturan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `penjualan`
---
-ALTER TABLE `penjualan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- Constraints for dumped tables
+-- Foreign Key Constraints
 --
 
---
--- Constraints for table `buku`
---
 ALTER TABLE `buku`
   ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori_buku` (`id`) ON DELETE SET NULL;
 
---
--- Constraints for table `detail_pembelian`
---
 ALTER TABLE `detail_pembelian`
   ADD CONSTRAINT `detail_pembelian_ibfk_1` FOREIGN KEY (`pembelian_id`) REFERENCES `pembelian` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
---
--- Constraints for table `detail_penjualan`
---
 ALTER TABLE `detail_penjualan`
   ADD CONSTRAINT `detail_penjualan_ibfk_1` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`) ON DELETE CASCADE;
 
---
--- Constraints for table `pembelian`
---
 ALTER TABLE `pembelian`
   ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`penerbit_id`) REFERENCES `penerbit` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
---
--- Constraints for table `penjualan`
---
 ALTER TABLE `penjualan`
   ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
-COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+COMMIT;
