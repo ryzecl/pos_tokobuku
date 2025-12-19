@@ -1,59 +1,158 @@
+INSERT INTO buku
+(id, kode_buku, nama_buku, kategori_id, satuan, harga_beli, harga_jual, diskon, stok, stok_minimum, tanggal_expired, deskripsi)
+VALUES
 -- SELF IMPROVEMENT
-1. Atomic Habits - BK001
-2. The 7 Habits of Highly Effective People - BK002
-3. Rich Dad Poor Dad - BK003
-4. Think and Grow Rich - BK004
-5. The Power of Now - BK005
-6. How to Win Friends and Influence People - BK006
-7. Deep Work - BK007
-8. Mindset - BK008
-9. Grit - BK009
-10. Ikigai - BK010
+(1,'BK001','Atomic Habits',1,'pcs',85000,120000,0,50,2,'2018-10-16',
+'Buku ini menjelaskan bagaimana perubahan kecil yang konsisten dapat menghasilkan dampak besar dalam hidup melalui pembentukan kebiasaan yang efektif.'),
+
+(2,'BK002','The 7 Habits of Highly Effective People',1,'pcs',90000,130000,0,40,2,'1989-08-15',
+'Stephen R. Covey menguraikan tujuh kebiasaan utama yang membantu seseorang menjadi lebih efektif dalam kehidupan pribadi dan profesional.'),
+
+(3,'BK003','Rich Dad Poor Dad',1,'pcs',80000,115000,0,60,2,'1997-04-01',
+'Melalui dua sudut pandang ayah, buku ini mengajarkan pola pikir finansial dan pentingnya literasi keuangan.'),
+
+(4,'BK004','Think and Grow Rich',1,'pcs',75000,110000,0,30,2,'1937-01-01',
+'Buku motivasi klasik yang membahas kekuatan pikiran, tujuan hidup, dan keyakinan dalam meraih kesuksesan.'),
+
+(5,'BK005','The Power of Now',1,'pcs',70000,105000,0,25,2,'1997-01-01',
+'Eckhart Tolle mengajak pembaca untuk hidup sepenuhnya di saat ini demi mencapai kedamaian batin.'),
+
+(6,'BK006','How to Win Friends and Influence People',1,'pcs',85000,125000,0,35,2,'1936-10-01',
+'Buku ini mengajarkan cara berkomunikasi dan membangun hubungan yang baik secara efektif.'),
+
+(7,'BK007','Deep Work',1,'pcs',90000,135000,0,20,2,'2016-01-05',
+'Cal Newport membahas pentingnya fokus mendalam di dunia yang penuh distraksi.'),
+
+(8,'BK008','Mindset',1,'pcs',80000,120000,0,45,2,'2006-02-28',
+'Carol Dweck menjelaskan perbedaan antara fixed mindset dan growth mindset dalam meraih kesuksesan.'),
+
+(9,'BK009','Grit',1,'pcs',82000,122000,0,28,2,'2016-05-03',
+'Buku ini menyoroti pentingnya ketekunan dan konsistensi dibandingkan bakat semata.'),
+
+(10,'BK010','Ikigai',1,'pcs',70000,100000,0,55,2,'2016-08-01',
+'Mengungkap filosofi hidup orang Jepang dalam menemukan tujuan dan kebahagiaan hidup.'),
 
 -- ROMANCE
-11. Pride and Prejudice - BK011
-12. Me Before You - BK012
-13. The Notebook - BK013
-14. It Ends With Us - BK014
-15. Twilight - BK015
-16. The Fault in Our Stars - BK016
-17. Love & Other Words - BK017
-18. Eleanor & Park - BK018
-19. Five Feet Apart - BK019
-20. Call Me by Your Name - BK020
+(11,'BK011','Pride and Prejudice',2,'pcs',65000,95000,0,40,2,'1813-01-28',
+'Kisah cinta klasik antara Elizabeth Bennet dan Mr. Darcy yang penuh konflik sosial dan emosi.'),
+
+(12,'BK012','Me Before You',2,'pcs',75000,110000,0,35,2,'2012-01-05',
+'Novel ini mengisahkan cinta, pilihan hidup, dan pengorbanan antara Louisa dan Will.'),
+
+(13,'BK013','The Notebook',2,'pcs',70000,105000,0,30,2,'1996-10-01',
+'Kisah cinta sejati yang bertahan melawan waktu dan keadaan.'),
+
+(14,'BK014','It Ends With Us',2,'pcs',80000,120000,0,45,2,'2016-08-02',
+'Novel romansa yang mengangkat isu cinta, luka emosional, dan keberanian mengambil keputusan.'),
+
+(15,'BK015','Twilight',2,'pcs',72000,108000,0,50,2,'2005-10-05',
+'Kisah cinta antara manusia dan vampir yang penuh konflik dan pengorbanan.'),
 
 -- FANTASY
-21. Harry Potter and the Sorcerer’s Stone - BK021
-22. The Hobbit - BK022
-23. The Lord of the Rings - BK023
-24. Percy Jackson: The Lightning Thief - BK024
-25. A Game of Thrones - BK025
-26. The Name of the Wind - BK026
-27. Divergent - BK027
-28. The Chronicles of Narnia - BK028
-29. Shadow and Bone - BK029
-30. The Maze Runner - BK030
+(16,'BK016','Harry Potter and the Sorcerer Stone',3,'pcs',90000,140000,0,60,2,'1997-06-26',
+'Awal petualangan Harry Potter di dunia sihir Hogwarts yang penuh misteri.'),
+
+(17,'BK017','The Hobbit',3,'pcs',85000,130000,0,35,2,'1937-09-21',
+'Bilbo Baggins memulai petualangan berbahaya yang mengubah hidupnya selamanya.'),
+
+(18,'BK018','The Lord of the Rings',3,'pcs',150000,220000,0,25,2,'1954-07-29',
+'Fantasi epik tentang perjuangan menghancurkan cincin kekuasaan demi menyelamatkan dunia.'),
+
+(19,'BK019','Percy Jackson: The Lightning Thief',3,'pcs',78000,115000,0,40,2,'2005-06-28',
+'Petualangan remaja setengah dewa dalam dunia mitologi Yunani modern.'),
+
+(20,'BK020','Game of Thrones',3,'pcs',140000,210000,0,20,2,'1996-08-06',
+'Intrik politik, peperangan, dan perebutan kekuasaan di dunia fantasi Westeros.'),
 
 -- MISTERY
-31. Sherlock Holmes - BK031
-32. The Da Vinci Code - BK032
-33. Gone Girl - BK033
-34. The Girl with the Dragon Tattoo - BK034
-35. Big Little Lies - BK035
-36. The Woman in White - BK036
-37. The Hound of the Baskervilles - BK037
-38. In the Woods - BK038
-39. The Silent Patient - BK039
-40. And Then There Were None - BK040
+(21,'BK021','Sherlock Holmes',4,'pcs',85000,125000,0,50,2,'1892-10-14',
+'Kumpulan kisah detektif jenius yang memecahkan kasus rumit dengan logika tajam.'),
+
+(22,'BK022','The Da Vinci Code',4,'pcs',90000,135000,0,30,2,'2003-04-03',
+'Petualangan misteri simbol kuno yang mengungkap rahasia besar sejarah.'),
+
+(23,'BK023','Gone Girl',4,'pcs',88000,130000,0,25,2,'2012-06-05',
+'Kisah hilangnya seorang istri yang penuh manipulasi dan kejutan psikologis.'),
+
+(24,'BK024','The Girl with the Dragon Tattoo',4,'pcs',92000,138000,0,20,2,'2005-08-01',
+'Investigasi kriminal yang mengungkap rahasia keluarga gelap.'),
+
+(25,'BK025','Big Little Lies',4,'pcs',87000,128000,0,30,2,'2014-07-29',
+'Kehidupan sempurna yang menyimpan kebohongan dan tragedi.'),
 
 -- THRILLER
-41. The Girl on the Train - BK041
-42. Shutter Island - BK042
-43. Inferno - BK043
-44. The Hunger Games - BK044
-45. 1984 - BK045
-46. Fahrenheit 451 - BK046
-47. American Psycho - BK047
-48. The Shining - BK048
-49. The Road - BK049
-50. The Outsider - BK050
+(26,'BK026','The Silent Patient',5,'pcs',90000,135000,0,40,2,'2019-02-05',
+'Seorang wanita membisu setelah membunuh suaminya, menyimpan kebenaran mengejutkan.'),
+
+(27,'BK027','The Girl on the Train',5,'pcs',88000,130000,0,35,2,'2015-01-13',
+'Thriller psikologis tentang pengamatan, ingatan, dan misteri.'),
+
+(28,'BK028','Shutter Island',5,'pcs',92000,138000,0,25,2,'2003-04-15',
+'Penyelidikan di rumah sakit jiwa yang berubah menjadi mimpi buruk.'),
+
+(29,'BK029','Inferno',5,'pcs',95000,145000,0,20,2,'2013-05-14',
+'Perburuan simbol berbahaya yang mengancam umat manusia.'),
+
+(30,'BK030','The Hunger Games',5,'pcs',85000,125000,0,45,2,'2008-09-14',
+'Permainan mematikan yang menjadi simbol perlawanan terhadap tirani.'),
+
+-- CAMPURAN TERKENAL
+(31,'BK031','1984',5,'pcs',80000,120000,0,30,2,'1949-06-08',
+'Dunia distopia dengan pengawasan total dan manipulasi kebenaran.'),
+
+(32,'BK032','To Kill a Mockingbird',4,'pcs',78000,115000,0,25,2,'1960-07-11',
+'Kisah keadilan dan moral di tengah diskriminasi.'),
+
+(33,'BK033','The Alchemist',1,'pcs',75000,110000,0,60,2,'1988-01-01',
+'Perjalanan menemukan mimpi, makna hidup, dan takdir.'),
+
+(34,'BK034','Fahrenheit 451',5,'pcs',82000,123000,0,20,2,'1953-10-19',
+'Dunia masa depan di mana buku dilarang dan dibakar.'),
+
+(35,'BK035','Dracula',4,'pcs',70000,105000,0,30,2,'1897-05-26',
+'Kisah vampir legendaris yang penuh teror dan misteri.'),
+
+(36,'BK036','The Catcher in the Rye',1,'pcs',78000,118000,0,25,2,'1951-07-16',
+'Pencarian jati diri remaja dalam dunia yang membingungkan.'),
+
+(37,'BK037','Little Women',2,'pcs',75000,110000,0,35,2,'1868-09-30',
+'Kisah keluarga, cinta, dan kedewasaan empat bersaudara.'),
+
+(38,'BK038','Divergent',3,'pcs',80000,120000,0,40,2,'2011-04-25',
+'Dunia distopia dengan sistem faksi yang menentukan nasib.'),
+
+(39,'BK039','The Maze Runner',5,'pcs',82000,123000,0,45,2,'2009-10-06',
+'Remaja terjebak dalam labirin mematikan penuh misteri.'),
+
+(40,'BK040','The Shining',5,'pcs',90000,135000,0,20,2,'1977-01-28',
+'Teror psikologis di hotel terpencil.'),
+
+(41,'BK041','The Road',5,'pcs',85000,128000,0,15,2,'2006-09-26',
+'Perjalanan ayah dan anak di dunia pasca-apokaliptik.'),
+
+(42,'BK042','A Game of Thrones',3,'pcs',140000,215000,0,25,2,'1996-08-06',
+'Intrik politik dan perebutan kekuasaan di dunia Westeros.'),
+
+(43,'BK043','The Book Thief',4,'pcs',90000,135000,0,30,2,'2005-03-14',
+'Kisah kemanusiaan dan harapan di tengah perang.'),
+
+(44,'BK044','Life of Pi',1,'pcs',80000,120000,0,35,2,'2001-09-11',
+'Perjuangan bertahan hidup yang sarat makna spiritual.'),
+
+(45,'BK045','The Fault in Our Stars',2,'pcs',78000,118000,0,50,2,'2012-01-10',
+'Kisah cinta remaja yang manis dan menyayat hati.'),
+
+(46,'BK046','The Name of the Wind',3,'pcs',95000,145000,0,20,2,'2007-03-27',
+'Kisah hidup penyihir legendaris yang penuh misteri.'),
+
+(47,'BK047','American Psycho',5,'pcs',90000,140000,0,15,2,'1991-03-06',
+'Potret gelap psikologi dan kekerasan.'),
+
+(48,'BK048','The Outsider',5,'pcs',88000,132000,0,18,2,'2018-05-22',
+'Kasus kriminal yang menantang logika.'),
+
+(49,'BK049','Sapiens',1,'pcs',100000,150000,0,40,2,'2011-01-01',
+'Sejarah singkat umat manusia dari masa purba hingga modern.'),
+
+(50,'BK050','Homo Deus',1,'pcs',105000,160000,0,35,2,'2015-01-01',
+'Pandangan tentang masa depan manusia dan teknologi.');
