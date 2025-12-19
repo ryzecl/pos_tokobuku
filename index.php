@@ -272,9 +272,26 @@
                 </div>
                 <div class="testimonials-grid">
                     <div class="avatars-column">
-                        <img src="assets/img/customer-review/Model 1.png" class="avatar" alt="User 1">
-                        <img src="assets/img/customer-review/Model 2.png" class="avatar avatar-active" alt="User 2">
-                        <img src="assets/img/customer-review/Model 3.png" class="avatar" alt="User 3">
+                        <img src="assets/img/customer-review/Model 1.png" class="avatar" alt="User 1"
+                             data-quote="Discovering rare insights — these books changed my study routine."
+                             data-desc="The curated selection and fast delivery made my learning process so much easier. Highly recommended for students and lifelong learners."
+                             data-name="Aisha Rahman"
+                             data-role="Graduate Student"
+                             data-rating="5">
+
+                        <img src="assets/img/customer-review/Model 2.png" class="avatar avatar-active" alt="User 2"
+                             data-quote="Grateful for the Books That Changed Our Access to Knowledge."
+                             data-desc="We're grateful because your books broaden our knowledge, improve study access, and make learning experiences richer for everyone."
+                             data-name="Makayla Barron"
+                             data-role="Harvard University Student's"
+                             data-rating="5">
+
+                        <img src="assets/img/customer-review/Model 3.png" class="avatar" alt="User 3"
+                             data-quote="A delightful find — quality titles with thoughtful curation."
+                             data-desc="Customer service and packaging were excellent. I'll keep coming back for new releases and recommendations."
+                             data-name="Rizky Pratama"
+                             data-role="Freelance Editor"
+                             data-rating="4">
                     </div>
                     <div class="testimonial-content">
                         <div class="quote-mark">"</div>
@@ -453,6 +470,49 @@
             // Kita akan update HTML formnya juga, tapi untuk safety kita bisa force redirect via JS
             // jika update HTML terpisah.
         });
+
+        // Testimonial avatar click handler: swap quote, description, author, role, and rating
+        (function() {
+            const avatars = document.querySelectorAll('.avatars-column .avatar');
+            const quoteEl = document.querySelector('.testimonial-quote');
+            const descEl = document.querySelector('.testimonial-description');
+            const nameEl = document.querySelector('.author-name');
+            const roleEl = document.querySelector('.author-role');
+            const ratingEl = document.querySelector('.rating');
+
+            if (!avatars.length || !quoteEl) return;
+
+            function renderRating(n) {
+                ratingEl.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    const iEl = document.createElement('i');
+                    iEl.setAttribute('data-lucide', 'star');
+                    iEl.className = i < n ? 'star-filled' : 'star-empty';
+                    ratingEl.appendChild(iEl);
+                }
+                lucide.createIcons();
+            }
+
+            avatars.forEach(av => {
+                av.style.cursor = 'pointer';
+                av.addEventListener('click', () => {
+                    avatars.forEach(a => a.classList.remove('avatar-active'));
+                    av.classList.add('avatar-active');
+
+                    const q = av.dataset.quote || '';
+                    const d = av.dataset.desc || '';
+                    const n = av.dataset.name || '';
+                    const r = av.dataset.role || '';
+                    const rt = parseInt(av.dataset.rating || '5', 10);
+
+                    if (quoteEl) quoteEl.textContent = q;
+                    if (descEl) descEl.textContent = d;
+                    if (nameEl) nameEl.textContent = n;
+                    if (roleEl) roleEl.textContent = r;
+                    if (ratingEl) renderRating(isNaN(rt) ? 5 : rt);
+                });
+            });
+        })();
     </script>
 </body>
 
