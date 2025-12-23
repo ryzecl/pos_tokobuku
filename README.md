@@ -2,12 +2,12 @@
 
 Sistem Point of Sale (POS) untuk toko buku yang dibangun dengan PHP dan MySQL. Aplikasi ini mencakup fitur manajemen buku, penjualan, pembelian, stok, dan dilengkapi dengan AI Assistant menggunakan Groq API.
 
-## � Preview Aplikasi
+## 📚 Preview Aplikasi
 
 ![Landing Page POS Daebook](assets/img/lading-page.png)
 *Tampilan landing page aplikasi POS Daebook*
 
-## �📋 Daftar Isi
+## 📋 Daftar Isi
 - [Fitur Utama](#-fitur-utama)
 - [Persyaratan Sistem](#-persyaratan-sistem)
 - [Instalasi Step by Step](#-instalasi-step-by-step)
