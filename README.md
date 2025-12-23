@@ -71,7 +71,43 @@ Sistem Point of Sale (POS) untuk toko buku yang dibangun dengan PHP dan MySQL. A
 
 ### Langkah 2: Setup Database
 
-#### Opsi A: Menggunakan phpMyAdmin (Lebih Mudah)
+#### Opsi A: Menggunakan Install.php (Paling Mudah - Rekomendasi) 🌟
+
+Cara termudah untuk instalasi database adalah menggunakan installer otomatis melalui browser:
+
+1. **Pastikan Web Server Sudah Running**
+   - Laragon: Klik "Start All"
+   - XAMPP: Start Apache dan MySQL
+
+2. **Buka Install.php di Browser**
+   - Ketik di address bar: `http://localhost/pos_tokobuku/install.php`
+   
+   ![Installer Interface](assets/screenshots/installer.png)
+   *Atau akses langsung melalui URL di atas*
+
+3. **Pilih Aksi "Install DB"**
+   - Pada dropdown, pilih: **"Install DB (buat & import schema)"**
+   - Klik tombol **"Jalankan"**
+   - Klik **"OK"** pada konfirmasi
+
+4. **Tunggu Proses Selesai**
+   - Sistem akan otomatis:
+     - Membuat database `pos_daebook`
+     - Mengimport semua tabel dan data
+     - Membuat user default (admin, kasir, gudang)
+   - Jika berhasil, akan muncul pesan: **"Install selesai. Jumlah user terdeteksi: X"**
+
+5. **Selesai!** 🎉
+   - Database sudah siap digunakan
+   - Anda bisa langsung login ke aplikasi
+
+**⚠️ Catatan Penting:**
+- File `install.php` dapat dihapus setelah instalasi selesai untuk keamanan
+- Pastikan setting database di `install.php` sesuai dengan `config/database.php` (default: host=localhost, user=root, password kosong)
+
+---
+
+#### Opsi B: Menggunakan phpMyAdmin (Manual)
 
 1. **Buka phpMyAdmin**
    - Laragon: Klik kanan icon Laragon di tray → Database → phpMyAdmin
@@ -90,7 +126,9 @@ Sistem Point of Sale (POS) untuk toko buku yang dibangun dengan PHP dan MySQL. A
    - Scroll ke bawah, klik tombol "Import"
    - Tunggu hingga muncul pesan sukses
 
-#### Opsi B: Menggunakan Command Line
+---
+
+#### Opsi C: Menggunakan Command Line
 
 1. **Buka Terminal/Command Prompt**
    - Laragon: Klik kanan icon Laragon → Terminal
@@ -407,8 +445,72 @@ Fitur AI Assistant memerlukan server Node.js terpisah. Ikuti langkah berikut jik
 2. Cek tabel `users` di phpMyAdmin apakah ada data
 3. Gunakan kredensial default:
    - Username: `admin`
-   - Password: `admin123`
+   - Password: `password`
 4. Pastikan tidak ada spasi saat mengetik username/password
+
+### Database Maintenance (Menggunakan install.php)
+
+File `install.php` tidak hanya untuk instalasi awal, tetapi juga menyediakan fitur maintenance database:
+
+#### 🔄 Restart Database (Reset Data)
+
+**Kapan Digunakan:**
+- Ingin menghapus semua data transaksi tapi tetap mempertahankan user dan pengaturan
+- Testing atau development dan ingin mulai dari data bersih
+
+**Cara:**
+1. Buka: `http://localhost/pos_tokobuku/install.php`
+2. Pilih: **"Restart DB (kosongkan kecuali 'users' & 'pengaturan')"**
+3. Klik "Jalankan" → Konfirmasi "OK"
+
+**Yang Terjadi:**
+- ✅ Tabel `users` dan `pengaturan` **TETAP** (data tidak hilang)
+- ❌ Semua tabel lain dikosongkan (buku, penjualan, pembelian, stok, dll.)
+
+**⚠️ Peringatan:** Backup database dulu jika data penting!
+
+---
+
+#### 🗑️ Hapus Database (Delete)
+
+**Kapan Digunakan:**
+- Ingin menghapus database sepenuhnya dan mulai instalasi fresh
+- Troubleshooting untuk error database yang parah
+
+**Cara:**
+1. Buka: `http://localhost/pos_tokobuku/install.php`
+2. Pilih: **"Hapus DB (drop database)"**
+3. Klik "Jalankan" → Konfirmasi "OK"
+
+**Yang Terjadi:**
+- ❌ Database `pos_daebook` **DIHAPUS TOTAL**
+- ❌ **SEMUA DATA HILANG** (tidak bisa dikembalikan)
+
+**⚠️ Peringatan:** 
+- Tindakan ini PERMANEN dan tidak dapat dibatalkan!
+- Setelah hapus, Anda perlu install ulang dengan memilih "Install DB"
+
+---
+
+#### 💡 Tips Database Maintenance
+
+**Workflow Reset Data Testing:**
+```
+1. Hapus DB → untuk clean install total
+2. Install DB → buat database baru dengan data default
+3. Testing aplikasi
+4. Restart DB → reset transaksi tapi tetap pakai user yang sama
+5. Testing lagi
+```
+
+**Backup Database Sebelum Maintenance:**
+```bash
+# Via command line (backup manual)
+cd C:\laragon\www\pos_tokobuku
+mysqldump -u root -p pos_daebook > backup_$(date +%Y%m%d).sql
+
+# Atau via phpMyAdmin: Export → SQL
+```
 
 ## 📁 Struktur Folder Project
 
@@ -480,6 +582,18 @@ pos_tokobuku/
 
 - Untuk pertanyaan atau issue, silakan buat issue di repository
 - Aplikasi ini dibuat untuk keperluan pembelajaran dan bisa dikembangkan lebih lanjut
+
+## 👥 Tim Pengembang
+
+Aplikasi ini dikembangkan oleh tim berikut:
+
+- **[Fhazar R A](https://www.instagram.com/fhazar_aqyla/)** - Project Manager
+- **[Fadel R](https://www.instagram.com/ouldmanz/)** - Quality Assurance
+- **[Hildan A T P](https://www.instagram.com/hildan_hyell/)** - Frontend Developer
+- **[Ferry N H](https://www.instagram.com/ferrynoerh__/)** - Backend Developer
+- **[Daffa N Z](https://www.instagram.com/daffa.enz7/)** - UI/UX Designer
+
+Terima kasih kepada seluruh tim yang telah berkontribusi dalam pengembangan POS Daebook! 🙏
 
 ## 📄 Lisensi
 
