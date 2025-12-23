@@ -2,7 +2,12 @@
 
 Sistem Point of Sale (POS) untuk toko buku yang dibangun dengan PHP dan MySQL. Aplikasi ini mencakup fitur manajemen buku, penjualan, pembelian, stok, dan dilengkapi dengan AI Assistant menggunakan Groq API.
 
-## 📋 Daftar Isi
+## � Preview Aplikasi
+
+![Landing Page POS Daebook](assets/img/lading-page.png)
+*Tampilan landing page aplikasi POS Daebook*
+
+## �📋 Daftar Isi
 - [Fitur Utama](#-fitur-utama)
 - [Persyaratan Sistem](#-persyaratan-sistem)
 - [Instalasi Step by Step](#-instalasi-step-by-step)
@@ -46,7 +51,7 @@ Sistem Point of Sale (POS) untuk toko buku yang dibangun dengan PHP dan MySQL. A
 1. **Download atau Clone Repository**
    - Jika menggunakan Git:
      ```bash
-     git clone <repository-url> pos_tokobuku
+     git clone https://github.com/ryzecl/pos_tokobuku.git
      ```
    - Jika download ZIP: Extract file ZIP ke folder `pos_tokobuku`
 
@@ -190,9 +195,9 @@ Setelah instalasi berhasil, gunakan kredensial default:
 
 | Role | Username | Password |
 |------|----------|----------|
-| Admin | admin | admin123 |
-| Kasir | kasir | kasir123 |
-| Gudang | gudang | gudang123 |
+| Admin | admin | password |
+| Kasir | kasir | password |
+| Gudang | gudang | password |
 
 **⚠️ PENTING:** Segera ganti password default setelah login pertama kali melalui menu Pengaturan → Users!
 
