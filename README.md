@@ -284,7 +284,7 @@ Fitur AI Assistant memerlukan server Node.js terpisah. Ikuti langkah berikut jik
 2. **Isi File .env**
    ```env
    GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-   CACHE_REFRESH_SECRET=rahasia-saya-123
+   CACHE_REFRESH_SECRET=AkusukAC00kl4444T
    ```
    
    **Keterangan:**
